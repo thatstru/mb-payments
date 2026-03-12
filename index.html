@@ -997,12 +997,19 @@ function clickSimilar(i){
   if(!s) return;
   var rm=RATES_DATA.models[s.model_year+'_'+s.model_code];
   if(!rm) return;
+  // Match inventory by model_code + year (prefer exact year, fallback to code only)
+  var invYear=parseInt('20'+s.model_year.slice(-2));
   var inv=null;
   for(var j=0;j<INVENTORY.length;j++){
+    var iv=INVENTORY[j];
+    if(iv.model_code===s.model_code&&(iv.model_year===invYear||iv.year===invYear)){inv=iv;break;}
+  }
+  if(!inv) for(var j=0;j<INVENTORY.length;j++){
     if(INVENTORY[j].model_code===s.model_code){inv=INVENTORY[j];break;}
   }
   state.rateModel=rm;
-  state.vehicle=inv||{year:parseInt('20'+s.model_year.slice(-2)),make:'Mercedes-Benz',
+  // Always use real inventory record so stock#, days, color badges always display
+  state.vehicle=inv||{year:invYear,make:'Mercedes-Benz',
                       model:s.model_code,model_code:s.model_code,model_year:s.model_year,
                       msrp:s.msrp,photo:s.photo};
   renderVehicle(state.vehicle,rm);
