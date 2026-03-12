@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<!-- saved from url=(0242)file:///Users/trumanhedding/Library/Application%20Support/Claude/local-agent-mode-sessions/a5280f17-1b8c-40ac-b481-ac5d10c3de7f/cfc6eea6-4255-4423-bfee-be2654ce7bc3/local_21d9ad8a-8f26-423a-926c-bb773b42d6f6/outputs/mb-payment-tool/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MB Payments – Mercedes-Benz of Encino</title>
+<script src="./index_files/react.production.min.js"></script>
+<script src="./index_files/react-dom.production.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+         background: #f0f0f0; color: #1a1a1a; }
+  :root {
+    --mb-black: #1a1a1a; --mb-silver: #c0c0c0; --mb-blue: #0a2540;
+    --mb-accent: #009ee3; --mb-green: #00a651; --mb-red: #e00;
+    --radius: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .app { min-height: 100vh; display: flex; flex-direction: column; }
+  .header { background: var(--mb-black); color: white; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; }
+  .header-title { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; }
+  .header-logo { font-size: 22px; font-weight: 300; letter-spacing: 2px; color: var(--mb-silver); }
+  .main { flex: 1; padding: 12px; max-width: 480px; margin: 0 auto; width: 100%; }
+  .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+          padding: 16px; margin-bottom: 12px; }
+  .card-title { font-size: 11px; font-weight: 600; text-transform: uppercase;
+                letter-spacing: 1px; color: #666; margin-bottom: 12px; }
+  .login-screen { min-height: 100vh; display: flex; align-items: center;
+                  justify-content: center; background: var(--mb-black); padding: 24px; }
+  .login-box { background: white; border-radius: 16px; padding: 32px 24px;
+               width: 100%; max-width: 360px; }
+  .login-logo { text-align: center; margin-bottom: 24px; }
+  .login-logo .star { font-size: 40px; }
+  .login-logo .brand { font-size: 18px; font-weight: 300; letter-spacing: 3px; color: var(--mb-black); margin-top: 4px; }
+  .login-logo .store { font-size: 12px; color: #666; margin-top: 4px; }
+  .input { width: 100%; border: 1.5px solid #ddd; border-radius: 8px;
+           padding: 12px 14px; font-size: 16px; outline: none; transition: border 0.2s; }
+  .input:focus { border-color: var(--mb-accent); }
+  .input-group { margin-bottom: 14px; }
+  .input-label { display: block; font-size: 12px; font-weight: 600; color: #444;
+                 margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .btn { width: 100%; padding: 14px; border: none; border-radius: 8px;
+         font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--mb-black); color: white; }
+  .btn-primary:active { background: #333; transform: scale(0.99); }
+  .btn-sm { padding: 8px 14px; font-size: 13px; width: auto; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--mb-black); color: var(--mb-black); }
+  .btn-danger { background: var(--mb-red); color: white; }
+  .btn-success { background: var(--mb-green); color: white; }
+  .search-wrap { display: flex; gap: 8px; }
+  .search-input { flex: 1; border: 1.5px solid #ddd; border-radius: 8px;
+                  padding: 12px 14px; font-size: 20px; font-weight: 500;
+                  text-transform: uppercase; letter-spacing: 2px; outline: none; }
+  .search-input:focus { border-color: var(--mb-accent); }
+  .search-btn { background: var(--mb-black); color: white; border: none;
+                border-radius: 8px; padding: 12px 18px; font-size: 18px; cursor: pointer; }
+  .vehicle-header { display: flex; gap: 12px; align-items: flex-start; }
+  .vehicle-photo { width: 90px; height: 68px; border-radius: 8px; object-fit: cover;
+                   background: #f0f0f0; flex-shrink: 0; }
+  .vehicle-photo-placeholder { width: 90px; height: 68px; border-radius: 8px;
+                                background: #f0f0f0; display: flex; align-items: center;
+                                justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .vehicle-name { font-size: 17px; font-weight: 700; line-height: 1.2; }
+  .vehicle-sub { font-size: 13px; color: #666; margin-top: 3px; }
+  .vehicle-msrp { font-size: 13px; color: #333; margin-top: 4px; }
+  .vehicle-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .badge { font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 20px;
+           text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-stock { background: #e8f4fd; color: #0a73c4; }
+  .badge-age { background: #fff3e0; color: #e65100; }
+  .badge-color { background: #f3e5f5; color: #6a1b9a; }
+  .badge-nomatch { background: #fff0f0; color: #c00; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .select { border: 1.5px solid #ddd; border-radius: 8px; padding: 8px 10px;
+            font-size: 14px; background: white; outline: none; flex: 1; min-width: 110px; }
+  .select:focus { border-color: var(--mb-accent); }
+  .control-label { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase;
+                   letter-spacing: 0.5px; margin-bottom: 3px; }
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid #eee; margin-bottom: 12px; }
+  .tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; font-weight: 600;
+         color: #888; border-bottom: 2px solid transparent; cursor: pointer;
+         margin-bottom: -2px; transition: all 0.2s; }
+  .tab.active { color: var(--mb-black); border-color: var(--mb-black); }
+  .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .payment-cell { background: #f8f9fa; border-radius: 10px; padding: 12px; text-align: center;
+                  border: 2px solid transparent; cursor: pointer; transition: all 0.15s; }
+  .payment-cell:active { transform: scale(0.97); }
+  .payment-cell.featured { background: var(--mb-black); border-color: var(--mb-black); }
+  .payment-cell.featured .payment-amount { color: white; }
+  .payment-cell.featured .payment-term { color: #aaa; }
+  .payment-cell.featured .payment-sub { color: #888; }
+  .payment-cell.no-rate { background: #f0f0f0; opacity: 0.5; }
+  .payment-amount { font-size: 22px; font-weight: 700; color: var(--mb-black); }
+  .payment-term { font-size: 11px; color: #888; margin-top: 2px; }
+  .payment-sub { font-size: 10px; color: #aaa; margin-top: 1px; }
+  .similar-list { display: flex; flex-direction: column; gap: 10px; }
+  .similar-card { display: flex; align-items: center; gap: 10px; padding: 12px;
+                  background: #f8f9fa; border-radius: 10px; border: 2px solid transparent;
+                  cursor: pointer; transition: all 0.15s; }
+  .similar-card:active { background: #eee; }
+  .similar-card.in-stock { border-color: #c8e6c9; }
+  .similar-photo { width: 60px; height: 44px; border-radius: 6px; object-fit: cover;
+                   background: #e0e0e0; flex-shrink: 0; }
+  .similar-photo-ph { width: 60px; height: 44px; border-radius: 6px; background: #e0e0e0;
+                      display: flex; align-items: center; justify-content: center;
+                      font-size: 22px; flex-shrink: 0; }
+  .similar-info { flex: 1; min-width: 0; }
+  .similar-name { font-size: 14px; font-weight: 600; }
+  .similar-detail { font-size: 11px; color: #888; margin-top: 2px; }
+  .similar-payment { text-align: right; flex-shrink: 0; }
+  .similar-amount { font-size: 18px; font-weight: 700; }
+  .similar-diff { font-size: 11px; color: #888; margin-top: 1px; }
+  .similar-diff.positive { color: var(--mb-red); }
+  .similar-diff.negative { color: var(--mb-green); }
+  .in-stock-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+                  background: var(--mb-green); margin-right: 4px; }
+  .loading { text-align: center; padding: 40px 20px; color: #888; }
+  .loading-spinner { font-size: 32px; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-msg { background: #fff0f0; color: var(--mb-red); padding: 12px 14px;
+               border-radius: 8px; font-size: 14px; margin: 8px 0; }
+  .success-msg { background: #f0fff4; color: var(--mb-green); padding: 12px 14px;
+                 border-radius: 8px; font-size: 14px; margin: 8px 0; }
+  .admin-grid { display: grid; gap: 8px; }
+  .discount-row { display: flex; align-items: center; gap: 10px; padding: 10px;
+                  background: #f8f9fa; border-radius: 8px; }
+  .discount-label { flex: 1; font-weight: 600; font-size: 14px; }
+  .discount-input { width: 70px; border: 1.5px solid #ddd; border-radius: 6px;
+                    padding: 6px 8px; font-size: 14px; text-align: center; }
+  .discount-pct { color: #888; font-size: 13px; }
+  .user-row { display: flex; align-items: center; gap: 10px; padding: 10px;
+              background: #f8f9fa; border-radius: 8px; }
+  .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--mb-black);
+                 color: white; display: flex; align-items: center; justify-content: center;
+                 font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-weight: 600; font-size: 14px; }
+  .user-role { font-size: 11px; color: #888; }
+  .report-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .report-table th { text-align: left; padding: 8px; border-bottom: 2px solid #eee;
+                     font-size: 11px; text-transform: uppercase; color: #888; }
+  .report-table td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+  .divider { height: 1px; background: #eee; margin: 12px 0; }
+  .row { display: flex; gap: 8px; }
+  .col { flex: 1; }
+  .text-sm { font-size: 12px; color: #666; }
+  .text-muted { color: #999; }
+  .font-bold { font-weight: 700; }
+  .mt-2 { margin-top: 8px; }
+  .mb-2 { margin-bottom: 8px; }
+  .oem-ref { font-size: 11px; color: #888; background: #f8f9fa; border-radius: 6px;
+             padding: 6px 10px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div id="root"><div class="login-screen"><div class="login-box"><div class="login-logo"><div class="star">⊙</div><div class="brand">MERCEDES-BENZ</div><div class="store">of Encino · Payment Tool</div></div><form><div class="input-group"><label class="input-label">Username</label><input class="input" type="text" autocapitalize="none" autocorrect="off" value=""></div><div class="input-group"><label class="input-label">Password</label><input class="input" type="password" value=""></div><button class="btn btn-primary" type="submit">Sign In</button></form></div></div></div>
+
+<script>
+// ─── Embedded Rate Data ─────────────────────────────────────────────────────
+const RATES_DATA = {"effective":"2026-03-03","expiry":"2026-03-31","acq_fee":795.0,"turn_in_fee":595.0,"regional_cash":1000.0,"mileage_adjustments":{"7500":0.04,"10000":0.03,"12000":0.02,"15000":0.0,"20000":-0.05},"standard_money_factors":{"T1":{"24":0.003,"25_36":0.00335,"37_48":0.0038,"49_60":0.005,"61_72":0.00635},"T2":{"24":0.003,"25_36":0.00335,"37_48":0.0038,"49_60":0.005,"61_72":0.00635},"T3":{"24":0.003,"25_36":0.00335,"37_48":0.0038,"49_60":0.005,"61_72":0.00635},"T4":{"24":0.003,"25_36":0.00335,"37_48":0.0038,"49_60":0.005,"61_72":0.00635}},"finance_apr":{"special":{"MY25":{"default_24_60":1.99,"default_72":3.99,"cla_gla_glb_24":1.4,"cla_gla_glb_25_60":1.99,"cla_gla_glb_72":3.99},"MY26":{"default_24_60":3.99,"default_72":5.99,"cla_gla_glb_24":1.4,"cla_gla_glb_25_60":3.99,"cla_gla_glb_72":5.99}},"standard":{"T1":{"12_60":6.69,"61_66":7.29,"67_72":7.29},"T2":{"12_60":8.09,"61_66":8.59,"67_72":8.59},"T3":{"12_60":10.79,"61_66":11.59,"67_72":11.59},"T4":{"12_60":14.99,"61_66":14.99,"67_72":null}}},"models":{"MY26_EQE320V":{"model_code":"EQE320V","model_year":"MY26","msrp":64950.0,"transport":1350.0,"total_msrp":66300.0,"acq_fee":795.0,"money_factors":{"T1":0.00148,"T2":0.00148,"T3":0.00238,"T4":0.00238},"residuals":{"24":0.43,"30":0.42,"36":0.42,"42":0.42,"48":0.39,"54":0.34,"60":0.29},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":859.0,"oem_payment_t3_rc":819.0,"oem_amt_due_t1":6333.0,"oem_amt_due_t3_rc":6293.0,"oem_term":36,"oem_mileage":10000},"MY25_C43W4":{"model_code":"C43W4","model_year":"MY25","msrp":62500.0,"transport":1150.0,"total_msrp":63650.0,"acq_fee":795.0,"money_factors":{"T1":0.00136,"T2":0.00136,"T3":0.00226,"T4":0.00226},"residuals":{"24":0.59,"30":0.55,"36":0.54,"42":0.5,"48":0.47,"54":0.43,"60":0.39},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":649.0,"oem_payment_t3_rc":609.0,"oem_amt_due_t1":6043.0,"oem_amt_due_t3_rc":6003.0,"oem_term":36,"oem_mileage":10000},"MY26_SL43R":{"model_code":"SL43R","model_year":"MY26","msrp":112550.0,"transport":1350.0,"total_msrp":113900.0,"acq_fee":795.0,"money_factors":{"T1":0.00111,"T2":0.00111,"T3":0.00201,"T4":0.00201},"residuals":{"24":0.6,"30":0.56,"36":0.53,"42":0.5,"48":0.48,"54":0.45,"60":0.4},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1279.0,"oem_payment_t3_rc":1139.0,"oem_amt_due_t1":10073.0,"oem_amt_due_t3_rc":9933.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE450W4":{"model_code":"GLE450W4","model_year":"MY26","msrp":72250.0,"transport":1350.0,"total_msrp":73600.0,"acq_fee":795.0,"money_factors":{"T1":0.00211,"T2":0.00211,"T3":0.00301,"T4":0.00301},"residuals":{"24":0.6,"30":0.57,"36":0.55,"42":0.5,"48":0.45,"54":0.41,"60":0.38},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":839.0,"oem_payment_t3_rc":779.0,"oem_amt_due_t1":6833.0,"oem_amt_due_t3_rc":6773.0,"oem_term":36,"oem_mileage":10000},"MY25_CLA250C":{"model_code":"CLA250C","model_year":"MY25","msrp":44400.0,"transport":1150.0,"total_msrp":45550.0,"acq_fee":795.0,"money_factors":{"T1":0.00074,"T2":0.00074,"T3":0.00164,"T4":0.00164},"residuals":{"24":0.58,"30":0.54,"36":0.51,"42":0.47,"48":0.43,"54":0.41,"60":0.39},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":449.0,"oem_payment_t3_rc":409.0,"oem_amt_due_t1":4643.0,"oem_amt_due_t3_rc":4603.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC43W4":{"model_code":"GLC43W4","model_year":"MY26","msrp":67550.0,"transport":1350.0,"total_msrp":68900.0,"acq_fee":795.0,"money_factors":{"T1":0.00229,"T2":0.00229,"T3":0.00319,"T4":0.00319},"residuals":{"36":0.6000000000000001},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":739.0,"oem_payment_t3_rc":709.0,"oem_amt_due_t1":6663.0,"oem_amt_due_t3_rc":6633.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC63C4E":{"model_code":"GLC63C4E","model_year":"MY25","msrp":91450.0,"transport":1150.0,"total_msrp":92600.0,"acq_fee":795.0,"money_factors":{"T1":0.00139,"T2":0.00139,"T3":0.00229,"T4":0.00229},"residuals":{"24":0.59,"30":0.54,"36":0.49,"42":0.44,"48":0.4,"54":0.36,"60":0.31},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":1129.0,"oem_payment_t3_rc":1069.0,"oem_amt_due_t1":8623.0,"oem_amt_due_t3_rc":8563.0,"oem_term":36,"oem_mileage":10000},"MY25_CLA35C4":{"model_code":"CLA35C4","model_year":"MY25","msrp":56100.0,"transport":1150.0,"total_msrp":57250.0,"acq_fee":795.0,"money_factors":{"T1":0.00043,"T2":0.00043,"T3":0.00133,"T4":0.00133},"residuals":{"24":0.55,"30":0.53,"36":0.5,"42":0.45,"48":0.4,"54":0.37,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":569.0,"oem_payment_t3_rc":529.0,"oem_amt_due_t1":5463.0,"oem_amt_due_t3_rc":5423.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE53C4":{"model_code":"GLE53C4","model_year":"MY26","msrp":92150.0,"transport":1350.0,"total_msrp":93500.0,"acq_fee":795.0,"money_factors":{"T1":0.00278,"T2":0.00278,"T3":0.00368,"T4":0.00368},"residuals":{"24":0.59,"30":0.56,"36":0.53,"42":0.49,"48":0.47,"54":0.44,"60":0.41},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1219.0,"oem_payment_t3_rc":1149.0,"oem_amt_due_t1":8713.0,"oem_amt_due_t3_rc":8643.0,"oem_term":36,"oem_mileage":10000},"MY25_SL43R":{"model_code":"SL43R","model_year":"MY25","msrp":111950.0,"transport":1150.0,"total_msrp":113100.0,"acq_fee":795.0,"money_factors":{"T1":0.00117,"T2":0.00117,"T3":0.00207,"T4":0.00207},"residuals":{"24":0.58,"30":0.54,"36":0.51,"42":0.48,"48":0.46,"54":0.43,"60":0.38},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1259.0,"oem_payment_t3_rc":1189.0,"oem_amt_due_t1":10363.0,"oem_amt_due_t3_rc":10293.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE500V4":{"model_code":"EQE500V4","model_year":"MY25","msrp":85900.0,"transport":1150.0,"total_msrp":87050.0,"acq_fee":795.0,"money_factors":{"T1":0.0002,"T2":0.0002,"T3":0.0011,"T4":0.0011},"residuals":{"24":0.44,"30":0.44,"36":0.4,"42":0.38,"48":0.32,"54":0.29,"60":0.25},"mib":7500,"regional_cash":1000.0,"oem_payment_t1":859.0,"oem_payment_t3_rc":829.0,"oem_amt_due_t1":8253.0,"oem_amt_due_t3_rc":8223.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC63W4E":{"model_code":"GLC63W4E","model_year":"MY26","msrp":86750.0,"transport":1350.0,"total_msrp":88100.0,"acq_fee":795.0,"money_factors":{"T1":0.00201,"T2":0.00201,"T3":0.00201,"T4":0.00201},"residuals":{"36":0.5800000000000001},"mib":0,"regional_cash":1000.0,"oem_payment_t1":959.0,"oem_payment_t3_rc":929.0,"oem_amt_due_t1":8553.0,"oem_amt_due_t3_rc":8523.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC63C4E":{"model_code":"GLC63C4E","model_year":"MY26","msrp":93450.0,"transport":1350.0,"total_msrp":94800.0,"acq_fee":795.0,"money_factors":{"T1":0.00201,"T2":0.00201,"T3":0.00291,"T4":0.00291},"residuals":{"24":0.61,"30":0.56,"36":0.51,"42":0.46,"48":0.42,"54":0.38,"60":0.33},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":1179.0,"oem_payment_t3_rc":1119.0,"oem_amt_due_t1":8973.0,"oem_amt_due_t3_rc":8913.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA45C4S":{"model_code":"CLA45C4S","model_year":"MY26","msrp":67550.0,"transport":1350.0,"total_msrp":68900.0,"acq_fee":795.0,"money_factors":{"T1":0.00064,"T2":0.00064,"T3":0.00154,"T4":0.00154},"residuals":{"24":0.51,"30":0.5,"36":0.49,"42":0.46,"48":0.43,"54":0.39,"60":0.35},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":749.0,"oem_payment_t3_rc":709.0,"oem_amt_due_t1":6863.0,"oem_amt_due_t3_rc":6823.0,"oem_term":36,"oem_mileage":10000},"MY25_GLB250W":{"model_code":"GLB250W","model_year":"MY25","msrp":45800.0,"transport":1150.0,"total_msrp":46950.0,"acq_fee":795.0,"money_factors":{"T1":0.00134,"T2":0.00134,"T3":0.00224,"T4":0.00224},"residuals":{"24":0.6,"30":0.57,"36":0.54,"42":0.49,"48":0.45,"54":0.41,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":459.0,"oem_payment_t3_rc":419.0,"oem_amt_due_t1":4853.0,"oem_amt_due_t3_rc":4813.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC300C4":{"model_code":"GLC300C4","model_year":"MY26","msrp":59650.0,"transport":1350.0,"total_msrp":61000.0,"acq_fee":795.0,"money_factors":{"T1":0.00246,"T2":0.00246,"T3":0.00336,"T4":0.00336},"residuals":{"24":0.64,"30":0.59,"36":0.55,"42":0.52,"48":0.5,"54":0.48,"60":0.46},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":739.0,"oem_payment_t3_rc":679.0,"oem_amt_due_t1":5733.0,"oem_amt_due_t3_rc":5673.0,"oem_term":36,"oem_mileage":10000},"MY25_EQS450X4":{"model_code":"EQS450X4","model_year":"MY25","msrp":108250.0,"transport":1150.0,"total_msrp":109400.0,"acq_fee":795.0,"money_factors":{"T1":1e-05,"T2":1e-05,"T3":0.00091,"T4":0.00091},"residuals":{"24":0.48,"30":0.46,"36":0.42,"42":0.37,"48":0.32,"54":0.28,"60":0.24},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":979.0,"oem_payment_t3_rc":949.0,"oem_amt_due_t1":10173.0,"oem_amt_due_t3_rc":10143.0,"oem_term":36,"oem_mileage":10000},"MY25_C63W4SE":{"model_code":"C63W4SE","model_year":"MY25","msrp":86050.0,"transport":1150.0,"total_msrp":87200.0,"acq_fee":795.0,"money_factors":{"T1":0.00052,"T2":0.00052,"T3":0.00142,"T4":0.00142},"residuals":{"24":0.56,"30":0.52,"36":0.5,"42":0.47,"48":0.46,"54":0.44,"60":0.42},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":899.0,"oem_payment_t3_rc":849.0,"oem_amt_due_t1":8123.0,"oem_amt_due_t3_rc":8073.0,"oem_term":36,"oem_mileage":10000},"MY26_EQE320V4":{"model_code":"EQE320V4","model_year":"MY26","msrp":67450.0,"transport":1350.0,"total_msrp":68800.0,"acq_fee":795.0,"money_factors":{"T1":0.00232,"T2":0.00232,"T3":0.00322,"T4":0.00322},"residuals":{"24":0.48,"30":0.48,"36":0.46,"42":0.41,"48":0.37,"54":0.32,"60":0.28},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":899.0,"oem_payment_t3_rc":859.0,"oem_amt_due_t1":6573.0,"oem_amt_due_t3_rc":6533.0,"oem_term":36,"oem_mileage":10000},"MY25_AMGEQEX4":{"model_code":"AMGEQEX4","model_year":"MY25","msrp":109300.0,"transport":1150.0,"total_msrp":110450.0,"acq_fee":795.0,"money_factors":{"T1":1e-05,"T2":1e-05,"T3":0.00091,"T4":0.00091},"residuals":{"24":0.47,"30":0.46,"36":0.43,"42":0.39,"48":0.33,"54":0.29,"60":0.26},"mib":12500,"regional_cash":1000.0,"oem_payment_t1":1059.0,"oem_payment_t3_rc":939.0,"oem_amt_due_t1":10253.0,"oem_amt_due_t3_rc":10133.0,"oem_term":36,"oem_mileage":10000},"MY26_S580V4":{"model_code":"S580V4","model_year":"MY26","msrp":130700.0,"transport":1350.0,"total_msrp":132050.0,"acq_fee":795.0,"money_factors":{"T1":0.00144,"T2":0.00144,"T3":0.00234,"T4":0.00234},"residuals":{"24":0.53,"30":0.5,"36":0.47,"42":0.42,"48":0.38,"54":0.36,"60":0.32},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1609.0,"oem_payment_t3_rc":1449.0,"oem_amt_due_t1":12403.0,"oem_amt_due_t3_rc":12243.0,"oem_term":13,"oem_mileage":10000},"MY25_GLS450W4":{"model_code":"GLS450W4","model_year":"MY25","msrp":89200.0,"transport":1150.0,"total_msrp":90350.0,"acq_fee":795.0,"money_factors":{"T1":0.00088,"T2":0.00088,"T3":0.00178,"T4":0.00178},"residuals":{"24":0.59,"30":0.52,"36":0.52,"42":0.45,"48":0.41,"54":0.37,"60":0.34},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":919.0,"oem_payment_t3_rc":869.0,"oem_amt_due_t1":8723.0,"oem_amt_due_t3_rc":8673.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC350e4":{"model_code":"GLC350e4","model_year":"MY26","msrp":60300.0,"transport":1350.0,"total_msrp":61650.0,"acq_fee":795.0,"money_factors":{"T1":0.00091,"T2":0.00091,"T3":0.00091,"T4":0.00091},"residuals":{"36":0.56},"mib":0,"regional_cash":1000.0,"oem_payment_t1":599.0,"oem_payment_t3_rc":569.0,"oem_amt_due_t1":5993.0,"oem_amt_due_t3_rc":5963.0,"oem_term":36,"oem_mileage":10000},"MY25_GLS580W4":{"model_code":"GLS580W4","model_year":"MY25","msrp":114800.0,"transport":1150.0,"total_msrp":115950.0,"acq_fee":795.0,"money_factors":{"T1":0.00046,"T2":0.00046,"T3":0.00136,"T4":0.00136},"residuals":{"24":0.56,"30":0.53,"36":0.5,"42":0.47,"48":0.44,"54":0.41,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1190.0,"oem_payment_t3_rc":1139.0,"oem_amt_due_t1":10984.0,"oem_amt_due_t3_rc":10933.0,"oem_term":36,"oem_mileage":10000},"MY26_S500V4":{"model_code":"S500V4","model_year":"MY26","msrp":119550.0,"transport":1350.0,"total_msrp":120900.0,"acq_fee":795.0,"money_factors":{"T1":0.00093,"T2":0.00093,"T3":0.00183,"T4":0.00183},"residuals":{"24":0.51,"30":0.49,"36":0.47,"42":0.43,"48":0.39,"54":0.35,"60":0.32},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1359.0,"oem_payment_t3_rc":1209.0,"oem_amt_due_t1":11373.0,"oem_amt_due_t3_rc":11223.0,"oem_term":13,"oem_mileage":10000},"MY26_GLE53W4":{"model_code":"GLE53W4","model_year":"MY26","msrp":90000.0,"transport":1350.0,"total_msrp":91350.0,"acq_fee":795.0,"money_factors":{"T1":0.00185,"T2":0.00185,"T3":0.00275,"T4":0.00275},"residuals":{"24":0.58,"30":0.54,"36":0.51,"42":0.48,"48":0.46,"54":0.43,"60":0.4},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1119.0,"oem_payment_t3_rc":1059.0,"oem_amt_due_t1":8313.0,"oem_amt_due_t3_rc":8253.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE580W4":{"model_code":"GLE580W4","model_year":"MY25","msrp":89200.0,"transport":1150.0,"total_msrp":90350.0,"acq_fee":795.0,"money_factors":{"T1":0.0014,"T2":0.0014,"T3":0.0023,"T4":0.0023},"residuals":{"36":0.53},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1049.0,"oem_payment_t3_rc":999.0,"oem_amt_due_t1":8323.0,"oem_amt_due_t3_rc":8273.0,"oem_term":36,"oem_mileage":10000},"MY26_EQE320X":{"model_code":"EQE320X","model_year":"MY26","msrp":64950.0,"transport":1350.0,"total_msrp":66300.0,"acq_fee":795.0,"money_factors":{"T1":0.00208,"T2":0.00208,"T3":0.00208,"T4":0.00208},"residuals":{"24":0.48,"30":0.45,"36":0.45,"42":0.41,"48":0.37,"54":0.33,"60":0.3},"mib":0,"regional_cash":1000.0,"oem_payment_t1":859.0,"oem_payment_t3_rc":819.0,"oem_amt_due_t1":6333.0,"oem_amt_due_t3_rc":6293.0,"oem_term":36,"oem_mileage":10000},"MY25_CLA250C4":{"model_code":"CLA250C4","model_year":"MY25","msrp":46400.0,"transport":1150.0,"total_msrp":47550.0,"acq_fee":795.0,"money_factors":{"T1":0.00054,"T2":0.00054,"T3":0.00144,"T4":0.00144},"residuals":{"24":0.58,"30":0.53,"36":0.5,"42":0.46,"48":0.43,"54":0.41,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":469.0,"oem_payment_t3_rc":429.0,"oem_amt_due_t1":4833.0,"oem_amt_due_t3_rc":4793.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE53W4":{"model_code":"GLE53W4","model_year":"MY25","msrp":89200.0,"transport":1150.0,"total_msrp":90350.0,"acq_fee":795.0,"money_factors":{"T1":0.0012,"T2":0.0012,"T3":0.0021,"T4":0.0021},"residuals":{"24":0.56,"30":0.52,"36":0.49,"42":0.46,"48":0.44,"54":0.41,"60":0.38},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1069.0,"oem_payment_t3_rc":999.0,"oem_amt_due_t1":8331.0,"oem_amt_due_t3_rc":8261.0,"oem_term":36,"oem_mileage":10000},"MY26_SL55R4":{"model_code":"SL55R4","model_year":"MY26","msrp":145250.0,"transport":1350.0,"total_msrp":146600.0,"acq_fee":795.0,"money_factors":{"T1":0.00053,"T2":0.00053,"T3":0.00143,"T4":0.00143},"residuals":{"24":0.55,"30":0.52,"36":0.47,"42":0.43,"48":0.39,"54":0.36,"60":0.34},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1769.0,"oem_payment_t3_rc":1609.0,"oem_amt_due_t1":12963.0,"oem_amt_due_t3_rc":12803.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC350e4":{"model_code":"GLC350e4","model_year":"MY25","msrp":59900.0,"transport":1150.0,"total_msrp":61050.0,"acq_fee":795.0,"money_factors":{"T1":0.00037,"T2":0.00037,"T3":0.00037,"T4":0.00037},"residuals":{"36":0.54},"mib":0,"regional_cash":1000.0,"oem_payment_t1":579.0,"oem_payment_t3_rc":549.0,"oem_amt_due_t1":5973.0,"oem_amt_due_t3_rc":5943.0,"oem_term":36,"oem_mileage":10000},"MY25_EQS450X":{"model_code":"EQS450X","model_year":"MY25","msrp":105250.0,"transport":1150.0,"total_msrp":106400.0,"acq_fee":795.0,"money_factors":{"T1":8e-05,"T2":8e-05,"T3":0.00098,"T4":0.00098},"residuals":{"24":0.44,"30":0.43,"36":0.42,"42":0.37,"48":0.32,"54":0.28,"60":0.24},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":949.0,"oem_payment_t3_rc":919.0,"oem_amt_due_t1":9943.0,"oem_amt_due_t3_rc":9913.0,"oem_term":36,"oem_mileage":10000},"MY25_EQB300W4":{"model_code":"EQB300W4","model_year":"MY25","msrp":57000.0,"transport":1150.0,"total_msrp":58150.0,"acq_fee":795.0,"money_factors":{"T1":0.00152,"T2":0.00152,"T3":0.00242,"T4":0.00242},"residuals":{"36":0.45000000000000007},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":469.0,"oem_payment_t3_rc":439.0,"oem_amt_due_t1":5763.0,"oem_amt_due_t3_rc":5733.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE500X4":{"model_code":"EQE500X4","model_year":"MY25","msrp":89500.0,"transport":1150.0,"total_msrp":90650.0,"acq_fee":795.0,"money_factors":{"T1":8e-05,"T2":8e-05,"T3":8e-05,"T4":8e-05},"residuals":{"36":0.45000000000000007},"mib":0,"regional_cash":1000.0,"oem_payment_t1":839.0,"oem_payment_t3_rc":809.0,"oem_amt_due_t1":8633.0,"oem_amt_due_t3_rc":8603.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE350W4":{"model_code":"GLE350W4","model_year":"MY25","msrp":64350.0,"transport":1150.0,"total_msrp":65500.0,"acq_fee":795.0,"money_factors":{"T1":0.002,"T2":0.002,"T3":0.0029,"T4":0.0029},"residuals":{"24":0.6,"30":0.56,"36":0.52,"42":0.48,"48":0.44,"54":0.4,"60":0.36},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":769.0,"oem_payment_t3_rc":719.0,"oem_amt_due_t1":6563.0,"oem_amt_due_t3_rc":6513.0,"oem_term":36,"oem_mileage":10000},"MY26_E450W4":{"model_code":"E450W4","model_year":"MY26","msrp":72300.0,"transport":1350.0,"total_msrp":73650.0,"acq_fee":795.0,"money_factors":{"T1":0.0022,"T2":0.0022,"T3":0.0031,"T4":0.0031},"residuals":{"36":0.54},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":899.0,"oem_payment_t3_rc":859.0,"oem_amt_due_t1":7343.0,"oem_amt_due_t3_rc":7303.0,"oem_term":36,"oem_mileage":10000},"MY26_EQS400X4":{"model_code":"EQS400X4","model_year":"MY26","msrp":89950.0,"transport":1350.0,"total_msrp":91300.0,"acq_fee":795.0,"money_factors":{"T1":0.00186,"T2":0.00186,"T3":0.00186,"T4":0.00186},"residuals":{"24":0.5,"30":0.48,"36":0.44,"42":0.39,"48":0.34,"54":0.3,"60":0.26},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1219.0,"oem_payment_t3_rc":1169.0,"oem_amt_due_t1":8513.0,"oem_amt_due_t3_rc":8463.0,"oem_term":36,"oem_mileage":10000},"MY26_S580EV4":{"model_code":"S580EV4","model_year":"MY26","msrp":130400.0,"transport":1350.0,"total_msrp":131750.0,"acq_fee":795.0,"money_factors":{"T1":0.00067,"T2":0.00067,"T3":0.00157,"T4":0.00157},"residuals":{"36":0.76},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1509.0,"oem_payment_t3_rc":1369.0,"oem_amt_due_t1":12428.0,"oem_amt_due_t3_rc":12288.0,"oem_term":13,"oem_mileage":10000},"MY26_E450S4":{"model_code":"E450S4","model_year":"MY26","msrp":78300.0,"transport":1350.0,"total_msrp":79650.0,"acq_fee":795.0,"money_factors":{"T1":0.00251,"T2":0.00251,"T3":0.00341,"T4":0.00341},"residuals":{"24":0.6,"30":0.56,"36":0.52,"42":0.49,"48":0.46,"54":0.43,"60":0.4},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1019.0,"oem_payment_t3_rc":959.0,"oem_amt_due_t1":7443.0,"oem_amt_due_t3_rc":7383.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA350E4":{"model_code":"CLA350E4","model_year":"MY26","msrp":49800.0,"transport":1350.0,"total_msrp":51150.0,"acq_fee":795.0,"money_factors":{"T1":0.0022,"T2":0.0022,"T3":0.0031,"T4":0.0031},"residuals":{"24":0.54,"30":0.51,"36":0.49,"42":0.45,"48":0.42,"54":0.39,"60":0.35},"mib":5500,"regional_cash":1000.0,"oem_payment_t1":589.0,"oem_payment_t3_rc":549.0,"oem_amt_due_t1":3083.0,"oem_amt_due_t3_rc":3043.0,"oem_term":36,"oem_mileage":10000},"MY25_E450W4":{"model_code":"E450W4","model_year":"MY25","msrp":70850.0,"transport":1150.0,"total_msrp":72000.0,"acq_fee":795.0,"money_factors":{"T1":0.00175,"T2":0.00175,"T3":0.00265,"T4":0.00265},"residuals":{"24":0.57,"30":0.54,"36":0.49,"42":0.46,"48":0.43,"54":0.4,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":879.0,"oem_payment_t3_rc":819.0,"oem_amt_due_t1":7303.0,"oem_amt_due_t3_rc":7243.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE300A4":{"model_code":"CLE300A4","model_year":"MY25","msrp":66450.0,"transport":1150.0,"total_msrp":67600.0,"acq_fee":795.0,"money_factors":{"T1":0.00145,"T2":0.00145,"T3":0.00235,"T4":0.00235},"residuals":{"24":0.57,"30":0.55,"36":0.51,"42":0.49,"48":0.46,"54":0.44,"60":0.42},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":779.0,"oem_payment_t3_rc":739.0,"oem_amt_due_t1":6253.0,"oem_amt_due_t3_rc":6213.0,"oem_term":36,"oem_mileage":10000},"MY26_GLB250W4":{"model_code":"GLB250W4","model_year":"MY26","msrp":45800.0,"transport":1350.0,"total_msrp":47150.0,"acq_fee":795.0,"money_factors":{"T1":0.00161,"T2":0.00161,"T3":0.00251,"T4":0.00251},"residuals":{"24":0.61,"30":0.57,"36":0.54,"42":0.5,"48":0.46,"54":0.41,"60":0.37},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":509.0,"oem_payment_t3_rc":469.0,"oem_amt_due_t1":4873.0,"oem_amt_due_t3_rc":4833.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA250+E":{"model_code":"CLA250+E","model_year":"MY26","msrp":47250.0,"transport":1350.0,"total_msrp":48600.0,"acq_fee":795.0,"money_factors":{"T1":0.0022,"T2":0.0022,"T3":0.0031,"T4":0.0031},"residuals":{"36":0.53},"mib":5500,"regional_cash":1000.0,"oem_payment_t1":539.0,"oem_payment_t3_rc":499.0,"oem_amt_due_t1":2963.0,"oem_amt_due_t3_rc":2923.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE450e4":{"model_code":"GLE450e4","model_year":"MY26","msrp":72250.0,"transport":1350.0,"total_msrp":73600.0,"acq_fee":795.0,"money_factors":{"T1":0.00176,"T2":0.00176,"T3":0.00176,"T4":0.00176},"residuals":{"36":0.54},"mib":0,"regional_cash":1000.0,"oem_payment_t1":859.0,"oem_payment_t3_rc":809.0,"oem_amt_due_t1":7253.0,"oem_amt_due_t3_rc":7203.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE53C4":{"model_code":"GLE53C4","model_year":"MY25","msrp":92150.0,"transport":1150.0,"total_msrp":93300.0,"acq_fee":795.0,"money_factors":{"T1":0.00166,"T2":0.00166,"T3":0.00256,"T4":0.00256},"residuals":{"24":0.57,"30":0.54,"36":0.51,"42":0.47,"48":0.45,"54":0.42,"60":0.39},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1119.0,"oem_payment_t3_rc":1049.0,"oem_amt_due_t1":8533.0,"oem_amt_due_t3_rc":8463.0,"oem_term":36,"oem_mileage":10000},"MY26_C63W4SE":{"model_code":"C63W4SE","model_year":"MY26","msrp":88000.0,"transport":1350.0,"total_msrp":89350.0,"acq_fee":795.0,"money_factors":{"T1":0.00057,"T2":0.00057,"T3":0.00147,"T4":0.00147},"residuals":{"24":0.58,"30":0.55,"36":0.52,"42":0.49,"48":0.48,"54":0.46,"60":0.44},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":919.0,"oem_payment_t3_rc":859.0,"oem_amt_due_t1":7963.0,"oem_amt_due_t3_rc":7903.0,"oem_term":36,"oem_mileage":10000},"MY25_GLA35W4":{"model_code":"GLA35W4","model_year":"MY25","msrp":58050.0,"transport":1150.0,"total_msrp":59200.0,"acq_fee":795.0,"money_factors":{"T1":0.00084,"T2":0.00084,"T3":0.00174,"T4":0.00174},"residuals":{"24":0.53,"30":0.52,"36":0.52,"42":0.47,"48":0.43,"54":0.38,"60":0.34},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":579.0,"oem_payment_t3_rc":539.0,"oem_amt_due_t1":5973.0,"oem_amt_due_t3_rc":5933.0,"oem_term":36,"oem_mileage":10000},"MY26_GLA250W4":{"model_code":"GLA250W4","model_year":"MY26","msrp":43500.0,"transport":1350.0,"total_msrp":44850.0,"acq_fee":795.0,"money_factors":{"T1":0.00208,"T2":0.00208,"T3":0.00298,"T4":0.00298},"residuals":{"24":0.59,"30":0.57,"36":0.55,"42":0.5,"48":0.44,"54":0.4,"60":0.36},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":509.0,"oem_payment_t3_rc":469.0,"oem_amt_due_t1":4643.0,"oem_amt_due_t3_rc":4603.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC300W4":{"model_code":"GLC300W4","model_year":"MY26","msrp":51550.0,"transport":1350.0,"total_msrp":52900.0,"acq_fee":795.0,"money_factors":{"T1":0.00186,"T2":0.00186,"T3":0.00276,"T4":0.00276},"residuals":{"24":0.59,"30":0.56,"36":0.54,"42":0.48,"48":0.43,"54":0.39,"60":0.36},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":569.0,"oem_payment_t3_rc":539.0,"oem_amt_due_t1":5203.0,"oem_amt_due_t3_rc":5173.0,"oem_term":36,"oem_mileage":10000},"MY26_EQE320X4":{"model_code":"EQE320X4","model_year":"MY26","msrp":67450.0,"transport":1350.0,"total_msrp":68800.0,"acq_fee":795.0,"money_factors":{"T1":0.00212,"T2":0.00212,"T3":0.00302,"T4":0.00302},"residuals":{"24":0.49,"30":0.47,"36":0.45,"42":0.41,"48":0.37,"54":0.33,"60":0.3},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":899.0,"oem_payment_t3_rc":859.0,"oem_amt_due_t1":6513.0,"oem_amt_due_t3_rc":6473.0,"oem_term":36,"oem_mileage":10000},"MY26_CLE53A4":{"model_code":"CLE53A4","model_year":"MY26","msrp":84600.0,"transport":1350.0,"total_msrp":85950.0,"acq_fee":795.0,"money_factors":{"T1":0.00179,"T2":0.00179,"T3":0.00269,"T4":0.00269},"residuals":{"24":0.61,"30":0.56,"36":0.5,"42":0.45,"48":0.41,"54":0.37,"60":0.33},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":1059.0,"oem_payment_t3_rc":1009.0,"oem_amt_due_t1":8253.0,"oem_amt_due_t3_rc":8203.0,"oem_term":36,"oem_mileage":10000},"MY25_GLA250W4":{"model_code":"GLA250W4","model_year":"MY25","msrp":45000.0,"transport":1150.0,"total_msrp":46150.0,"acq_fee":795.0,"money_factors":{"T1":0.00159,"T2":0.00159,"T3":0.00249,"T4":0.00249},"residuals":{"24":0.57,"30":0.55,"36":0.53,"42":0.48,"48":0.42,"54":0.38,"60":0.34},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":479.0,"oem_payment_t3_rc":439.0,"oem_amt_due_t1":4773.0,"oem_amt_due_t3_rc":4733.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE450C4":{"model_code":"GLE450C4","model_year":"MY25","msrp":76400.0,"transport":1150.0,"total_msrp":77550.0,"acq_fee":795.0,"money_factors":{"T1":0.00263,"T2":0.00263,"T3":0.00353,"T4":0.00353},"residuals":{"24":0.64,"30":0.59,"36":0.53,"42":0.49,"48":0.45,"54":0.4,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":969.0,"oem_payment_t3_rc":919.0,"oem_amt_due_t1":7593.0,"oem_amt_due_t3_rc":7543.0,"oem_term":36,"oem_mileage":10000},"MY25_AMGEQEV4":{"model_code":"AMGEQEV4","model_year":"MY25","msrp":106900.0,"transport":1150.0,"total_msrp":108050.0,"acq_fee":795.0,"money_factors":{"T1":0.00053,"T2":0.00053,"T3":0.00143,"T4":0.00143},"residuals":{"24":0.46,"30":0.44,"36":0.4,"42":0.35,"48":0.3,"54":0.27,"60":0.23},"mib":12500,"regional_cash":1000.0,"oem_payment_t1":1179.0,"oem_payment_t3_rc":1069.0,"oem_amt_due_t1":10273.0,"oem_amt_due_t3_rc":10163.0,"oem_term":36,"oem_mileage":10000},"MY26_EQS580V4":{"model_code":"EQS580V4","model_year":"MY26","msrp":123900.0,"transport":1350.0,"total_msrp":125250.0,"acq_fee":795.0,"money_factors":{"T1":0.00081,"T2":0.00081,"T3":0.00171,"T4":0.00171},"residuals":{"24":0.47,"30":0.46,"36":0.45,"42":0.41,"48":0.36,"54":0.32,"60":0.29},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1499.0,"oem_payment_t3_rc":1449.0,"oem_amt_due_t1":11293.0,"oem_amt_due_t3_rc":11243.0,"oem_term":36,"oem_mileage":10000},"MY25_AMGEQSV4":{"model_code":"AMGEQSV4","model_year":"MY25","msrp":147550.0,"transport":1150.0,"total_msrp":148700.0,"acq_fee":795.0,"money_factors":{"T1":5e-05,"T2":5e-05,"T3":0.00095,"T4":0.00095},"residuals":{"24":0.44,"30":0.42,"36":0.42,"42":0.36,"48":0.32,"54":0.29,"60":0.24},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":1469.0,"oem_payment_t3_rc":1439.0,"oem_amt_due_t1":13763.0,"oem_amt_due_t3_rc":13733.0,"oem_term":36,"oem_mileage":10000},"MY26_CLE53C4":{"model_code":"CLE53C4","model_year":"MY26","msrp":76300.0,"transport":1350.0,"total_msrp":77650.0,"acq_fee":795.0,"money_factors":{"T1":0.00172,"T2":0.00172,"T3":0.00262,"T4":0.00262},"residuals":{"24":0.6,"30":0.55,"36":0.5,"42":0.45,"48":0.4,"54":0.36,"60":0.33},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":959.0,"oem_payment_t3_rc":899.0,"oem_amt_due_t1":7223.0,"oem_amt_due_t3_rc":7163.0,"oem_term":36,"oem_mileage":10000},"MY25_G580W4E":{"model_code":"G580W4E","model_year":"MY25","msrp":161500.0,"transport":1150.0,"total_msrp":162650.0,"acq_fee":795.0,"money_factors":{"T1":0.00124,"T2":0.00124,"T3":0.00214,"T4":0.00214},"residuals":{"36":0.5},"mib":10000,"regional_cash":0.0,"oem_payment_t1":1949.0,"oem_payment_t3_rc":1729.0,"oem_amt_due_t1":14743.0,"oem_amt_due_t3_rc":14523.0,"oem_term":36,"oem_mileage":10000},"MY26_EQS550X4":{"model_code":"EQS550X4","model_year":"MY26","msrp":112450.0,"transport":1350.0,"total_msrp":113800.0,"acq_fee":795.0,"money_factors":{"T1":0.00177,"T2":0.00177,"T3":0.00267,"T4":0.00267},"residuals":{"36":0.48},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1499.0,"oem_payment_t3_rc":1449.0,"oem_amt_due_t1":10393.0,"oem_amt_due_t3_rc":10343.0,"oem_term":36,"oem_mileage":10000},"MY26_C43W4":{"model_code":"C43W4","model_year":"MY26","msrp":64150.0,"transport":1350.0,"total_msrp":65500.0,"acq_fee":795.0,"money_factors":{"T1":0.0015,"T2":0.0015,"T3":0.0024,"T4":0.0024},"residuals":{"24":0.61,"30":0.58,"36":0.56,"42":0.52,"48":0.49,"54":0.45,"60":0.41},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":669.0,"oem_payment_t3_rc":619.0,"oem_amt_due_t1":6213.0,"oem_amt_due_t3_rc":6163.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE350X4":{"model_code":"EQE350X4","model_year":"MY25","msrp":77900.0,"transport":1150.0,"total_msrp":79050.0,"acq_fee":795.0,"money_factors":{"T1":0.00079,"T2":0.00079,"T3":0.00169,"T4":0.00169},"residuals":{"24":0.47,"30":0.44,"36":0.43,"42":0.39,"48":0.35,"54":0.31,"60":0.28},"mib":7500,"regional_cash":1000.0,"oem_payment_t1":749.0,"oem_payment_t3_rc":719.0,"oem_amt_due_t1":7543.0,"oem_amt_due_t3_rc":7513.0,"oem_term":36,"oem_mileage":10000},"MY25_CLA45C4S":{"model_code":"CLA45C4S","model_year":"MY25","msrp":67050.0,"transport":1150.0,"total_msrp":68200.0,"acq_fee":795.0,"money_factors":{"T1":0.00029,"T2":0.00029,"T3":0.00119,"T4":0.00119},"residuals":{"24":0.49,"30":0.48,"36":0.47,"42":0.44,"48":0.41,"54":0.37,"60":0.33},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":719.0,"oem_payment_t3_rc":679.0,"oem_amt_due_t1":6713.0,"oem_amt_due_t3_rc":6673.0,"oem_term":36,"oem_mileage":10000},"MY25_GLA250W":{"model_code":"GLA250W","model_year":"MY25","msrp":43000.0,"transport":1150.0,"total_msrp":44150.0,"acq_fee":795.0,"money_factors":{"T1":0.00164,"T2":0.00164,"T3":0.00254,"T4":0.00254},"residuals":{"24":0.57,"30":0.55,"36":0.53,"42":0.48,"48":0.42,"54":0.38,"60":0.34},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":459.0,"oem_payment_t3_rc":419.0,"oem_amt_due_t1":4653.0,"oem_amt_due_t3_rc":4613.0,"oem_term":36,"oem_mileage":10000},"MY26_GLA250W":{"model_code":"GLA250W","model_year":"MY26","msrp":41500.0,"transport":1350.0,"total_msrp":42850.0,"acq_fee":795.0,"money_factors":{"T1":0.00218,"T2":0.00218,"T3":0.00308,"T4":0.00308},"residuals":{"24":0.59,"30":0.57,"36":0.55,"42":0.5,"48":0.44,"54":0.4,"60":0.36},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":489.0,"oem_payment_t3_rc":449.0,"oem_amt_due_t1":4483.0,"oem_amt_due_t3_rc":4443.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC300W4":{"model_code":"GLC300W4","model_year":"MY25","msrp":51250.0,"transport":1150.0,"total_msrp":52400.0,"acq_fee":795.0,"money_factors":{"T1":0.00121,"T2":0.00121,"T3":0.00211,"T4":0.00211},"residuals":{"24":0.57,"30":0.54,"36":0.52,"42":0.46,"48":0.41,"54":0.37,"60":0.34},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":549.0,"oem_payment_t3_rc":519.0,"oem_amt_due_t1":4963.0,"oem_amt_due_t3_rc":4933.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE450W4":{"model_code":"GLE450W4","model_year":"MY25","msrp":71350.0,"transport":1150.0,"total_msrp":72500.0,"acq_fee":795.0,"money_factors":{"T1":0.00161,"T2":0.00161,"T3":0.00251,"T4":0.00251},"residuals":{"24":0.58,"30":0.55,"36":0.53,"42":0.48,"48":0.44,"54":0.4,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":799.0,"oem_payment_t3_rc":749.0,"oem_amt_due_t1":6783.0,"oem_amt_due_t3_rc":6733.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE350W":{"model_code":"GLE350W","model_year":"MY25","msrp":61850.0,"transport":1150.0,"total_msrp":63000.0,"acq_fee":795.0,"money_factors":{"T1":0.00192,"T2":0.00192,"T3":0.00282,"T4":0.00282},"residuals":{"24":0.59,"30":0.55,"36":0.51,"42":0.47,"48":0.43,"54":0.39,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":749.0,"oem_payment_t3_rc":699.0,"oem_amt_due_t1":6203.0,"oem_amt_due_t3_rc":6153.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA35C4":{"model_code":"CLA35C4","model_year":"MY26","msrp":56600.0,"transport":1350.0,"total_msrp":57950.0,"acq_fee":795.0,"money_factors":{"T1":0.00062,"T2":0.00062,"T3":0.00152,"T4":0.00152},"residuals":{"24":0.56,"30":0.54,"36":0.51,"42":0.46,"48":0.41,"54":0.38,"60":0.36},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":599.0,"oem_payment_t3_rc":559.0,"oem_amt_due_t1":5693.0,"oem_amt_due_t3_rc":5653.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC43W4":{"model_code":"GLC43W4","model_year":"MY25","msrp":67100.0,"transport":1150.0,"total_msrp":68250.0,"acq_fee":795.0,"money_factors":{"T1":0.00173,"T2":0.00173,"T3":0.00263,"T4":0.00263},"residuals":{"24":0.59,"30":0.57,"36":0.55,"42":0.48,"48":0.43,"54":0.39,"60":0.36},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":719.0,"oem_payment_t3_rc":689.0,"oem_amt_due_t1":6333.0,"oem_amt_due_t3_rc":6303.0,"oem_term":36,"oem_mileage":10000},"MY26_EQS450V":{"model_code":"EQS450V","model_year":"MY26","msrp":99900.0,"transport":1350.0,"total_msrp":101250.0,"acq_fee":795.0,"money_factors":{"T1":0.00082,"T2":0.00082,"T3":0.00172,"T4":0.00172},"residuals":{"24":0.45,"30":0.44,"36":0.44,"42":0.4,"48":0.36,"54":0.32,"60":0.26},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1219.0,"oem_payment_t3_rc":1169.0,"oem_amt_due_t1":9333.0,"oem_amt_due_t3_rc":9283.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA250C4":{"model_code":"CLA250C4","model_year":"MY26","msrp":44749.5,"transport":1350.0,"total_msrp":46099.5,"acq_fee":795.0,"money_factors":{"T1":0.00121,"T2":0.00121,"T3":0.00211,"T4":0.00211},"residuals":{"24":0.6,"30":0.55,"36":0.52,"42":0.48,"48":0.45,"54":0.43,"60":0.37},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":499.0,"oem_payment_t3_rc":459.0,"oem_amt_due_t1":4693.0,"oem_amt_due_t3_rc":4653.0,"oem_term":36,"oem_mileage":10000},"MY25_SL55R4":{"model_code":"SL55R4","model_year":"MY25","msrp":144650.0,"transport":1150.0,"total_msrp":145800.0,"acq_fee":795.0,"money_factors":{"T1":0.00059,"T2":0.00059,"T3":0.00149,"T4":0.00149},"residuals":{"24":0.53,"30":0.5,"36":0.45,"42":0.41,"48":0.37,"54":0.34,"60":0.32},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1749.0,"oem_payment_t3_rc":1689.0,"oem_amt_due_t1":13193.0,"oem_amt_due_t3_rc":13133.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE300C4":{"model_code":"CLE300C4","model_year":"MY25","msrp":58000.0,"transport":1150.0,"total_msrp":59150.0,"acq_fee":795.0,"money_factors":{"T1":0.00204,"T2":0.00204,"T3":0.00294,"T4":0.00294},"residuals":{"24":0.57,"30":0.55,"36":0.52,"42":0.49,"48":0.45,"54":0.41,"60":0.38},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":699.0,"oem_payment_t3_rc":659.0,"oem_amt_due_t1":5893.0,"oem_amt_due_t3_rc":5853.0,"oem_term":36,"oem_mileage":10000},"MY25_C300W4":{"model_code":"C300W4","model_year":"MY25","msrp":50450.0,"transport":1150.0,"total_msrp":51600.0,"acq_fee":795.0,"money_factors":{"T1":0.00091,"T2":0.00091,"T3":0.00181,"T4":0.00181},"residuals":{"24":0.62,"30":0.58,"36":0.53,"42":0.47,"48":0.44,"54":0.4,"60":0.36},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":499.0,"oem_payment_t3_rc":459.0,"oem_amt_due_t1":4923.0,"oem_amt_due_t3_rc":4883.0,"oem_term":36,"oem_mileage":10000},"MY26_AMGEQEX4":{"model_code":"AMGEQEX4","model_year":"MY26","msrp":97550.0,"transport":1350.0,"total_msrp":98900.0,"acq_fee":795.0,"money_factors":{"T1":0.00182,"T2":0.00182,"T3":0.00272,"T4":0.00272},"residuals":{"24":0.49,"30":0.48,"36":0.45,"42":0.41,"48":0.35,"54":0.31,"60":0.28},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1299.0,"oem_payment_t3_rc":1249.0,"oem_amt_due_t1":9123.0,"oem_amt_due_t3_rc":9073.0,"oem_term":36,"oem_mileage":10000},"MY25_E450S4":{"model_code":"E450S4","model_year":"MY25","msrp":76100.0,"transport":1150.0,"total_msrp":77250.0,"acq_fee":795.0,"money_factors":{"T1":0.00251,"T2":0.00251,"T3":0.00341,"T4":0.00341},"residuals":{"24":0.58,"30":0.55,"36":0.5,"42":0.47,"48":0.44,"54":0.41,"60":0.38},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":999.0,"oem_payment_t3_rc":959.0,"oem_amt_due_t1":7693.0,"oem_amt_due_t3_rc":7564.515,"oem_term":36,"oem_mileage":10000},"MY26_CLE300C4":{"model_code":"CLE300C4","model_year":"MY26","msrp":59550.0,"transport":1350.0,"total_msrp":60900.0,"acq_fee":795.0,"money_factors":{"T1":0.00226,"T2":0.00226,"T3":0.00316,"T4":0.00316},"residuals":{"24":0.58,"30":0.55,"36":0.53,"42":0.5,"48":0.46,"54":0.42,"60":0.39},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":729.0,"oem_payment_t3_rc":689.0,"oem_amt_due_t1":6033.0,"oem_amt_due_t3_rc":5993.0,"oem_term":36,"oem_mileage":10000},"MY26_C300W4":{"model_code":"C300W4","model_year":"MY26","msrp":51650.0,"transport":1350.0,"total_msrp":53000.0,"acq_fee":795.0,"money_factors":{"T1":0.0017,"T2":0.0017,"T3":0.0026,"T4":0.0026},"residuals":{"36":0.5800000000000001},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":569.0,"oem_payment_t3_rc":519.0,"oem_amt_due_t1":5163.0,"oem_amt_due_t3_rc":5113.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE350W":{"model_code":"GLE350W","model_year":"MY26","msrp":62250.0,"transport":1350.0,"total_msrp":63600.0,"acq_fee":795.0,"money_factors":{"T1":0.00252,"T2":0.00252,"T3":0.00342,"T4":0.00342},"residuals":{"24":0.61,"30":0.57,"36":0.53,"42":0.49,"48":0.44,"54":0.4,"60":0.36},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":789.0,"oem_payment_t3_rc":729.0,"oem_amt_due_t1":6066.0,"oem_amt_due_t3_rc":6006.0,"oem_term":36,"oem_mileage":10000},"MY25_GT43C4":{"model_code":"GT43C4","model_year":"MY25","msrp":101100.0,"transport":1250.0,"total_msrp":102350.0,"acq_fee":795.0,"money_factors":{"T1":0.002,"T2":0.002,"T3":0.0029,"T4":0.0029},"residuals":{"36":0.51},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1339.0,"oem_payment_t3_rc":1279.0,"oem_amt_due_t1":9403.0,"oem_amt_due_t3_rc":9343.0,"oem_term":36,"oem_mileage":10000},"MY25_EQS580X4":{"model_code":"EQS580X4","model_year":"MY25","msrp":128200.0,"transport":1150.0,"total_msrp":129350.0,"acq_fee":795.0,"money_factors":{"T1":0.0001,"T2":0.0001,"T3":0.0001,"T4":0.0001},"residuals":{"36":0.45999999999999996},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1199.0,"oem_payment_t3_rc":1169.0,"oem_amt_due_t1":11993.0,"oem_amt_due_t3_rc":11963.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC300W":{"model_code":"GLC300W","model_year":"MY26","msrp":49550.0,"transport":1350.0,"total_msrp":50900.0,"acq_fee":795.0,"money_factors":{"T1":0.00198,"T2":0.00198,"T3":0.00288,"T4":0.00288},"residuals":{"24":0.62,"30":0.58,"36":0.54,"42":0.48,"48":0.43,"54":0.4,"60":0.38},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":549.0,"oem_payment_t3_rc":519.0,"oem_amt_due_t1":5183.0,"oem_amt_due_t3_rc":5153.0,"oem_term":36,"oem_mileage":10000},"MY26_E350W":{"model_code":"E350W","model_year":"MY26","msrp":63900.0,"transport":1350.0,"total_msrp":65250.0,"acq_fee":795.0,"money_factors":{"T1":0.00226,"T2":0.00226,"T3":0.00316,"T4":0.00316},"residuals":{"24":0.58,"30":0.55,"36":0.53,"42":0.49,"48":0.46,"54":0.42,"60":0.38},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":769.0,"oem_payment_t3_rc":719.0,"oem_amt_due_t1":6413.0,"oem_amt_due_t3_rc":6363.0,"oem_term":36,"oem_mileage":10000},"MY26_C300W":{"model_code":"C300W","model_year":"MY26","msrp":49650.0,"transport":1350.0,"total_msrp":51000.0,"acq_fee":795.0,"money_factors":{"T1":0.00172,"T2":0.00172,"T3":0.00262,"T4":0.00262},"residuals":{"24":0.66,"30":0.6,"36":0.55,"42":0.5,"48":0.47,"54":0.43,"60":0.39},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":549.0,"oem_payment_t3_rc":499.0,"oem_amt_due_t1":4963.0,"oem_amt_due_t3_rc":4913.0,"oem_term":36,"oem_mileage":10000},"MY26_CLE450C4":{"model_code":"CLE450C4","model_year":"MY26","msrp":69000.0,"transport":1350.0,"total_msrp":70350.0,"acq_fee":795.0,"money_factors":{"T1":0.00202,"T2":0.00202,"T3":0.00292,"T4":0.00292},"residuals":{"24":0.54,"30":0.53,"36":0.52,"42":0.5,"48":0.47,"54":0.43,"60":0.39},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":859.0,"oem_payment_t3_rc":809.0,"oem_amt_due_t1":6593.0,"oem_amt_due_t3_rc":6543.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC300C4":{"model_code":"GLC300C4","model_year":"MY25","msrp":59300.0,"transport":1150.0,"total_msrp":60450.0,"acq_fee":795.0,"money_factors":{"T1":0.00203,"T2":0.00203,"T3":0.00293,"T4":0.00293},"residuals":{"24":0.62,"30":0.57,"36":0.53,"42":0.5,"48":0.48,"54":0.46,"60":0.44},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":719.0,"oem_payment_t3_rc":669.0,"oem_amt_due_t1":5783.0,"oem_amt_due_t3_rc":5733.0,"oem_term":36,"oem_mileage":10000},"MY26_E53EW4":{"model_code":"E53EW4","model_year":"MY26","msrp":89600.0,"transport":1350.0,"total_msrp":90950.0,"acq_fee":795.0,"money_factors":{"T1":0.00215,"T2":0.00215,"T3":0.00305,"T4":0.00305},"residuals":{"24":0.62,"30":0.56,"36":0.51,"42":0.46,"48":0.41,"54":0.37,"60":0.32},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1149.0,"oem_payment_t3_rc":1089.0,"oem_amt_due_t1":8443.0,"oem_amt_due_t3_rc":8383.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE350X":{"model_code":"EQE350X","model_year":"MY25","msrp":77900.0,"transport":1150.0,"total_msrp":79050.0,"acq_fee":795.0,"money_factors":{"T1":0.00079,"T2":0.00079,"T3":0.00169,"T4":0.00169},"residuals":{"24":0.44,"30":0.43,"36":0.43,"42":0.39,"48":0.35,"54":0.31,"60":0.28},"mib":7500,"regional_cash":1000.0,"oem_payment_t1":749.0,"oem_payment_t3_rc":719.0,"oem_amt_due_t1":7543.0,"oem_amt_due_t3_rc":7513.0,"oem_term":36,"oem_mileage":10000},"MY26_GLB250W":{"model_code":"GLB250W","model_year":"MY26","msrp":43800.0,"transport":1350.0,"total_msrp":45150.0,"acq_fee":795.0,"money_factors":{"T1":0.00162,"T2":0.00162,"T3":0.00252,"T4":0.00252},"residuals":{"24":0.6,"30":0.57,"36":0.54,"42":0.49,"48":0.45,"54":0.41,"60":0.37},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":489.0,"oem_payment_t3_rc":449.0,"oem_amt_due_t1":4573.0,"oem_amt_due_t3_rc":4533.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE350V":{"model_code":"EQE350V","model_year":"MY25","msrp":74900.0,"transport":1150.0,"total_msrp":76050.0,"acq_fee":795.0,"money_factors":{"T1":0.00053,"T2":0.00053,"T3":0.00143,"T4":0.00143},"residuals":{"24":0.42,"30":0.41,"36":0.41,"42":0.41,"48":0.37,"54":0.32,"60":0.27},"mib":7500,"regional_cash":1000.0,"oem_payment_t1":719.0,"oem_payment_t3_rc":689.0,"oem_amt_due_t1":7313.0,"oem_amt_due_t3_rc":7283.0,"oem_term":36,"oem_mileage":10000},"MY25_EQS450V4":{"model_code":"EQS450V4","model_year":"MY25","msrp":107400.0,"transport":1150.0,"total_msrp":108550.0,"acq_fee":795.0,"money_factors":{"T1":0.00077,"T2":0.00077,"T3":0.00167,"T4":0.00167},"residuals":{"24":0.43,"30":0.43,"36":0.42,"42":0.37,"48":0.33,"54":0.29,"60":0.23},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":1069.0,"oem_payment_t3_rc":1039.0,"oem_amt_due_t1":10163.0,"oem_amt_due_t3_rc":10133.0,"oem_term":36,"oem_mileage":10000},"MY25_EQB250W":{"model_code":"EQB250W","model_year":"MY25","msrp":53050.0,"transport":1150.0,"total_msrp":54200.0,"acq_fee":795.0,"money_factors":{"T1":0.00146,"T2":0.00146,"T3":0.00236,"T4":0.00236},"residuals":{"24":0.44,"30":0.43,"36":0.42,"42":0.38,"48":0.34,"54":0.32,"60":0.28},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":409.0,"oem_payment_t3_rc":379.0,"oem_amt_due_t1":5453.0,"oem_amt_due_t3_rc":5423.0,"oem_term":36,"oem_mileage":10000},"MY25_EQB350W4":{"model_code":"EQB350W4","model_year":"MY25","msrp":60650.0,"transport":1150.0,"total_msrp":61800.0,"acq_fee":795.0,"money_factors":{"T1":0.00182,"T2":0.00182,"T3":0.00272,"T4":0.00272},"residuals":{"24":0.45,"30":0.45,"36":0.43,"42":0.39,"48":0.35,"54":0.32,"60":0.29},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":529.0,"oem_payment_t3_rc":499.0,"oem_amt_due_t1":6123.0,"oem_amt_due_t3_rc":6093.0,"oem_term":36,"oem_mileage":10000},"MY25_GLB35W4":{"model_code":"GLB35W4","model_year":"MY25","msrp":60100.0,"transport":1150.0,"total_msrp":61250.0,"acq_fee":795.0,"money_factors":{"T1":0.00063,"T2":0.00063,"T3":0.00153,"T4":0.00153},"residuals":{"24":0.56,"30":0.53,"36":0.51,"42":0.46,"48":0.43,"54":0.39,"60":0.36},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":599.0,"oem_payment_t3_rc":559.0,"oem_amt_due_t1":6143.0,"oem_amt_due_t3_rc":6103.0,"oem_term":36,"oem_mileage":10000},"MY26_AMGEQEV4":{"model_code":"AMGEQEV4","model_year":"MY26","msrp":97550.0,"transport":1350.0,"total_msrp":98900.0,"acq_fee":795.0,"money_factors":{"T1":0.00133,"T2":0.00133,"T3":0.00223,"T4":0.00223},"residuals":{"24":0.48,"30":0.46,"36":0.42,"42":0.37,"48":0.32,"54":0.29,"60":0.25},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1299.0,"oem_payment_t3_rc":1249.0,"oem_amt_due_t1":9573.0,"oem_amt_due_t3_rc":9523.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC300W":{"model_code":"GLC300W","model_year":"MY25","msrp":49250.0,"transport":1150.0,"total_msrp":50400.0,"acq_fee":795.0,"money_factors":{"T1":0.00171,"T2":0.00171,"T3":0.00261,"T4":0.00261},"residuals":{"24":0.62,"30":0.58,"36":0.54,"42":0.48,"48":0.43,"54":0.4,"60":0.38},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":529.0,"oem_payment_t3_rc":499.0,"oem_amt_due_t1":4983.0,"oem_amt_due_t3_rc":4953.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE450C4":{"model_code":"CLE450C4","model_year":"MY25","msrp":67450.0,"transport":1150.0,"total_msrp":68600.0,"acq_fee":795.0,"money_factors":{"T1":0.00165,"T2":0.00165,"T3":0.00255,"T4":0.00255},"residuals":{"24":0.52,"30":0.53,"36":0.5,"42":0.48,"48":0.45,"54":0.41,"60":0.37},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":829.0,"oem_payment_t3_rc":779.0,"oem_amt_due_t1":6463.0,"oem_amt_due_t3_rc":6413.0,"oem_term":36,"oem_mileage":10000},"MY26_GLS580W4":{"model_code":"GLS580W4","model_year":"MY26","msrp":116150.0,"transport":1350.0,"total_msrp":117500.0,"acq_fee":795.0,"money_factors":{"T1":0.00044,"T2":0.00044,"T3":0.00134,"T4":0.00134},"residuals":{"24":0.56,"30":0.53,"36":0.5,"42":0.47,"48":0.43,"54":0.4,"60":0.36},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1219.0,"oem_payment_t3_rc":1159.0,"oem_amt_due_t1":11073.0,"oem_amt_due_t3_rc":11013.0,"oem_term":36,"oem_mileage":10000},"MY26_E350W4":{"model_code":"E350W4","model_year":"MY26","msrp":66400.0,"transport":1350.0,"total_msrp":67750.0,"acq_fee":795.0,"money_factors":{"T1":0.00197,"T2":0.00197,"T3":0.00287,"T4":0.00287},"residuals":{"24":0.57,"30":0.54,"36":0.52,"42":0.48,"48":0.45,"54":0.41,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":789.0,"oem_payment_t3_rc":739.0,"oem_amt_due_t1":6683.0,"oem_amt_due_t3_rc":6633.0,"oem_term":36,"oem_mileage":10000},"MY25_S500V4":{"model_code":"S500V4","model_year":"MY25","msrp":117750.0,"transport":1150.0,"total_msrp":118900.0,"acq_fee":795.0,"money_factors":{"T1":0.00093,"T2":0.00093,"T3":0.00183,"T4":0.00183},"residuals":{"24":0.5,"30":0.48,"36":0.46,"42":0.42,"48":0.38,"54":0.34,"60":0.31},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1309.0,"oem_payment_t3_rc":1159.0,"oem_amt_due_t1":11403.0,"oem_amt_due_t3_rc":11253.0,"oem_term":13,"oem_mileage":10000},"MY25_EQS580V4":{"model_code":"EQS580V4","model_year":"MY25","msrp":127350.0,"transport":1150.0,"total_msrp":128500.0,"acq_fee":795.0,"money_factors":{"T1":0.00015,"T2":0.00015,"T3":0.00105,"T4":0.00105},"residuals":{"24":0.47,"30":0.46,"36":0.43,"42":0.39,"48":0.34,"54":0.3,"60":0.27},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":1209.0,"oem_payment_t3_rc":1179.0,"oem_amt_due_t1":11723.0,"oem_amt_due_t3_rc":11693.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE350W4":{"model_code":"GLE350W4","model_year":"MY26","msrp":64750.0,"transport":1350.0,"total_msrp":66100.0,"acq_fee":795.0,"money_factors":{"T1":0.00257,"T2":0.00257,"T3":0.00347,"T4":0.00347},"residuals":{"24":0.62,"30":0.58,"36":0.54,"42":0.5,"48":0.45,"54":0.41,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":809.0,"oem_payment_t3_rc":759.0,"oem_amt_due_t1":6263.0,"oem_amt_due_t3_rc":6213.0,"oem_term":36,"oem_mileage":10000},"MY26_GLS450W4":{"model_code":"GLS450W4","model_year":"MY26","msrp":90250.0,"transport":1350.0,"total_msrp":91600.0,"acq_fee":795.0,"money_factors":{"T1":0.00143,"T2":0.00143,"T3":0.00233,"T4":0.00233},"residuals":{"24":0.59,"30":0.54,"36":0.52,"42":0.45,"48":0.41,"54":0.37,"60":0.33},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1019.0,"oem_payment_t3_rc":959.0,"oem_amt_due_t1":8813.0,"oem_amt_due_t3_rc":8753.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE53C4":{"model_code":"CLE53C4","model_year":"MY25","msrp":74300.0,"transport":1150.0,"total_msrp":75450.0,"acq_fee":795.0,"money_factors":{"T1":0.00144,"T2":0.00144,"T3":0.00234,"T4":0.00234},"residuals":{"36":0.51},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":929.0,"oem_payment_t3_rc":879.0,"oem_amt_due_t1":7223.0,"oem_amt_due_t3_rc":7173.0,"oem_term":36,"oem_mileage":10000},"MY26_GLC43C4":{"model_code":"GLC43C4","model_year":"MY26","msrp":73450.0,"transport":1350.0,"total_msrp":74800.0,"acq_fee":795.0,"money_factors":{"T1":0.00242,"T2":0.00242,"T3":0.00332,"T4":0.00332},"residuals":{"24":0.59,"30":0.56,"36":0.53,"42":0.5,"48":0.48,"54":0.45,"60":0.43},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":929.0,"oem_payment_t3_rc":879.0,"oem_amt_due_t1":7223.0,"oem_amt_due_t3_rc":7173.0,"oem_term":36,"oem_mileage":10000},"MY25_S580EV4":{"model_code":"S580EV4","model_year":"MY25","msrp":128200.0,"transport":1150.0,"total_msrp":129350.0,"acq_fee":795.0,"money_factors":{"T1":0.00109,"T2":0.00109,"T3":0.00109,"T4":0.00109},"residuals":{"36":0.75},"mib":0,"regional_cash":1000.0,"oem_payment_t1":1459.0,"oem_payment_t3_rc":1319.0,"oem_amt_due_t1":12403.0,"oem_amt_due_t3_rc":12263.0,"oem_term":13,"oem_mileage":10000},"MY25_E350W4":{"model_code":"E350W4","model_year":"MY25","msrp":64950.0,"transport":1150.0,"total_msrp":66100.0,"acq_fee":795.0,"money_factors":{"T1":0.00169,"T2":0.00169,"T3":0.00259,"T4":0.00259},"residuals":{"24":0.55,"30":0.52,"36":0.5,"42":0.46,"48":0.43,"54":0.39,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":769.0,"oem_payment_t3_rc":729.0,"oem_amt_due_t1":6663.0,"oem_amt_due_t3_rc":6623.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC43C4":{"model_code":"GLC43C4","model_year":"MY25","msrp":72900.0,"transport":1150.0,"total_msrp":74050.0,"acq_fee":795.0,"money_factors":{"T1":0.00181,"T2":0.00181,"T3":0.00271,"T4":0.00271},"residuals":{"24":0.57,"30":0.54,"36":0.51,"42":0.48,"48":0.46,"54":0.43,"60":0.41},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":899.0,"oem_payment_t3_rc":849.0,"oem_amt_due_t1":6993.0,"oem_amt_due_t3_rc":6943.0,"oem_term":36,"oem_mileage":10000},"MY26_CLE300A4":{"model_code":"CLE300A4","model_year":"MY26","msrp":68050.0,"transport":1350.0,"total_msrp":69400.0,"acq_fee":795.0,"money_factors":{"T1":0.00172,"T2":0.00172,"T3":0.00262,"T4":0.00262},"residuals":{"24":0.59,"30":0.56,"36":0.53,"42":0.51,"48":0.48,"54":0.46,"60":0.44},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":799.0,"oem_payment_t3_rc":749.0,"oem_amt_due_t1":6473.0,"oem_amt_due_t3_rc":6423.0,"oem_term":36,"oem_mileage":10000},"MY25_E53EW4":{"model_code":"E53EW4","model_year":"MY25","msrp":88000.0,"transport":1150.0,"total_msrp":89150.0,"acq_fee":795.0,"money_factors":{"T1":0.00172,"T2":0.00172,"T3":0.00262,"T4":0.00262},"residuals":{"24":0.6,"30":0.54,"36":0.49,"42":0.44,"48":0.39,"54":0.35,"60":0.3},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1099.0,"oem_payment_t3_rc":1039.0,"oem_amt_due_t1":8843.0,"oem_amt_due_t3_rc":8783.0,"oem_term":36,"oem_mileage":10000},"MY25_GLC63W4E":{"model_code":"GLC63W4E","model_year":"MY25","msrp":86050.0,"transport":1150.0,"total_msrp":87200.0,"acq_fee":795.0,"money_factors":{"T1":0.00152,"T2":0.00152,"T3":0.00242,"T4":0.00242},"residuals":{"24":0.63,"30":0.58,"36":0.53,"42":0.48,"48":0.44,"54":0.4,"60":0.35},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":939.0,"oem_payment_t3_rc":909.0,"oem_amt_due_t1":8303.0,"oem_amt_due_t3_rc":8273.0,"oem_term":36,"oem_mileage":10000},"MY26_E53ES4":{"model_code":"E53ES4","model_year":"MY26","msrp":93350.0,"transport":1350.0,"total_msrp":94700.0,"acq_fee":795.0,"money_factors":{"T1":0.00257,"T2":0.00257,"T3":0.00347,"T4":0.00347},"residuals":{"24":0.61,"30":0.56,"36":0.51,"42":0.46,"48":0.41,"54":0.37,"60":0.32},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1249.0,"oem_payment_t3_rc":1189.0,"oem_amt_due_t1":8913.0,"oem_amt_due_t3_rc":8853.0,"oem_term":36,"oem_mileage":10000},"MY26_CLA250C":{"model_code":"CLA250C","model_year":"MY26","msrp":42749.5,"transport":1350.0,"total_msrp":44099.5,"acq_fee":795.0,"money_factors":{"T1":0.00143,"T2":0.00143,"T3":0.00233,"T4":0.00233},"residuals":{"24":0.6,"30":0.56,"36":0.53,"42":0.49,"48":0.45,"54":0.43,"60":0.41},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":479.0,"oem_payment_t3_rc":439.0,"oem_amt_due_t1":4453.0,"oem_amt_due_t3_rc":4413.0,"oem_term":36,"oem_mileage":10000},"MY26_GLE450C4":{"model_code":"GLE450C4","model_year":"MY26","msrp":77250.0,"transport":1350.0,"total_msrp":78600.0,"acq_fee":795.0,"money_factors":{"T1":0.00281,"T2":0.00281,"T3":0.00371,"T4":0.00371},"residuals":{"36":0.5800000000000001},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":989.0,"oem_payment_t3_rc":929.0,"oem_amt_due_t1":7163.0,"oem_amt_due_t3_rc":7103.0,"oem_term":36,"oem_mileage":10000},"MY25_E350W":{"model_code":"E350W","model_year":"MY25","msrp":62450.0,"transport":1150.0,"total_msrp":63600.0,"acq_fee":795.0,"money_factors":{"T1":0.00168,"T2":0.00168,"T3":0.00258,"T4":0.00258},"residuals":{"24":0.55,"30":0.52,"36":0.5,"42":0.46,"48":0.43,"54":0.39,"60":0.35},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":749.0,"oem_payment_t3_rc":709.0,"oem_amt_due_t1":6015.5,"oem_amt_due_t3_rc":5975.5,"oem_term":36,"oem_mileage":10000},"MY26_GLE580W4":{"model_code":"GLE580W4","model_year":"MY26","msrp":90000.0,"transport":1350.0,"total_msrp":91350.0,"acq_fee":795.0,"money_factors":{"T1":0.00172,"T2":0.00172,"T3":0.00262,"T4":0.00262},"residuals":{"24":0.58,"30":0.55,"36":0.52,"42":0.49,"48":0.47,"54":0.44,"60":0.4},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":1079.0,"oem_payment_t3_rc":1009.0,"oem_amt_due_t1":8323.0,"oem_amt_due_t3_rc":8253.0,"oem_term":36,"oem_mileage":10000},"MY25_EQS450V":{"model_code":"EQS450V","model_year":"MY25","msrp":104400.0,"transport":1150.0,"total_msrp":105550.0,"acq_fee":795.0,"money_factors":{"T1":0.00092,"T2":0.00092,"T3":0.00182,"T4":0.00182},"residuals":{"24":0.5,"30":0.47,"36":0.43,"42":0.38,"48":0.34,"54":0.3,"60":0.24},"mib":10000,"regional_cash":1000.0,"oem_payment_t1":1019.0,"oem_payment_t3_rc":989.0,"oem_amt_due_t1":9913.0,"oem_amt_due_t3_rc":9883.0,"oem_term":36,"oem_mileage":10000},"MY26_EQS450V4":{"model_code":"EQS450V4","model_year":"MY26","msrp":102900.0,"transport":1350.0,"total_msrp":104250.0,"acq_fee":795.0,"money_factors":{"T1":0.00083,"T2":0.00083,"T3":0.00173,"T4":0.00173},"residuals":{"24":0.45,"30":0.45,"36":0.44,"42":0.39,"48":0.35,"54":0.31,"60":0.25},"mib":3500,"regional_cash":1000.0,"oem_payment_t1":1259.0,"oem_payment_t3_rc":1209.0,"oem_amt_due_t1":9603.0,"oem_amt_due_t3_rc":9553.0,"oem_term":36,"oem_mileage":10000},"MY26_GLA35W4":{"model_code":"GLA35W4","model_year":"MY26","msrp":58550.0,"transport":1350.0,"total_msrp":59900.0,"acq_fee":795.0,"money_factors":{"T1":0.00125,"T2":0.00125,"T3":0.00215,"T4":0.00215},"residuals":{"24":0.55,"30":0.54,"36":0.54,"42":0.49,"48":0.45,"54":0.4,"60":0.36},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":629.0,"oem_payment_t3_rc":589.0,"oem_amt_due_t1":5853.0,"oem_amt_due_t3_rc":5813.0,"oem_term":36,"oem_mileage":10000},"MY26_GLB35W4":{"model_code":"GLB35W4","model_year":"MY26","msrp":60600.0,"transport":1350.0,"total_msrp":61950.0,"acq_fee":795.0,"money_factors":{"T1":0.00088,"T2":0.00088,"T3":0.00178,"T4":0.00178},"residuals":{"24":0.58,"30":0.55,"36":0.53,"42":0.48,"48":0.45,"54":0.41,"60":0.38},"mib":1000,"regional_cash":1000.0,"oem_payment_t1":629.0,"oem_payment_t3_rc":589.0,"oem_amt_due_t1":6123.0,"oem_amt_due_t3_rc":6083.0,"oem_term":36,"oem_mileage":10000},"MY25_EQE350V4":{"model_code":"EQE350V4","model_year":"MY25","msrp":77900.0,"transport":1150.0,"total_msrp":79050.0,"acq_fee":795.0,"money_factors":{"T1":0.00018,"T2":0.00018,"T3":0.00108,"T4":0.00108},"residuals":{"24":0.46,"30":0.46,"36":0.44,"42":0.39,"48":0.35,"54":0.3,"60":0.26},"mib":7500,"regional_cash":1000.0,"oem_payment_t1":769.0,"oem_payment_t3_rc":699.0,"oem_amt_due_t1":7463.0,"oem_amt_due_t3_rc":7393.0,"oem_term":36,"oem_mileage":10000},"MY26_CLE450A4":{"model_code":"CLE450A4","model_year":"MY26","msrp":77400.0,"transport":1350.0,"total_msrp":78750.0,"acq_fee":795.0,"money_factors":{"T1":0.00193,"T2":0.00193,"T3":0.00283,"T4":0.00283},"residuals":{"24":0.58,"30":0.55,"36":0.52,"42":0.5,"48":0.48,"54":0.46,"60":0.44},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":959.0,"oem_payment_t3_rc":899.0,"oem_amt_due_t1":7273.0,"oem_amt_due_t3_rc":7213.0,"oem_term":36,"oem_mileage":10000},"MY25_GLE450e4":{"model_code":"GLE450e4","model_year":"MY25","msrp":71350.0,"transport":1150.0,"total_msrp":72500.0,"acq_fee":795.0,"money_factors":{"T1":0.0012,"T2":0.0012,"T3":0.0012,"T4":0.0012},"residuals":{"36":0.52},"mib":0,"regional_cash":1000.0,"oem_payment_t1":819.0,"oem_payment_t3_rc":769.0,"oem_amt_due_t1":7273.0,"oem_amt_due_t3_rc":7223.0,"oem_term":36,"oem_mileage":10000},"MY25_C300W":{"model_code":"C300W","model_year":"MY25","msrp":48450.0,"transport":1150.0,"total_msrp":49600.0,"acq_fee":795.0,"money_factors":{"T1":0.00102,"T2":0.00102,"T3":0.00192,"T4":0.00192},"residuals":{"24":0.64,"30":0.59,"36":0.53,"42":0.48,"48":0.45,"54":0.41,"60":0.37},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":479.0,"oem_payment_t3_rc":439.0,"oem_amt_due_t1":5023.0,"oem_amt_due_t3_rc":4983.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE450A4":{"model_code":"CLE450A4","model_year":"MY25","msrp":75800.0,"transport":1150.0,"total_msrp":76950.0,"acq_fee":795.0,"money_factors":{"T1":0.00158,"T2":0.00158,"T3":0.00248,"T4":0.00248},"residuals":{"24":0.56,"30":0.53,"36":0.5,"42":0.48,"48":0.46,"54":0.44,"60":0.42},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":929.0,"oem_payment_t3_rc":879.0,"oem_amt_due_t1":7153.0,"oem_amt_due_t3_rc":7103.0,"oem_term":36,"oem_mileage":10000},"MY25_S580V4":{"model_code":"S580V4","model_year":"MY25","msrp":128600.0,"transport":1150.0,"total_msrp":129750.0,"acq_fee":795.0,"money_factors":{"T1":0.00136,"T2":0.00136,"T3":0.00226,"T4":0.00226},"residuals":{"24":0.51,"30":0.48,"36":0.45,"42":0.4,"48":0.36,"54":0.34,"60":0.3},"mib":2500,"regional_cash":1000.0,"oem_payment_t1":1559.0,"oem_payment_t3_rc":1389.0,"oem_amt_due_t1":12353.0,"oem_amt_due_t3_rc":12183.0,"oem_term":13,"oem_mileage":10000},"MY25_GLB250W4":{"model_code":"GLB250W4","model_year":"MY25","msrp":47800.0,"transport":1150.0,"total_msrp":48950.0,"acq_fee":795.0,"money_factors":{"T1":0.00093,"T2":0.00093,"T3":0.00183,"T4":0.00183},"residuals":{"36":0.55},"mib":2000,"regional_cash":1000.0,"oem_payment_t1":479.0,"oem_payment_t3_rc":439.0,"oem_amt_due_t1":5073.0,"oem_amt_due_t3_rc":5033.0,"oem_term":36,"oem_mileage":10000},"MY25_CLE53A4":{"model_code":"CLE53A4","model_year":"MY25","msrp":82600.0,"transport":1150.0,"total_msrp":83750.0,"acq_fee":795.0,"money_factors":{"T1":0.0014,"T2":0.0014,"T3":0.0023,"T4":0.0023},"residuals":{"24":0.59,"30":0.54,"36":0.48,"42":0.43,"48":0.39,"54":0.35,"60":0.31},"mib":1500,"regional_cash":1000.0,"oem_payment_t1":1029.0,"oem_payment_t3_rc":979.0,"oem_amt_due_t1":7823.0,"oem_amt_due_t3_rc":7773.0,"oem_term":36,"oem_mileage":10000}}};
+
+// ─── Embedded Inventory + GM Discounts ─────────────────────────────────────
+const INV_DATA = {"vehicles":[{"stock":"3N8726","vin":"W1KCG5FB2SA051954","year":"2025","make":"Mercedes-Benz","model":"AMG\u00ae EQS","trim":"","model_code":"AMGEQSV4","model_year":2025,"msrp":151335.0,"mileage":12,"color":"Cirrus Silver","interior":"Black\\brown","days":37,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3f97966a-584f-41ae-9d23-acb7ec3cd738.jpg","status":"active"},{"stock":"3N8728","vin":"W1KCG5FB1SA051816","year":"2025","make":"Mercedes-Benz","model":"AMG\u00ae EQS","trim":"","model_code":"AMGEQSV4","model_year":2025,"msrp":154435.0,"mileage":47,"color":"Moonlight Whit","interior":"Black\\brown","days":37,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/bdc91f51-25e8-4f5b-bcdf-3ed232bcb3ce.jpg","status":"active"},{"stock":"3N8808","vin":"W1KRJ8AB5SF006000","year":"2025","make":"Mercedes-Benz","model":"AMG\u00ae GT","trim":"","model_code":"AMGGT55","model_year":2025,"msrp":144100.0,"mileage":19,"color":"Selenite Grey","interior":"Black","days":12,"photo":null,"status":"active"},{"stock":"3N8231","vin":"W1KRJ7JB9TF008876","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 63","trim":"","model_code":"AMGGT63","model_year":2026,"msrp":210455.0,"mileage":17,"color":"Beige","interior":"Black Nappa","days":163,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/51cf2a9f-f9d1-4956-ad4f-f3cf438e52ee.jpg","status":"active"},{"stock":"3D18015","vin":"W1KAF4GB2TR318015","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W","model_year":2026,"msrp":52155.0,"mileage":28,"color":"Polar White","interior":"Beige","days":12,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/22a34bab-29d7-4314-bde5-236cc565ff9c.jpg","status":"active"},{"stock":"3D20098","vin":"W1KAF4GB9TR320098","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W","model_year":2026,"msrp":55655.0,"mileage":22,"color":"Black","interior":"Amg Black","days":12,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/2656be0f-e328-461e-8ae1-98f484432707.jpg","status":"active"},{"stock":"3D11017","vin":"W1KAF4GB4TR311017","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W","model_year":2026,"msrp":57530.0,"mileage":18,"color":"Cirrus Silver","interior":"Black","days":13,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/525c0acd-af01-4c55-b166-9c342038ac68.jpg","status":"active"},{"stock":"3D22298","vin":"W1KAF4HB7TR322298","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53500.0,"mileage":22,"color":"Black","interior":"Black","days":12,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0d46af2d-6cd4-4e2e-ad1c-571f93786f02.jpg","status":"active"},{"stock":"3D22324","vin":"W1KAF4HB4TR322324","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53500.0,"mileage":21,"color":"Black","interior":"Black","days":13,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f959734e-0bca-45a1-8a18-e495e5fe8cc4.jpg","status":"active"},{"stock":"3N8828","vin":"W1KAF4HB9TR312386","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53535.0,"mileage":10,"color":"Black","interior":"Black","days":5,"photo":null,"status":"active"},{"stock":"3N8826","vin":"W1KAF4HB5TR312384","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53785.0,"mileage":10,"color":"Polar White","interior":"Sienna Brown","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fe02f872-2d81-40f7-a6e1-e9dc059c3135.JPG","status":"active"},{"stock":"3N8824","vin":"W1KAF4HB3TR308558","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53785.0,"mileage":7,"color":"Polar White","interior":"Sienna Brown","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7dca1fa1-8ec3-4803-9785-1d2751f276c3.jpg","status":"active"},{"stock":"3N8827","vin":"W1KAF4HB6TR310837","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":53970.0,"mileage":12,"color":"Black","interior":"Black","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/2ce00214-b04a-4d4c-800a-f2440fd0793d.jpg","status":"active"},{"stock":"3N8825","vin":"W1KAF4HB3TR323156","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2026,"msrp":57070.0,"mileage":13,"color":"Black","interior":"Amg Black","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/eb2f59f7-807f-4b8e-9ae3-6c0cef0f2cd1.jpg","status":"active"},{"stock":"3N8823","vin":"W1KAF4HB1SR293041","year":"2025","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2025,"msrp":57720.0,"mileage":7,"color":"Selenite Grey","interior":"Amg Black","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6a2aa01c-8bea-4b9b-a276-a8ebbeb1216d.jpg","status":"active"},{"stock":"3N8829","vin":"W1KAF4HBXSR291689","year":"2025","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C300W4","model_year":2025,"msrp":59595.0,"mileage":9,"color":"Black","interior":"Amg Black","days":5,"photo":null,"status":"active"},{"stock":"3N8760","vin":"W1KAF8HB3TR326291","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C43W4","model_year":2026,"msrp":71090.0,"mileage":7,"color":"Starling Blue","interior":"Black\\with Red","days":33,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7f1f4667-6ffa-4d27-a07e-f416688e2746.jpg","status":"active"},{"stock":"3N8768","vin":"W1KAF8HB3TR325772","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C43W4","model_year":2026,"msrp":75225.0,"mileage":10,"color":"Patagonia Red","interior":"Black\\with Red","days":29,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/a7d76dd4-e026-4e24-8947-15f10f831ed5.jpg","status":"active"},{"stock":"3N8523","vin":"W1KAF8HB8TR309552","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C43W4","model_year":2026,"msrp":76225.0,"mileage":24,"color":"Patagonia Red","interior":"Black/Red","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f83bf3b5-7dec-4f23-8710-0f7ea38d6e7e.jpg","status":"active"},{"stock":"3N8367","vin":"W1KAF8HB1TR308033","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C43W4","model_year":2026,"msrp":76715.0,"mileage":6,"color":"Patagonia Red","interior":"Black\\with Red","days":119,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/abab5bbd-82cc-484c-8040-65103c8eec16.jpg","status":"active"},{"stock":"3N8785","vin":"W1KAF8HB7TR326276","year":"2026","make":"Mercedes-Benz","model":"C-Class","trim":"","model_code":"C43W4","model_year":2026,"msrp":77570.0,"mileage":9,"color":"Moonlight Whit","interior":"Red\\black","days":26,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/30f593e8-cea9-46b3-bb19-13f0615ca49a.jpg","status":"active"},{"stock":"3N8617","vin":"W1K5J4GB5TN606635","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA250C","model_year":2026,"msrp":48780.0,"mileage":6,"color":"Patagonia Red","interior":"Black","days":57,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/2e54d4c7-4127-47f2-963b-b4190db59a7a.jpg","status":"active"},{"stock":"3N8602","vin":"W1K5J4GB8TN606130","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA250C","model_year":2026,"msrp":56255.0,"mileage":4,"color":"Polar White","interior":"Black","days":57,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d4ebfad8-fb3b-4f1d-8ee9-416aff683def.jpg","status":"active"},{"stock":"3N8831","vin":"W1KFJ4EB8TJ016623","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA350E4","model_year":2026,"msrp":53570.0,"mileage":13,"color":"Night Black","interior":"Black","days":2,"photo":null,"status":"active"},{"stock":"3N8515","vin":"W1K5J5BB9TN606666","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA35C4","model_year":2026,"msrp":59905.0,"mileage":7,"color":"Polar White","interior":"Black/Red","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/ab72ddda-2bd9-4cbc-a411-d3a342ed2daf.jpg","status":"active"},{"stock":"3N8309","vin":"W1K5J5EB0TN597481","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA45C4S","model_year":2026,"msrp":75065.0,"mileage":5,"color":"Patagonia Red","interior":"Black With Red","days":133,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b65f0aff-f2b0-4e95-ac7f-8af8fd3b9734.jpg","status":"active"},{"stock":"3N8527","vin":"W1K5J5EB6TN606393","year":"2026","make":"Mercedes-Benz","model":"CLA","trim":"","model_code":"CLA45C4S","model_year":2026,"msrp":89450.0,"mileage":10,"color":"Grey Magno","interior":"Black","days":82,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f01aa0db-f764-4649-8561-79cdb6532ef4.jpg","status":"active"},{"stock":"3N7890","vin":"W1KMK4HB6SF075977","year":"2025","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2025,"msrp":68635.0,"mileage":13,"color":"Black","interior":"Black","days":271,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/260d86d6-1130-4e18-9a29-21f91255b751.jpg","status":"active"},{"stock":"3N8608","vin":"W1KMK4HB5TF107223","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":74855.0,"mileage":5,"color":"Graphite Grey","interior":"Black","days":57,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5bc6eb8f-1bf2-453b-acbd-e6f3c6aa61b3.jpg","status":"active"},{"stock":"3N8795","vin":"W1KMK4HB4TF112218","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":75605.0,"mileage":6,"color":"Graphite Grey","interior":"Black","days":20,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0c8de26c-6cd2-4669-b12c-4fd9f49fbe03.jpg","status":"active"},{"stock":"3N8095","vin":"W1KMK4HB1TF089867","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":76105.0,"mileage":4,"color":"Cirrus Silver","interior":"Beige","days":201,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/bbf7ed8e-6d65-4dba-b87a-3a54c8862c1d.jpg","status":"active"},{"stock":"3N8472","vin":"W1KMK4HB7TF100158","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":76575.0,"mileage":5,"color":"Obsidian Black","interior":"Red\\black","days":91,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1f1f34e7-46fb-4041-86f8-56f3057c3000.jpg","status":"active"},{"stock":"3N8304","vin":"W1KMK4HBXTF096963","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":77825.0,"mileage":7,"color":"Alpine Grey","interior":"Red\\black","days":138,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/dd7cb79e-c203-47aa-929f-cf67ea01d2d1.jpg","status":"active"},{"stock":"3N8748","vin":"W1KMK4HB1TF111575","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":77955.0,"mileage":7,"color":"Polar White","interior":"Beige","days":34,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c8dc8d39-8193-4424-bd7e-b601ceb93963.jpg","status":"active"},{"stock":"3N8583","vin":"W1KMK4HB8TF107779","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":79425.0,"mileage":7,"color":"Starling Blue","interior":"Beige\\black","days":61,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5e2df4fa-4eef-4f7f-8122-cfe34a472b7b.jpg","status":"active"},{"stock":"3D86185","vin":"W1KMK4HB4TF086185","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":79575.0,"mileage":45,"color":"Moonlight Whit","interior":"Red\\black","days":77,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fca09f2b-93c7-4edc-868b-298191f6f734.jpg","status":"active"},{"stock":"3N8722","vin":"W1KMK4HB9TF109556","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":80525.0,"mileage":6,"color":"Alpine Grey","interior":"Red\\black","days":41,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e87f96cb-18a4-4a8a-b352-83d765b469b3.jpg","status":"active"},{"stock":"3N8836","vin":"W1KMK4HB4TF113000","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300A4","model_year":2026,"msrp":80865.0,"mileage":7,"color":"Grey Magno","interior":"Red\\black","days":2,"photo":null,"status":"active"},{"stock":"3N8062","vin":"W1KMJ4HB9TF087075","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":64255.0,"mileage":6,"color":"Black","interior":"Black","days":208,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7ab7c64c-5c7a-464e-9b9b-c2cf46d86417.jpg","status":"active"},{"stock":"3N8835","vin":"W1KMJ4HB0TF112669","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":64745.0,"mileage":8,"color":"Polar White","interior":"Beige","days":2,"photo":null,"status":"active"},{"stock":"3N8636","vin":"W1KMJ4HB5TF106267","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":65305.0,"mileage":5,"color":"Graphite Grey","interior":"Black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/dace114f-2092-41b4-a6fd-e613fbf754c9.jpg","status":"active"},{"stock":"3N8684","vin":"W1KMJ4HB1TF107156","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":67345.0,"mileage":7,"color":"Patagonia Red","interior":"Black","days":46,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c95caab6-7a2e-4323-a8f2-f78a59b26a89.jpg","status":"active"},{"stock":"3N8648","vin":"W1KMJ4HB7TF108828","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":67805.0,"mileage":5,"color":"Alpine Grey","interior":"Black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d9ded7ca-d0d8-461c-9cf7-4f8e02ff5aaf.jpg","status":"active"},{"stock":"3N8701","vin":"W1KMJ4HB9TF110631","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":68255.0,"mileage":4,"color":"Patagonia Red","interior":"Black","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/df4d937f-4088-4ac8-893d-93b9d9760c32.jpg","status":"active"},{"stock":"3N8650","vin":"W1KMJ4HB7TF109316","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":68555.0,"mileage":6,"color":"Alpine Grey","interior":"Black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/cac35b30-fe3e-4112-8852-7da435116e2b.jpg","status":"active"},{"stock":"3D87794","vin":"W1KMJ4HB8TF087794","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE300C4","model_year":2026,"msrp":68975.0,"mileage":43,"color":"Alpine Grey","interior":"Red\\black","days":93,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/525614db-b335-4637-be56-6a1d291da255.jpg","status":"active"},{"stock":"3N8549","vin":"W1KMK6BB2TF107135","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE450A4","model_year":2026,"msrp":83825.0,"mileage":7,"color":"Alpine Grey","interior":"Black","days":75,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6f3a68bc-db7e-4790-acb4-3579af6f412e.jpg","status":"active"},{"stock":"3N8794","vin":"W1KMK6BB8TF111609","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE450A4","model_year":2026,"msrp":85160.0,"mileage":5,"color":"Cirrus Silver","interior":"Black","days":20,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fed50d9d-2d38-438b-849f-78289db167ba.jpg","status":"active"},{"stock":"3N8751","vin":"W1KMK6BB1TF111726","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE450A4","model_year":2026,"msrp":85625.0,"mileage":7,"color":"Graphite Grey","interior":"Black","days":34,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/ad90fe18-853c-4d81-a569-98e9792ac3d0.jpg","status":"active"},{"stock":"3N8814","vin":"W1KMJ6BB2TF112659","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE450C4","model_year":2026,"msrp":76155.0,"mileage":8,"color":"Moonlight Whit","interior":"Black","days":5,"photo":null,"status":"active"},{"stock":"3D12120","vin":"W1KMJ6BBXTF112120","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE450C4","model_year":2026,"msrp":78725.0,"mileage":30,"color":"Alpine Grey","interior":"Red/Black","days":10,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/82e6745a-a2bd-4a76-adc0-351626972760.jpg","status":"active"},{"stock":"3N8813","vin":"W1KMK6CB3TF113055","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE53A4","model_year":2026,"msrp":98490.0,"mileage":5,"color":"Alpine Grey","interior":"Black\\with Red","days":5,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1db812f6-193e-4100-bc6c-90313a415a3c.jpg","status":"active"},{"stock":"3N8348","vin":"W1KMJ6CB2TF099376","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE53C4","model_year":2026,"msrp":84060.0,"mileage":8,"color":"Starling Blue","interior":"Beige\\black","days":123,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7e31e49c-83c2-4612-ad50-d916667e7d83.jpg","status":"active"},{"stock":"3N8351","vin":"W1KMJ6CB6TF097081","year":"2026","make":"Mercedes-Benz","model":"CLE","trim":"","model_code":"CLE53C4","model_year":2026,"msrp":87395.0,"mileage":6,"color":"Patagonia Red","interior":"Red\\black","days":123,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/68b7daa7-1311-4d3d-bcc8-fbef6adbfe17.jpg","status":"active"},{"stock":"3D71607","vin":"W1KLF4GB6SA171607","year":"2025","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E350W","model_year":2025,"msrp":73790.0,"mileage":15,"color":"Black","interior":"Beige\\black","days":217,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/276c47fd-c832-440d-a5a3-1850fa276b19.jpg","status":"active"},{"stock":"3N8187","vin":"W1KLF4GB1TA208631","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E350W","model_year":2026,"msrp":78490.0,"mileage":16,"color":"Patagonia Red","interior":"Black Nappa","days":176,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/2cc9b8e7-6856-4b8e-92b5-2a9ffa02d64c.jpg","status":"active"},{"stock":"3N8217","vin":"W1KLF4GB3TA206833","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E350W","model_year":2026,"msrp":84040.0,"mileage":6,"color":"Moonlight Whit","interior":"Beige\\black","days":168,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b62d5e28-095d-4965-a49a-cd777ac4f73e.jpg","status":"active"},{"stock":"3N8063","vin":"W1KLF4GB6TA197187","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E350W","model_year":2026,"msrp":84800.0,"mileage":7,"color":"Verde Silver","interior":"Beige\\black","days":208,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3e025159-c56f-40b0-b3ce-71a9b5848192.jpg","status":"active"},{"stock":"3N8356","vin":"W1KLF4GB0TA226666","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E350W","model_year":2026,"msrp":85870.0,"mileage":5,"color":"Alpine Grey","interior":"Black Nappa","days":121,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/02d8a151-b1fc-4643-83ba-dbe94a007856.jpg","status":"active"},{"stock":"3N8242","vin":"W1KLH6DBXTA200330","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E53ES4","model_year":2026,"msrp":120450.0,"mileage":8,"color":"Alpine Grey","interior":"Black\\yellow","days":158,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/a65ff53f-8da8-4e20-836b-deb72897466c.jpg","status":"active"},{"stock":"3N8325","vin":"W1KLF6DB5TA226677","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E53EW4","model_year":2026,"msrp":104835.0,"mileage":8,"color":"Alpine Grey","interior":"Black\\with Red","days":126,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b33568be-3b3a-4da0-b5a1-f4adce8f3ca4.jpg","status":"active"},{"stock":"3N8368","vin":"W1KLF6DB3TA231182","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E53EW4","model_year":2026,"msrp":110115.0,"mileage":7,"color":"Nautical Blue","interior":"Grey\\black","days":119,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/eb0c1612-f063-48de-80d1-462d61ad803e.jpg","status":"active"},{"stock":"3N8503","vin":"W1KLF6DB9TA240288","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E53EW4","model_year":2026,"msrp":111135.0,"mileage":6,"color":"Alpine Grey","interior":"Grey\\brown","days":89,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/09b650ae-1496-490d-b3f5-156c7b6f51c8.jpg","status":"active"},{"stock":"3N8792","vin":"W1KLF6DB4TA258407","year":"2026","make":"Mercedes-Benz","model":"E-Class","trim":"","model_code":"E53EW4","model_year":2026,"msrp":113375.0,"mileage":6,"color":"White Magno","interior":"Grey\\black","days":20,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7450b577-7608-419a-9244-f6966b8d9754.jpg","status":"active"},{"stock":"3N8807","vin":"W1N9M0KB5SN150789","year":"2025","make":"Mercedes-Benz","model":"EQB","trim":"","model_code":"EQB300W4","model_year":2025,"msrp":null,"mileage":12,"color":"Mountain Grey","interior":"Black","days":13,"photo":null,"status":"active"},{"stock":"3N8819","vin":"4JGGM1CB5TA073526","year":"2026","make":"Mercedes-Benz","model":"EQE","trim":"","model_code":"EQE320X4","model_year":2026,"msrp":73085.0,"mileage":8,"color":"Polar White","interior":"Black\\grey","days":5,"photo":null,"status":"active"},{"stock":"3N8837","vin":"4JGDM2EB4TA040930","year":"2026","make":"Mercedes-Benz","model":"EQS","trim":"","model_code":"EQS400X4","model_year":2026,"msrp":94270.0,"mileage":5,"color":"Black","interior":"Black\\grey","days":1,"photo":null,"status":"active"},{"stock":"3N8801","vin":"4JGDM4EB7TA040867","year":"2026","make":"Mercedes-Benz","model":"EQS","trim":"","model_code":"EQS550X4","model_year":2026,"msrp":127455.0,"mileage":11,"color":"Alpine Grey","interior":"Black\\grey","days":18,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/09982d88-9528-4a3e-a108-2d998b10c5f3.jpg","status":"active"},{"stock":"3N8830","vin":"W1NWH1ABXTX078783","year":"2026","make":"Mercedes-Benz","model":"G-Class","trim":"","model_code":"G550W4","model_year":2026,"msrp":182830.0,"mileage":8,"color":"Polar White","interior":"Platinum White","days":4,"photo":null,"status":"active"},{"stock":"3N8750","vin":"W1NWM0AB3TX076878","year":"2026","make":"Mercedes-Benz","model":"G-Class","trim":"","model_code":"G580W4E","model_year":2026,"msrp":182735.0,"mileage":9,"color":"Black Magno","interior":"Red\\black","days":34,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/16fadd9a-0497-4cc0-af84-eec604403876.jpg","status":"active"},{"stock":"3N8811","vin":"W1N4N4HB2SJ732264","year":"2025","make":"Mercedes-Benz","model":"GLA","trim":"","model_code":"GLA250W4","model_year":2025,"msrp":44450.0,"mileage":10,"color":"Polar White","interior":"Beige\\black","days":8,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5e979169-8442-43f5-87df-034b0b49cd32.jpg","status":"active"},{"stock":"3N8111","vin":"W1N4N5BB5TJ787971","year":"2026","make":"Mercedes-Benz","model":"GLA","trim":"","model_code":"GLA35W4","model_year":2026,"msrp":61205.0,"mileage":9,"color":"Mountain Grey","interior":"Black\\with Red","days":196,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7216b805-1cfc-4791-af2c-b750deef2a9c.jpg","status":"active"},{"stock":"3N8703","vin":"W1N4M4GB3TW463099","year":"2026","make":"Mercedes-Benz","model":"GLB","trim":"","model_code":"GLB250W","model_year":2026,"msrp":50010.0,"mileage":14,"color":"Night Black","interior":"Black","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/a52132e0-6ed7-4c60-b01c-45c2f0698266.jpg","status":"active"},{"stock":"3N8688","vin":"W1N4M4GBXTW467456","year":"2026","make":"Mercedes-Benz","model":"GLB","trim":"","model_code":"GLB250W","model_year":2026,"msrp":50160.0,"mileage":7,"color":"Night Black","interior":"Beige\\black","days":46,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7cfd18ff-cfb5-445e-a51a-00949fd44503.jpg","status":"active"},{"stock":"3N8681","vin":"W1N4M4GB8TW466676","year":"2026","make":"Mercedes-Benz","model":"GLB","trim":"","model_code":"GLB250W","model_year":2026,"msrp":50160.0,"mileage":5,"color":"Night Black","interior":"Beige\\black","days":46,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/95dbe9c8-db5f-448b-94ec-3e2ec0dce297.jpg","status":"active"},{"stock":"3N8816","vin":"W1N4M5BB1TW477922","year":"2026","make":"Mercedes-Benz","model":"GLB","trim":"","model_code":"GLB35W4","model_year":2026,"msrp":65255.0,"mileage":9,"color":"Mountain Grey","interior":"Black\\with Red","days":5,"photo":null,"status":"active"},{"stock":"3N8479","vin":"W1N4M5BBXTW466238","year":"2026","make":"Mercedes-Benz","model":"GLB","trim":"","model_code":"GLB35W4","model_year":2026,"msrp":66365.0,"mileage":4,"color":"Cosmos Black","interior":"Black\\with Red","days":91,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/06aa3a43-bb83-456b-96bf-5c708992cd10.jpg","status":"active"},{"stock":"3N8817","vin":"W1NKJ4HB6TF564510","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300C4","model_year":2026,"msrp":70565.0,"mileage":6,"color":"Verde Silver","interior":"Neva Grey","days":5,"photo":null,"status":"active"},{"stock":"3N8596","vin":"W1NKM4GB3TU118397","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":58350.0,"mileage":11,"color":"Alpine Grey","interior":"Amg Black","days":60,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7b6a34fc-418e-40ba-9b58-98dc55e99dd2.jpg","status":"active"},{"stock":"3N8704","vin":"W1NKM4GB0TF548506","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":58900.0,"mileage":8,"color":"Cirrus Silver","interior":"Neva Grey","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/99f2b996-9d95-4930-94e3-4b28f3970eee.jpg","status":"active"},{"stock":"3N8647","vin":"W1NKM4GB6TF542855","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":59500.0,"mileage":5,"color":"Alpine Grey","interior":"Amg Black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1184ba59-0de1-4f2c-8c44-7162350643bd.jpg","status":"active"},{"stock":"3N8477","vin":"W1NKM4GBXTF509485","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":59810.0,"mileage":6,"color":"Black","interior":"Red\\black","days":91,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/9fc52b1a-b84d-4ec5-8e93-9273c94cf944.jpg","status":"active"},{"stock":"3N8644","vin":"W1NKM4GB5TF543155","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60150.0,"mileage":7,"color":"Grey Magno","interior":"Amg Black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/9b1fcdde-f795-413e-9b5e-ec5510b6e59d.jpg","status":"active"},{"stock":"3N8337","vin":"W1NKM4GB4TF490075","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60250.0,"mileage":11,"color":"Graphite Grey","interior":"Amg Black","days":125,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/99a14e8c-d334-447f-ab01-bf66683e7bea.jpg","status":"active"},{"stock":"3N8689","vin":"W1NKM4GB0TF545492","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60550.0,"mileage":7,"color":"Grey Magno","interior":"Amg Black","days":46,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/ce59611d-7273-4d3b-abb6-d569aab50f51.jpg","status":"active"},{"stock":"3N8571","vin":"W1NKM4GB9TU117416","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60750.0,"mileage":7,"color":"Polar White","interior":"Amg Black","days":63,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0ef95657-1034-4b1b-ab9e-28232c123fb5.jpg","status":"active"},{"stock":"3N8672","vin":"W1NKM4GB3TF544479","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60750.0,"mileage":6,"color":"Polar White","interior":"Amg Black","days":50,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8d89bdaa-ff46-4b53-a431-18dddfe89c30.jpg","status":"active"},{"stock":"3N8673","vin":"W1NKM4GB3TU118562","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60750.0,"mileage":6,"color":"Polar White","interior":"Amg Black","days":50,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1354d1a4-7524-4592-b165-aff8a6813c07.jpg","status":"active"},{"stock":"3N8668","vin":"W1NKM4GB2TF541220","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60820.0,"mileage":18,"color":"Alpine Grey","interior":"Amg Black","days":50,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1e1d784d-7546-4d7b-8f22-8edfa90ca807.jpg","status":"active"},{"stock":"3N8645","vin":"W1NKM4GB2TF544912","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":60970.0,"mileage":6,"color":"Graphite Grey","interior":"Red\\black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/68789666-fcb2-4cb9-a7a6-d064add2c38b.jpg","status":"active"},{"stock":"3N8320","vin":"W1NKM4GB7TU110240","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":61120.0,"mileage":8,"color":"Grey Magno","interior":"Red\\black","days":127,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/61b5c1b3-ea90-4079-94b1-5a5c9e3f85e0.jpg","status":"active"},{"stock":"3D46561","vin":"W1NKM4GB9TF546561","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":61345.0,"mileage":35,"color":"Black","interior":"Red\\black","days":14,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/9d0b6b93-daab-4e45-8569-84736259e39d.jpg","status":"active"},{"stock":"3N8705","vin":"W1NKM4GB1TF527048","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":61670.0,"mileage":8,"color":"Alpine Grey","interior":"Red\\black","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/25f7754a-9ad2-4756-b757-133127dc1471.jpg","status":"active"},{"stock":"3N8603","vin":"W1NKM4GB0TF528627","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":62170.0,"mileage":10,"color":"Alpine Grey","interior":"Red\\black","days":57,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/2cdc36dc-70fa-471b-ae64-34a7e7899d4a.jpg","status":"active"},{"stock":"3N8667","vin":"W1NKM4GBXTU120308","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":62850.0,"mileage":6,"color":"Alpine Grey","interior":"Amg Black","days":50,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1505d31f-e369-4612-8a86-a883d3a3b32d.jpg","status":"active"},{"stock":"3N8717","vin":"W1NKM4GB7TF546705","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":63120.0,"mileage":5,"color":"Graphite Grey","interior":"Red\\black","days":41,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/566bb376-b072-4fde-bcac-392ed95ce237.jpg","status":"active"},{"stock":"3N8651","vin":"W1NKM4GB8TF543344","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":63895.0,"mileage":8,"color":"Moonlight Whit","interior":"Red\\black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d9e462c6-aa9b-44ca-b850-7b82cee37a21.jpg","status":"active"},{"stock":"3N8715","vin":"W1NKM4GB6TF545464","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":64200.0,"mileage":7,"color":"Grey Magno","interior":"Neva Grey","days":41,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/feedc448-fe85-4577-8241-a7b2ec8b924d.jpg","status":"active"},{"stock":"3N8613","vin":"W1NKM4GB7TU120749","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":65820.0,"mileage":7,"color":"Grey Magno","interior":"Red\\black","days":57,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/36b03190-8b5d-40e9-adb2-6ee7666ba22b.jpg","status":"active"},{"stock":"3N8793","vin":"W1NKM4GB4TF554146","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC300W","model_year":2026,"msrp":66920.0,"mileage":8,"color":"Alpine Grey","interior":"Red\\black","days":20,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c005a8cd-84b3-4087-8410-42e6ba95d5c5.jpg","status":"active"},{"stock":"3N8815","vin":"W1NKM5GB8TF561106","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC350E4","model_year":2026,"msrp":68050.0,"mileage":7,"color":"Black","interior":"Brown\\black","days":5,"photo":null,"status":"active"},{"stock":"3N8516","vin":"W1NKJ8HB6TF524063","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43C4","model_year":2026,"msrp":74905.0,"mileage":2295,"color":"Black","interior":"Black/Red","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0652cb5a-06fc-4671-b52e-eac789ba7499.jpg","status":"active"},{"stock":"3N8834","vin":"W1NKJ8HB2TF560252","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43C4","model_year":2026,"msrp":85660.0,"mileage":6,"color":"Alpine Grey","interior":"Red\\black","days":2,"photo":null,"status":"active"},{"stock":"3N8334","vin":"W1NKJ8HBXTF490046","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43C4","model_year":2026,"msrp":85670.0,"mileage":9,"color":"Alpine Grey","interior":"Red\\black","days":125,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/047eea8f-bb2b-4bcd-af3f-945b0b9d5d86.jpg","status":"active"},{"stock":"3N8422","vin":"W1NKM8HB9TF511248","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":69645.0,"mileage":6,"color":"Black","interior":"Black\\with Red","days":106,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/212c468b-30fb-46e9-a4d2-341f52c2a832.jpg","status":"active"},{"stock":"3N8502","vin":"W1NKM8HB0TF518119","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":69680.0,"mileage":5,"color":"Black","interior":"Black\\with Red","days":89,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d8edd9c6-723b-4b09-be47-64e9a404f580.jpg","status":"active"},{"stock":"3N8102","vin":"W1NKM8HB9TF446059","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":72980.0,"mileage":8,"color":"Polar White","interior":"Black","days":198,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6004342c-f2b8-4f97-b6b3-a19aa14eee28.jpg","status":"active"},{"stock":"3D04108","vin":"W1NKM8HB2TF504108","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":74240.0,"mileage":20,"color":"Black","interior":"Red\\black","days":1,"photo":null,"status":"active"},{"stock":"3N8420","vin":"W1NKM8HB8TF507983","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":74510.0,"mileage":8,"color":"Alpine Grey","interior":"Black\\with Red","days":106,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7f57476c-66cd-47c9-b088-bd5f2a6acb4f.jpg","status":"active"},{"stock":"3N8517","vin":"W1NKM8HBXTF521934","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":75805.0,"mileage":6,"color":"Black","interior":"Red/Black","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/08359f7e-9328-41ea-8fe1-e7769c77f8b9.jpg","status":"active"},{"stock":"3N8555","vin":"W1NKM8HB0TF524356","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":76370.0,"mileage":7,"color":"Graphite Grey","interior":"Brown\\black","days":71,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3c66f0cf-4a96-49b6-94d2-92c6956483f1.jpg","status":"active"},{"stock":"3N8407","vin":"W1NKM8HB4TF508564","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":77905.0,"mileage":6,"color":"Alpine Grey","interior":"Black\\with Red","days":111,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6954f48a-6cb4-4e46-b760-c4ea8da45d56.jpg","status":"active"},{"stock":"3N8413","vin":"W1NKM8HB5TF508296","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":78090.0,"mileage":9,"color":"Alpine Grey","interior":"Red\\black","days":111,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/63db8f64-58f9-4724-bfac-ff47f12b9735.jpg","status":"active"},{"stock":"3N8670","vin":"W1NKM8HB3TF542530","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":79290.0,"mileage":7,"color":"Alpine Grey","interior":"Red\\black","days":50,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/75f4d502-1897-4591-bf45-30e9a85bc43a.jpg","status":"active"},{"stock":"3N8409","vin":"W1NKM8HB0TF512837","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":79600.0,"mileage":7,"color":"Obsidian Black","interior":"Black\\with Red","days":111,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7e99178f-b10d-4620-8780-a71efb43b8dd.jpg","status":"active"},{"stock":"3N8752","vin":"W1NKM8HB9TF552916","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":80280.0,"mileage":7,"color":"Starling Blue","interior":"Black\\with Red","days":34,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/28e59201-cadb-471a-9d98-d7d11eb16abe.jpg","status":"active"},{"stock":"3N8730","vin":"W1NKM8HB8TF545536","year":"2026","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC43W4","model_year":2026,"msrp":80855.0,"mileage":7,"color":"Grey Magno","interior":"Red\\black","days":37,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/356d04f2-10fe-4b0c-ac85-b47df58c4969.jpg","status":"active"},{"stock":"3N7240","vin":"W1NKM8AB5SF320838","year":"2025","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC63W4E","model_year":2025,"msrp":99230.0,"mileage":8,"color":"Moonlight Whit","interior":"Black","days":427,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f86e42c6-5785-475e-a931-8bb0b249e854.jpg","status":"active"},{"stock":"3N7611","vin":"W1NKM8AB1SF384410","year":"2025","make":"Mercedes-Benz","model":"GLC","trim":"","model_code":"GLC63W4SE","model_year":2025,"msrp":96550.0,"mileage":7,"color":"Black","interior":"Artico\\black","days":322,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d4ed3c11-feed-40cc-b660-7748fdb5e8eb.jpg","status":"active"},{"stock":"3D97638","vin":"4JGFB4EE0TB597638","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W","model_year":2026,"msrp":72620.0,"mileage":17,"color":"Polar White","interior":"Black","days":47,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8915a166-fef5-4fd0-8569-5bf8fbb85942.jpg","status":"active"},{"stock":"3N8764","vin":"4JGFB4EB7TB606132","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W","model_year":2026,"msrp":72920.0,"mileage":5,"color":"Polar White","interior":"Black","days":32,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/07efb0f9-9a6e-4d1e-87fc-e4eff454bfcd.jpg","status":"active"},{"stock":"3N8802","vin":"4JGFB4EB2TB606118","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W","model_year":2026,"msrp":74275.0,"mileage":7,"color":"Alpine Grey","interior":"Black","days":13,"photo":null,"status":"active"},{"stock":"3N8695","vin":"4JGFB4EB5TB603648","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W","model_year":2026,"msrp":78505.0,"mileage":4,"color":"Alpine Grey","interior":"Black","days":44,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b0ace73f-6ffa-4ceb-aafb-f85baee94fa3.jpg","status":"active"},{"stock":"3N8429","vin":"4JGFB4EB2TB577638","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W","model_year":2026,"msrp":86675.0,"mileage":5,"color":"Mid Green","interior":"Beige\\black","days":105,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/91d094ac-da8b-4df7-83c3-a6a3ae66134a.jpg","status":"active"},{"stock":"3N8736","vin":"4JGFB4FB0TB501902","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":71265.0,"mileage":17,"color":"Obsidian Black","interior":"Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/01e6e9c1-96ee-4256-8198-6444b54cadbe.jpg","status":"active"},{"stock":"3N8737","vin":"4JGFB4FB2TB515011","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":71265.0,"mileage":13,"color":"Selenite Grey","interior":"Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/af0680de-88fe-4bd2-a1d5-9664e0f6c166.jpg","status":"active"},{"stock":"3N8740","vin":"4JGFB4FB8TB514963","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":71465.0,"mileage":7,"color":"Obsidian Black","interior":"Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3f721281-481b-43e2-a5cd-9d16357b55a2.jpg","status":"active"},{"stock":"3N8738","vin":"4JGFB4FB3TB516975","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":71650.0,"mileage":8,"color":"Selenite Grey","interior":"Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fd831794-c409-4355-a2b4-a6a795624da6.jpg","status":"active"},{"stock":"3N8782","vin":"4JGFB4FB2TB520189","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":71915.0,"mileage":10,"color":"Polar White","interior":"Black","days":26,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/d47217ae-786a-42b4-a863-6e4af2d9cca0.jpg","status":"active"},{"stock":"3N8781","vin":"4JGFB4FB6TB501676","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":72150.0,"mileage":11,"color":"Obsidian Black","interior":"Black","days":26,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/afd4c00f-11e4-4659-b37a-5f46d70975da.jpg","status":"active"},{"stock":"3N8755","vin":"4JGFB4FB9TB532727","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":72600.0,"mileage":11,"color":"Polar White","interior":"Black","days":33,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/18763ebf-02ba-4acc-a738-87ab87f9baba.jpg","status":"active"},{"stock":"3N8771","vin":"4JGFB4FB5TB532711","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":72600.0,"mileage":8,"color":"Polar White","interior":"Black","days":28,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/de368164-8c63-4051-aa8b-c9ecba4575ad.jpg","status":"active"},{"stock":"3N8783","vin":"4JGFB4FBXTB509151","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":72850.0,"mileage":11,"color":"Obsidian Black","interior":"Black","days":26,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/76b1fff8-d1ac-4f9e-8bd7-72ebf86ae882.jpg","status":"active"},{"stock":"3N8766","vin":"4JGFB4FB5TB509347","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":72850.0,"mileage":33,"color":"Obsidian Black","interior":"Black","days":32,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e685bb75-030a-436c-a8b3-3b0506100436.jpg","status":"active"},{"stock":"3N8772","vin":"4JGFB4FB9TB516480","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":73215.0,"mileage":15,"color":"Polar White","interior":"Beige\\black","days":28,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b32a2d75-80e2-443a-be7d-c7603ea6cec3.jpg","status":"active"},{"stock":"3D28726","vin":"4JGFB4FB9TB528726","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":73800.0,"mileage":37,"color":"Polar White","interior":"Beige\\black","days":70,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/01e6799e-6f19-4349-a9e9-80c005d1ed0a.jpg","status":"active"},{"stock":"3N8839","vin":"4JGFB4FB3TB509959","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":75165.0,"mileage":4,"color":"Obsidian Black","interior":"Black","days":1,"photo":null,"status":"active"},{"stock":"3D58188","vin":"4JGFB4FB3TB558188","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":81370.0,"mileage":21,"color":"Alpine Grey","interior":"Black","days":12,"photo":null,"status":"active"},{"stock":"3D74676","vin":"4JGFB4FB8TB574676","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE350W4","model_year":2026,"msrp":85340.0,"mileage":153,"color":"Mid Green","interior":"Beige\\black","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c83503a1-1ab7-465c-9386-d935ccd0df38.jpg","status":"active"},{"stock":"3N8735","vin":"4JGFD5KB2TB597893","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":81110.0,"mileage":11,"color":"Cirrus Silver","interior":"Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/39225a2c-8bb2-474e-9f22-68dd8ef89a5a.jpg","status":"active"},{"stock":"3N8840","vin":"4JGFD5KB1TB629376","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":81665.0,"mileage":5,"color":"Cirrus Silver","interior":"Black","days":1,"photo":null,"status":"active"},{"stock":"3N8765","vin":"4JGFD5KB7TB609276","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":84365.0,"mileage":5,"color":"Selenite Grey","interior":"Black","days":32,"photo":null,"status":"active"},{"stock":"3N8818","vin":"4JGFD5KB3TB625961","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":84365.0,"mileage":7,"color":"Selenite Grey","interior":"Black","days":5,"photo":null,"status":"active"},{"stock":"3N8653","vin":"4JGFD5KB7TB596853","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":86865.0,"mileage":6,"color":"Obsidian Black","interior":"Black","days":54,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/a8f61d59-98bd-449b-aae8-f4a1d85410ae.jpg","status":"active"},{"stock":"3N8298","vin":"4JGFD5KB0TB559725","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":88355.0,"mileage":5,"color":"Polar White","interior":"Black","days":139,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/20db5cf9-e5cb-4b0c-a60f-02594d18455e.jpg","status":"active"},{"stock":"3N8495","vin":"4JGFD5KB4TB584434","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":88685.0,"mileage":7,"color":"Selenite Grey","interior":"Black","days":89,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/a0cfb55d-449b-48b5-8309-7ebaac2f9ad1.jpg","status":"active"},{"stock":"3N8130","vin":"4JGFD5KB5TB522279","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450C4","model_year":2026,"msrp":97810.0,"mileage":12,"color":"Irelan Green","interior":"Black","days":193,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/531e0c4b-2933-4b53-b678-5890fb310445.jpg","status":"active"},{"stock":"3D14839","vin":"4JGFB4GB5TB614839","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450E4","model_year":2026,"msrp":null,"mileage":100,"color":"","interior":"","days":17,"photo":null,"status":"active"},{"stock":"3N8800","vin":"4JGFB4GB1TB614742","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450E4","model_year":2026,"msrp":85110.0,"mileage":15,"color":"Obsidian Black","interior":"Black","days":18,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6786946d-a072-4d8a-bd0a-7e81f02786fb.jpg","status":"active"},{"stock":"3N8767","vin":"4JGFB5KBXTB608354","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE450W4","model_year":2026,"msrp":75200.0,"mileage":6,"color":"Polar White","interior":"Beige\\black","days":32,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/63c0953a-6890-4dac-a65f-4ae34de1ffbf.jpg","status":"active"},{"stock":"3N8791","vin":"4JGFD6BB9TB612248","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":94055.0,"mileage":6,"color":"Obsidian Black","interior":"Red\\black","days":21,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e875c249-6059-4833-b163-8e1f64984203.jpg","status":"active"},{"stock":"3N8820","vin":"4JGFD6BB1TB629478","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":95665.0,"mileage":8,"color":"Polar White","interior":"Red\\black","days":5,"photo":null,"status":"active"},{"stock":"3N8487","vin":"4JGFD6BBXTB584587","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":96505.0,"mileage":8,"color":"Cirrus Silver","interior":"Red\\black","days":91,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0c2ff3dc-b8e3-4f33-b3d0-86291ba8a482.jpg","status":"active"},{"stock":"3D34952","vin":"4JGFD6BBXTB534952","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":97625.0,"mileage":106,"color":"Polar White","interior":"Black\\diamond","days":116,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/ce1ee760-bb72-4562-bf0f-79f5039dcd39.jpg","status":"active"},{"stock":"3N8775","vin":"4JGFD6BB5TB612232","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":99005.0,"mileage":8,"color":"Polar White","interior":"Red\\black","days":28,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/73b33e83-2050-4be3-b36a-c54545424722.jpg","status":"active"},{"stock":"3N8756","vin":"4JGFD6BB7TB610742","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":99565.0,"mileage":5,"color":"Alpine Grey","interior":"Beige\\black","days":33,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/54857aaa-33dd-49cc-9ac9-39e627cee763.jpg","status":"active"},{"stock":"3N8665","vin":"4JGFD6BB3TB584561","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":99775.0,"mileage":6,"color":"Alpine Grey","interior":"Red\\black","days":51,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/005bf412-067a-4abd-8261-1a7a4d1c3bcb.jpg","status":"active"},{"stock":"3N8537","vin":"4JGFD6BB9TB498901","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":100225.0,"mileage":8,"color":"Silicon Grey","interior":"Amg Black","days":75,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5a4b993e-318d-4fed-8ea9-557cc28dc1ae.jpg","status":"active"},{"stock":"3D15625","vin":"4JGFD6BBXTB515625","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":100265.0,"mileage":70,"color":"Polar White","interior":"Red\\black","days":112,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/87d1ab13-f8e1-4180-b2d3-7617e4f2cabb.jpg","status":"active"},{"stock":"3N8499","vin":"4JGFD6BB3TB588478","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":101115.0,"mileage":6,"color":"Moonlight Whit","interior":"Amg Black","days":89,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/46189273-9b80-4961-9f95-920145674b03.jpg","status":"active"},{"stock":"3N8532","vin":"4JGFD6BBXTB590292","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":101900.0,"mileage":5,"color":"Cirrus Silver","interior":"Brown\\black","days":79,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e72da51e-55c1-48ca-910c-710ccd140fcf.jpg","status":"active"},{"stock":"3D15462","vin":"4JGFD6BB8TB515462","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":104505.0,"mileage":312,"color":"Cirrus Silver","interior":"Red\\black","days":12,"photo":null,"status":"active"},{"stock":"3N8773","vin":"4JGFD6BB0TB610713","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":104975.0,"mileage":8,"color":"Alpine Grey","interior":"Red\\black","days":28,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fb1181f3-5678-4db9-8da3-118ba6ac373d.jpg","status":"active"},{"stock":"3N8426","vin":"4JGFD6BB4TB580843","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":106265.0,"mileage":8,"color":"Alpine Grey","interior":"Black\\diamond","days":105,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/b58664a6-37ac-4c36-801d-b0dac5823626.jpg","status":"active"},{"stock":"3N8383","vin":"4JGFD6BB9TB574889","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":107050.0,"mileage":5,"color":"Moonlight Whit","interior":"Red\\black","days":117,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fb75854f-c5f2-4d06-b87c-a2d3cd97ebe9.jpg","status":"active"},{"stock":"3N8806","vin":"4JGFD6BB2TB622314","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":108465.0,"mileage":8,"color":"Mid Green","interior":"Brown\\black","days":13,"photo":null,"status":"active"},{"stock":"3N8747","vin":"4JGFD6BB5TB604843","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":112060.0,"mileage":9,"color":"Alpine Grey","interior":"Red\\black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/514013fa-28a2-4cf0-8f52-5b40b039bc49.jpg","status":"active"},{"stock":"3N8712","vin":"4JGFD6BB4TB604834","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53C4","model_year":2026,"msrp":113290.0,"mileage":11,"color":"Mid Green","interior":"Amg Black","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e5117c2b-34e7-40b8-99ee-1157bcadadce.jpg","status":"active"},{"stock":"3N8744","vin":"4JGFB6BB5SB414156","year":"2025","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2025,"msrp":90835.0,"mileage":11,"color":"Obsidian Black","interior":"Black Nappa","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8f4f24f9-c9d1-4865-96ca-24d0f0e25cac.jpg","status":"active"},{"stock":"3N8731","vin":"4JGFB6BB1SB359236","year":"2025","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2025,"msrp":90835.0,"mileage":14,"color":"Obsidian Black","interior":"Amg Black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e2142237-2b6c-480d-b366-bcbcb0d8d014.jpg","status":"active"},{"stock":"3N8821","vin":"4JGFB6BBXTB628416","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":95400.0,"mileage":6,"color":"Polar White","interior":"Beige\\black","days":5,"photo":null,"status":"active"},{"stock":"3N8534","vin":"4JGFB6BB2TB593483","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":95640.0,"mileage":7,"color":"Cirrus Silver","interior":"Beige\\black","days":78,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/92235086-c8ec-421d-ad08-c65f93f0c559.jpg","status":"active"},{"stock":"3N8533","vin":"4JGFB6BB8TB560570","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":97950.0,"mileage":6,"color":"Mystic Blue","interior":"Amg Black","days":78,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c2fe8e22-4d32-4986-ae15-7ce71f566c3c.jpg","status":"active"},{"stock":"3D06820","vin":"4JGFB6BBXTB506820","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":98075.0,"mileage":36,"color":"Silicon Grey","interior":"Amg Black","days":14,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/54db6d90-9ad7-4407-9cc3-be22300a91c1.jpg","status":"active"},{"stock":"3N8416","vin":"4JGFB6BB9TB572999","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":102950.0,"mileage":6,"color":"Moonlight Whit","interior":"Beige\\black","days":111,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/ed0d54df-5075-4c07-9f7b-756fd622210f.jpg","status":"active"},{"stock":"3N8790","vin":"4JGFB6BB4TB607206","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":111540.0,"mileage":21,"color":"Alpine Grey","interior":"Brown\\black","days":21,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/eadc7177-2ced-48de-a025-341407e6d44c.jpg","status":"active"},{"stock":"3N8512","vin":"4JGFB6BB1TB588937","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE53W4","model_year":2026,"msrp":112740.0,"mileage":7,"color":"Alpine Grey","interior":"Black\\diamond","days":85,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/32e82eae-ab20-4f6b-b311-d3755beee542.jpg","status":"active"},{"stock":"3N8732","vin":"4JGFB8FB1SB397393","year":"2025","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE580W4","model_year":2025,"msrp":90745.0,"mileage":10,"color":"Polar White","interior":"Beige\\black","days":35,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/699a112f-5bf8-4fdc-87b9-71776482eebc.jpg","status":"active"},{"stock":"3N7994","vin":"4JGFB8FB3TB496010","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE580W4","model_year":2026,"msrp":91850.0,"mileage":9,"color":"Polar White","interior":"Beige\\black","days":222,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/7fc17c51-13dc-4295-842a-2ed8ede8a67d.jpg","status":"active"},{"stock":"3N8711","vin":"4JGFB8FB5TB605437","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE580W4","model_year":2026,"msrp":97635.0,"mileage":6,"color":"Obsidian Black","interior":"Black","days":43,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/4b9cd951-628c-4f2b-b461-b122a47be69d.jpg","status":"active"},{"stock":"3N8436","vin":"4JGFD8KB0TB581239","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63C4S","model_year":2026,"msrp":140855.0,"mileage":5,"color":"Alpine Grey","interior":"Red\\black","days":100,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/fc951b0f-23ca-4193-b922-895b6c8c23ca.jpg","status":"active"},{"stock":"3D06138","vin":"4JGFD8KB0TB606138","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63C4S","model_year":2026,"msrp":143550.0,"mileage":30,"color":"Obsidian Black","interior":"Black\\diamond","days":2,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8633371c-252d-4264-b9e2-c242f03a9b1a.jpg","status":"active"},{"stock":"3N8774","vin":"4JGFD8KBXTB610116","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63C4S","model_year":2026,"msrp":143955.0,"mileage":6,"color":"Alpine Grey","interior":"Red\\black","days":28,"photo":null,"status":"active"},{"stock":"3N8696","vin":"4JGFD8KB7TB602913","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63C4S","model_year":2026,"msrp":147490.0,"mileage":5,"color":"Alpine Grey","interior":"Black\\diamond","days":44,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/1e1c0401-b644-4e7b-bee3-bd4814f59524.jpg","status":"active"},{"stock":"3N8838","vin":"4JGFB8KB7TB627946","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63W4S","model_year":2026,"msrp":141300.0,"mileage":5,"color":"Selenite Grey","interior":"Red\\black","days":1,"photo":null,"status":"active"},{"stock":"3N8501","vin":"4JGFB8KBXTB588446","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63W4S","model_year":2026,"msrp":141550.0,"mileage":7,"color":"Selenite Grey","interior":"Red\\black","days":89,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5de8e460-e262-41bf-95c3-6e910a29f43a.jpg","status":"active"},{"stock":"3N8700","vin":"4JGFB8KB6TB601581","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63W4S","model_year":2026,"msrp":146040.0,"mileage":20,"color":"Alpine Grey","interior":"Black\\diamond","days":44,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e7b27c41-1036-4377-a227-40d3790c6618.jpg","status":"active"},{"stock":"3N8235","vin":"4JGFB8KBXTB546696","year":"2026","make":"Mercedes-Benz","model":"GLE","trim":"","model_code":"GLE63W4S","model_year":2026,"msrp":146975.0,"mileage":7,"color":"Alpine Grey","interior":"Black\\diamond","days":159,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/187b461d-d60a-45eb-ad07-d4708b27d20d.jpg","status":"active"},{"stock":"3N8206","vin":"4JGFF5KE1TB517620","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS450W4","model_year":2026,"msrp":102435.0,"mileage":5,"color":"Twilight Blue","interior":"Black","days":172,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c162ade4-0eff-4441-bc41-4eb52394d18f.jpg","status":"active"},{"stock":"3N8156","vin":"4JGFF5KE4TB524075","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS450W4","model_year":2026,"msrp":102795.0,"mileage":5,"color":"Cirrus Silver","interior":"Black","days":183,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/5e7920dd-28b1-4163-89bc-85cf77e508ce.jpg","status":"active"},{"stock":"3D85669","vin":"4JGFF5KE8TB585669","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS450W4","model_year":2026,"msrp":103085.0,"mileage":140,"color":"Alpine Grey","interior":"Beige\\black","days":75,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/581f7b08-568e-4d1d-831d-20885da5e3d9.jpg","status":"active"},{"stock":"3N8733","vin":"4JGFF8FE3SB494349","year":"2025","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS580W4","model_year":2025,"msrp":117245.0,"mileage":13,"color":"Polar White","interior":"Beige\\black","days":35,"photo":null,"status":"active"},{"stock":"3N8723","vin":"4JGFF8FE0SB473278","year":"2025","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS580W4","model_year":2025,"msrp":117480.0,"mileage":9,"color":"Selenite Grey","interior":"Black","days":40,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/73b39cdd-b4b0-4289-8e43-6867bb47b4ca.jpg","status":"active"},{"stock":"3N8192","vin":"4JGFF8FE6TB529192","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS580W4","model_year":2026,"msrp":121065.0,"mileage":7,"color":"Cirrus Silver","interior":"Beige\\black","days":175,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/662661e7-2497-4590-b27a-500b990508c8.jpg","status":"active"},{"stock":"3D23511","vin":"4JGFF8FE6TB623511","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS580W4","model_year":2026,"msrp":123320.0,"mileage":10,"color":"Black","interior":"Black","days":4,"photo":null,"status":"active"},{"stock":"3N8804","vin":"4JGFF8FE5TB623452","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS580W4","model_year":2026,"msrp":128375.0,"mileage":6,"color":"Black","interior":"Brown\\black","days":13,"photo":null,"status":"active"},{"stock":"3D27551","vin":"4JGFF8HB1TB627551","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS600Z4","model_year":2026,"msrp":null,"mileage":25,"color":"Obsidian Black","interior":"Brown\\beige","days":1,"photo":null,"status":"active"},{"stock":"3N8694","vin":"4JGFF8KE2TB602015","year":"2026","make":"Mercedes-Benz","model":"GLS","trim":"","model_code":"GLS63W4","model_year":2026,"msrp":171470.0,"mileage":7,"color":"Obsidian Black","interior":"Black\\diamond","days":44,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e8975300-7e4e-468e-8a29-dcc1bc608c7e.jpg","status":"active"},{"stock":"3N8419","vin":"W1K7X5KB8TV007331","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 43","trim":"","model_code":"GT43C4","model_year":2026,"msrp":114980.0,"mileage":6,"color":"Obsidian Black","interior":"Black Nappa","days":110,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/852ae035-a217-4412-9e4c-2eaf3be1838a.jpg","status":"active"},{"stock":"3N8643","vin":"W1K7X5KB7TV008387","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 43","trim":"","model_code":"GT43C4","model_year":2026,"msrp":122560.0,"mileage":4,"color":"Blue Magno","interior":"Brown\\black","days":55,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/611b10e7-33f9-45b0-beef-77e9293b58c9.jpg","status":"active"},{"stock":"3N8562","vin":"W1K7X6BB0TV008057","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 53","trim":"","model_code":"GT53C4","model_year":2026,"msrp":130610.0,"mileage":6,"color":"Blue Magno","interior":"Brown\\black","days":64,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/73ad0d54-285c-4172-ba1d-8b75f9e4f3b2.jpg","status":"active"},{"stock":"3N8418","vin":"W1K7X6BB0TV007345","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 53","trim":"","model_code":"GT53C4","model_year":2026,"msrp":137250.0,"mileage":18,"color":"Moonligth Whit","interior":"Red\\black","days":110,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3aef2e93-5c12-4157-b8ed-06ae685b77e9.jpg","status":"active"},{"stock":"3N8282","vin":"W1K7X7KB1TV006226","year":"2026","make":"Mercedes-Benz","model":"AMG\u00ae GT 63","trim":"","model_code":"GT63C4SE","model_year":2026,"msrp":231290.0,"mileage":9,"color":"Grey Magno","interior":"Red\\black","days":141,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/3af1169a-9a0e-42ea-b370-1c80059355e6.jpg","status":"active"},{"stock":"3N8265","vin":"W1K6G6DB0TA354030","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S500V4","model_year":2026,"msrp":139525.0,"mileage":8,"color":"Black","interior":"Black Nappa","days":153,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/c7dfbe1f-57f0-466d-9291-63464ba9bf27.jpg","status":"active"},{"stock":"3N8341","vin":"W1K6G7GB6TA351327","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S580V4","model_year":2026,"msrp":147415.0,"mileage":9,"color":"Moonlight Whit","interior":"Black","days":125,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/760ddf84-2615-4f96-ab59-5dac1133a2d8.jpg","status":"active"},{"stock":"3N8103","vin":"W1K6G7GB5TA344403","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S580V4","model_year":2026,"msrp":154705.0,"mileage":8,"color":"Black Magno","interior":"Black","days":198,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/6af0210a-b245-403a-bdbf-50967bb043bc.jpg","status":"active"},{"stock":"3N8350","vin":"W1K6G7GB8TA354374","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S580V4","model_year":2026,"msrp":163080.0,"mileage":5,"color":"Obsidian Black","interior":"Carmine Red","days":123,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8006346e-05bc-4e10-9067-eed165039123.jpg","status":"active"},{"stock":"3D23236","vin":"W1K6G7GB8SA323236","year":"2025","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S580V4","model_year":2025,"msrp":170180.0,"mileage":24,"color":"Nautical Blue","interior":"Silver Grey","days":208,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/83cde8dc-b66d-4648-aaff-63273189771a.jpg","status":"active"},{"stock":"3N8411","vin":"W1K6G6KB8TA346065","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S580eV4","model_year":2026,"msrp":138755.0,"mileage":7,"color":"Moonlight Whit","interior":"Beige\\grey","days":111,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/8fc38be1-88ce-473b-a5e3-efefaeb699c4.jpg","status":"active"},{"stock":"3D57474","vin":"W1K6G8CB0TA357474","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S63EV4","model_year":2026,"msrp":212325.0,"mileage":70,"color":"White Magno","interior":"Carmine Red","days":14,"photo":null,"status":"active"},{"stock":"3N8822","vin":"W1K6G8CB7TA344396","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S63EV4","model_year":2026,"msrp":221455.0,"mileage":13,"color":"Black Magno","interior":"Black","days":5,"photo":null,"status":"active"},{"stock":"3N8788","vin":"W1K6X7KB9TA348686","year":"2026","make":"Mercedes-Benz","model":"S-Class","trim":"","model_code":"S680Z4","model_year":2026,"msrp":259485.0,"mileage":11,"color":"Obsidian Black","interior":"Black Nappa","days":21,"photo":null,"status":"active"},{"stock":"3N8120","vin":"W1KVK5AB7TF026096","year":"2026","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL43R","model_year":2026,"msrp":119380.0,"mileage":12,"color":"Starling Blue","interior":"Brown\\black","days":194,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/738b0916-4466-44a1-9e74-19bcc8a5277b.jpg","status":"active"},{"stock":"3N8729","vin":"W1KVK5AB7TF027393","year":"2026","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL43R","model_year":2026,"msrp":125830.0,"mileage":20,"color":"Hyper Blue","interior":"Black Nappa","days":37,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/e9921e99-4c21-4037-8020-14f625873e2f.jpg","status":"active"},{"stock":"3N8786","vin":"W1KVK8AB0TF027270","year":"2026","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL55R4","model_year":2026,"msrp":151480.0,"mileage":16,"color":"Obsidian Black","interior":"Black Nappa","days":21,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f6672934-d010-4c64-af60-db90e4853eb7.jpg","status":"active"},{"stock":"3N8833","vin":"W1KVK8AB1TF027911","year":"2026","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL55R4","model_year":2026,"msrp":164930.0,"mileage":12,"color":"Patagonia Red","interior":"Black","days":2,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/f5046240-0a3c-43c0-be3b-14442d2e509f.jpg","status":"active"},{"stock":"3N7484","vin":"W1KVK8CB5SF024828","year":"2025","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL63SER4","model_year":2025,"msrp":216795.0,"mileage":15,"color":"Moonlight Whit","interior":"Black Nappa","days":343,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/be5b7e90-8e2d-4686-9986-c6844a0f65ee.jpg","status":"active"},{"stock":"3N8236","vin":"W1KVK8CB7TF026467","year":"2026","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL63SER4","model_year":2026,"msrp":217635.0,"mileage":13,"color":"Patagonia Red","interior":"Black","days":158,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/901caaf4-66dc-4f62-a3a1-a45297cb5ea3.jpg","status":"active"},{"stock":"3N7210","vin":"W1KVK8CB6SF023350","year":"2025","make":"Mercedes-Benz","model":"SL-Class","trim":"","model_code":"SL63SER4","model_year":2025,"msrp":227895.0,"mileage":57,"color":"Alpine Grey","interior":"Black","days":445,"photo":"https://assets.cai-media-management.com/resize/1024x1024/common-vehicle-media/0a525a25-3ecf-426c-b2fc-d0ca80896a04.jpg","status":"active"}],"discounts":{"AMG":3.0,"C":5.0,"CLA":5.0,"CLE":4.0,"E":4.0,"EQ":5.0,"G":1.0,"GLA":5.0,"GLB":5.0,"GLC":4.5,"GLE":4.0,"GLS":3.5,"GT":3.0,"S":3.0,"SL":3.0,"default":4.0}};
+const INVENTORY = INV_DATA.vehicles;
+const GM_DISCOUNTS_DEFAULT = INV_DATA.discounts;
+
+// ─── Users ──────────────────────────────────────────────────────────────────
+const USERS = [
+  { id:1, username:"admin",        password:"MBEncino26!", full_name:"GM Admin",      role:"gm" },
+  { id:2, username:"salesperson1", password:"MBSales26!",  full_name:"Salesperson 1", role:"salesperson" },
+];
+</script>
+
+<script>
+// ─── Pre-compiled React App (no Babel needed) ───────────────────────────────
+const {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo
+} = React;
+
+// ─── Payment Engine (JavaScript port of rate_engine.py) ─────────────────────
+
+const LEASE_TERMS = [24, 30, 36, 42, 48, 54, 60];
+const FINANCE_TERMS = [24, 36, 48, 60, 72];
+const CLA_GLA_GLB_PREFIXES = ["CLA", "GLA", "GLB"];
+function getGMDiscount(modelCode, discounts) {
+  const prefixes = Object.keys(discounts).sort((a, b) => b.length - a.length);
+  for (const p of prefixes) {
+    if (p === "default") continue;
+    if (modelCode.startsWith(p)) return discounts[p];
+  }
+  return discounts["default"] || 0;
+}
+function getMoneyFactor(rateModel, tier, term) {
+  var _RATES_DATA$standard_;
+  if (term <= 51) {
+    var _rateModel$money_fact;
+    return ((_rateModel$money_fact = rateModel.money_factors) === null || _rateModel$money_fact === void 0 ? void 0 : _rateModel$money_fact[tier]) ?? null;
+  }
+  const smf = (_RATES_DATA$standard_ = RATES_DATA.standard_money_factors) === null || _RATES_DATA$standard_ === void 0 ? void 0 : _RATES_DATA$standard_[tier];
+  if (!smf) return null;
+  if (term <= 36) return smf["25_36"];
+  if (term <= 48) return smf["37_48"];
+  if (term <= 60) return smf["49_60"];
+  return smf["61_72"];
+}
+function getResidualPct(rateModel, term, mileage) {
+  var _RATES_DATA$mileage_a, _rateModel$residuals;
+  const adj = ((_RATES_DATA$mileage_a = RATES_DATA.mileage_adjustments) === null || _RATES_DATA$mileage_a === void 0 ? void 0 : _RATES_DATA$mileage_a[String(mileage)]) ?? 0;
+  const base = (_rateModel$residuals = rateModel.residuals) === null || _rateModel$residuals === void 0 ? void 0 : _rateModel$residuals[String(term)];
+  if (base == null) return null;
+  return base + adj;
+}
+function getFinanceAPR(rateModel, tier, term) {
+  const mc = rateModel.model_code || "";
+  const my = rateModel.model_year || "MY26";
+  if (tier === "T1" || tier === "T2") {
+    var _RATES_DATA$finance_a, _RATES_DATA$finance_a2;
+    const special = ((_RATES_DATA$finance_a = RATES_DATA.finance_apr) === null || _RATES_DATA$finance_a === void 0 || (_RATES_DATA$finance_a = _RATES_DATA$finance_a.special) === null || _RATES_DATA$finance_a === void 0 ? void 0 : _RATES_DATA$finance_a[my]) || ((_RATES_DATA$finance_a2 = RATES_DATA.finance_apr) === null || _RATES_DATA$finance_a2 === void 0 || (_RATES_DATA$finance_a2 = _RATES_DATA$finance_a2.special) === null || _RATES_DATA$finance_a2 === void 0 ? void 0 : _RATES_DATA$finance_a2.MY26);
+    const isClaGlaGlb = CLA_GLA_GLB_PREFIXES.some(p => mc.startsWith(p));
+    if (isClaGlaGlb) {
+      if (term === 24) return (special === null || special === void 0 ? void 0 : special.cla_gla_glb_24) ?? 1.40;
+      if (term <= 60) return (special === null || special === void 0 ? void 0 : special.cla_gla_glb_25_60) ?? (special === null || special === void 0 ? void 0 : special.default_24_60) ?? 3.99;
+      return (special === null || special === void 0 ? void 0 : special.cla_gla_glb_72) ?? (special === null || special === void 0 ? void 0 : special.default_72) ?? 5.99;
+    } else {
+      if (term <= 60) return (special === null || special === void 0 ? void 0 : special.default_24_60) ?? 3.99;
+      return (special === null || special === void 0 ? void 0 : special.default_72) ?? 5.99;
+    }
+  } else {
+    var _RATES_DATA$finance_a3, _RATES_DATA$finance_a4;
+    const std = ((_RATES_DATA$finance_a3 = RATES_DATA.finance_apr) === null || _RATES_DATA$finance_a3 === void 0 || (_RATES_DATA$finance_a3 = _RATES_DATA$finance_a3.standard) === null || _RATES_DATA$finance_a3 === void 0 ? void 0 : _RATES_DATA$finance_a3[tier]) || ((_RATES_DATA$finance_a4 = RATES_DATA.finance_apr) === null || _RATES_DATA$finance_a4 === void 0 || (_RATES_DATA$finance_a4 = _RATES_DATA$finance_a4.standard) === null || _RATES_DATA$finance_a4 === void 0 ? void 0 : _RATES_DATA$finance_a4.T3);
+    if (term <= 60) return (std === null || std === void 0 ? void 0 : std["12_60"]) ?? 10.79;
+    if (term <= 66) return (std === null || std === void 0 ? void 0 : std["61_66"]) ?? (std === null || std === void 0 ? void 0 : std["12_60"]) ?? 10.79;
+    return (std === null || std === void 0 ? void 0 : std["67_72"]) ?? (std === null || std === void 0 ? void 0 : std["61_66"]) ?? (std === null || std === void 0 ? void 0 : std["12_60"]) ?? 10.79;
+  }
+}
+function calcLease(rateModel, tier, term, mileage, gmDiscountPct) {
+  const resPct = getResidualPct(rateModel, term, mileage);
+  const mf = getMoneyFactor(rateModel, tier, term);
+  if (resPct == null || mf == null) return null;
+  const totalMsrp = rateModel.total_msrp || rateModel.msrp || 0;
+  const acqFee = rateModel.acq_fee || 795;
+  const regionalCash = rateModel.regional_cash || 0;
+  const mib = rateModel.mib || 0;
+  const sellingPrice = totalMsrp * (1 - gmDiscountPct / 100);
+  const capReductions = regionalCash + mib;
+  const netCap = sellingPrice - capReductions;
+  const residualValue = totalMsrp * resPct;
+  const depreciation = (netCap - residualValue) / term;
+  const financeCharge = (netCap + residualValue) * mf;
+  const monthly = Math.round(depreciation + financeCharge);
+  return {
+    monthly,
+    resPct,
+    mf,
+    acqFee,
+    term,
+    mileage,
+    netCap,
+    residualValue,
+    sellingPrice
+  };
+}
+function calcFinance(rateModel, tier, term, gmDiscountPct) {
+  const apr = getFinanceAPR(rateModel, tier, term);
+  if (apr == null) return null;
+  const totalMsrp = rateModel.total_msrp || rateModel.msrp || 0;
+  const sellingPrice = totalMsrp * (1 - gmDiscountPct / 100);
+  const r = apr / 12 / 100;
+  let monthly;
+  if (r === 0) {
+    monthly = Math.round(sellingPrice / term);
+  } else {
+    monthly = Math.round(sellingPrice * r * Math.pow(1 + r, term) / (Math.pow(1 + r, term) - 1));
+  }
+  return {
+    monthly,
+    apr,
+    term,
+    sellingPrice
+  };
+}
+function getAllPayments(modelCode, modelYear, tier, mileage, gmDiscounts) {
+  var _RATES_DATA$models;
+  const my = modelYear.startsWith("MY") ? modelYear : `MY${String(modelYear).slice(-2)}`;
+  const key = `${my}_${modelCode}`;
+  const rateModel = (_RATES_DATA$models = RATES_DATA.models) === null || _RATES_DATA$models === void 0 ? void 0 : _RATES_DATA$models[key];
+  if (!rateModel) return null;
+  const discPct = getGMDiscount(modelCode, gmDiscounts);
+  const lease = {};
+  for (const t of LEASE_TERMS) {
+    const r = calcLease(rateModel, tier, t, mileage, discPct);
+    if (r) lease[t] = r;
+  }
+  const finance = {};
+  for (const t of FINANCE_TERMS) {
+    const r = calcFinance(rateModel, tier, t, discPct);
+    if (r) finance[t] = r;
+  }
+  return {
+    lease,
+    finance,
+    modelCode,
+    modelYear: my,
+    oemT1: rateModel.oem_payment_t1,
+    oemT3rc: rateModel.oem_payment_t3_rc,
+    oemTerm: rateModel.oem_term,
+    acqFee: rateModel.acq_fee || 795,
+    totalMsrp: rateModel.total_msrp || rateModel.msrp
+  };
+}
+function findSimilarVehicles(modelCode, modelYear, tier, mileage, windowAmt, gmDiscounts) {
+  var _RATES_DATA$models2;
+  const my = modelYear.startsWith("MY") ? modelYear : `MY${String(modelYear).slice(-2)}`;
+  const targetKey = `${my}_${modelCode}`;
+  const targetModel = (_RATES_DATA$models2 = RATES_DATA.models) === null || _RATES_DATA$models2 === void 0 ? void 0 : _RATES_DATA$models2[targetKey];
+  if (!targetModel) return [];
+  const discPct = getGMDiscount(modelCode, gmDiscounts);
+  const targetLease = calcLease(targetModel, tier, 36, mileage, discPct);
+  if (!targetLease) return [];
+  const targetPayment = targetLease.monthly;
+
+  // Build inventory map: model_code -> [vehicles]
+  const invMap = {};
+  for (const v of INVENTORY) {
+    const mc = v.model_code;
+    if (!invMap[mc]) invMap[mc] = [];
+    invMap[mc].push(v);
+  }
+  const results = [];
+  for (const [key, rateModel] of Object.entries(RATES_DATA.models)) {
+    var _invVehicles$find;
+    if (key === targetKey) continue;
+    const mc = rateModel.model_code;
+    const simDiscPct = getGMDiscount(mc, gmDiscounts);
+    const simLease = calcLease(rateModel, tier, 36, mileage, simDiscPct);
+    if (!simLease) continue;
+    const diff = simLease.monthly - targetPayment;
+    if (Math.abs(diff) > windowAmt) continue;
+
+    // Get inventory for this model
+    const invVehicles = invMap[mc] || [];
+    const firstPhoto = ((_invVehicles$find = invVehicles.find(v => v.photo)) === null || _invVehicles$find === void 0 ? void 0 : _invVehicles$find.photo) || null;
+    results.push({
+      model_code: mc,
+      model_year: rateModel.model_year,
+      monthly: simLease.monthly,
+      diff,
+      in_inventory: invVehicles.length > 0,
+      stock_count: invVehicles.length,
+      photo: firstPhoto,
+      msrp: rateModel.total_msrp || rateModel.msrp
+    });
+  }
+  results.sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
+  return results.slice(0, 6);
+}
+
+// ─── Auth helpers ────────────────────────────────────────────────────────────
+function doLogin(username, password) {
+  const u = USERS.find(u => u.username === username && u.password === password);
+  if (!u) throw new Error("Invalid username or password");
+  return u;
+}
+
+// ─── Lookup: search inventory ────────────────────────────────────────────────
+function lookupVehicle(q) {
+  const qUp = q.toUpperCase().trim();
+  // Try stock number first (exact)
+  let v = INVENTORY.find(x => {
+    var _x$stock;
+    return ((_x$stock = x.stock) === null || _x$stock === void 0 ? void 0 : _x$stock.toUpperCase()) === qUp;
+  });
+  // Try last 6 of VIN
+  if (!v) v = INVENTORY.find(x => {
+    var _x$vin;
+    return ((_x$vin = x.vin) === null || _x$vin === void 0 ? void 0 : _x$vin.toUpperCase().slice(-6)) === qUp;
+  });
+  // Try partial stock
+  if (!v) v = INVENTORY.find(x => {
+    var _x$stock2;
+    return (_x$stock2 = x.stock) === null || _x$stock2 === void 0 ? void 0 : _x$stock2.toUpperCase().includes(qUp);
+  });
+  return v || null;
+}
+
+// ─── Formatters ──────────────────────────────────────────────────────────────
+const fmt$ = n => n != null ? `$${Math.round(n).toLocaleString()}` : "—";
+
+// ─── Login Screen ─────────────────────────────────────────────────────────────
+function LoginScreen({
+  onLogin
+}) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const handleLogin = e => {
+    e.preventDefault();
+    setError("");
+    try {
+      const u = doLogin(username, password);
+      onLogin(u);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "login-screen"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "login-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "login-logo"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "star"
+  }, "\u2299"), /*#__PURE__*/React.createElement("div", {
+    className: "brand"
+  }, "MERCEDES-BENZ"), /*#__PURE__*/React.createElement("div", {
+    className: "store"
+  }, "of Encino \xB7 Payment Tool")), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleLogin
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "input-group"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "input-label"
+  }, "Username"), /*#__PURE__*/React.createElement("input", {
+    className: "input",
+    type: "text",
+    value: username,
+    onChange: e => setUsername(e.target.value),
+    autoCapitalize: "none",
+    autoCorrect: "off"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "input-group"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "input-label"
+  }, "Password"), /*#__PURE__*/React.createElement("input", {
+    className: "input",
+    type: "password",
+    value: password,
+    onChange: e => setPassword(e.target.value)
+  })), error && /*#__PURE__*/React.createElement("div", {
+    className: "error-msg"
+  }, "\u26A0 ", error), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary",
+    type: "submit"
+  }, "Sign In"))));
+}
+
+// ─── Payment Cell ─────────────────────────────────────────────────────────────
+function PaymentCell({
+  term,
+  data,
+  featured,
+  type
+}) {
+  if (!data) return /*#__PURE__*/React.createElement("div", {
+    className: "payment-cell no-rate"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "payment-amount",
+    style: {
+      color: "#bbb"
+    }
+  }, "\u2014"), /*#__PURE__*/React.createElement("div", {
+    className: "payment-term"
+  }, term, " mo"));
+  return /*#__PURE__*/React.createElement("div", {
+    className: `payment-cell ${featured ? "featured" : ""}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "payment-amount"
+  }, fmt$(data.monthly)), /*#__PURE__*/React.createElement("div", {
+    className: "payment-term"
+  }, term, " months"), type === "lease" && /*#__PURE__*/React.createElement("div", {
+    className: "payment-sub"
+  }, data.mileage === 7500 ? "7.5k" : data.mileage / 1000, "k mi/yr"), type === "finance" && /*#__PURE__*/React.createElement("div", {
+    className: "payment-sub"
+  }, data.apr, "% APR"));
+}
+
+// ─── Payment Grid ─────────────────────────────────────────────────────────────
+function PaymentGrid({
+  payments,
+  mileage
+}) {
+  const [tab, setTab] = useState("lease");
+  if (!payments) return null;
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "tabs"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: `tab ${tab === "lease" ? "active" : ""}`,
+    onClick: () => setTab("lease")
+  }, "\uD83D\uDD11 Lease"), /*#__PURE__*/React.createElement("div", {
+    className: `tab ${tab === "finance" ? "active" : ""}`,
+    onClick: () => setTab("finance")
+  }, "\uD83D\uDCB3 Finance")), tab === "lease" && /*#__PURE__*/React.createElement("div", {
+    className: "payment-grid"
+  }, LEASE_TERMS.map(t => /*#__PURE__*/React.createElement(PaymentCell, {
+    key: t,
+    term: t,
+    data: payments.lease[t],
+    featured: t === 36,
+    type: "lease"
+  }))), tab === "finance" && /*#__PURE__*/React.createElement("div", {
+    className: "payment-grid"
+  }, FINANCE_TERMS.map(t => /*#__PURE__*/React.createElement(PaymentCell, {
+    key: t,
+    term: t,
+    data: payments.finance[t],
+    featured: t === 60,
+    type: "finance"
+  }))));
+}
+
+// ─── Similar Card ─────────────────────────────────────────────────────────────
+function SimilarCard({
+  vehicle,
+  onSelect
+}) {
+  const diff = vehicle.diff;
+  const diffStr = diff === 0 ? "same" : diff > 0 ? `+$${Math.abs(Math.round(diff))}` : `-$${Math.abs(Math.round(diff))}`;
+  const diffClass = diff > 0 ? "positive" : diff < 0 ? "negative" : "";
+  return /*#__PURE__*/React.createElement("div", {
+    className: `similar-card ${vehicle.in_inventory ? "in-stock" : ""}`,
+    onClick: () => onSelect(vehicle)
+  }, vehicle.photo ? /*#__PURE__*/React.createElement("img", {
+    className: "similar-photo",
+    src: vehicle.photo,
+    alt: vehicle.model_code,
+    loading: "lazy"
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "similar-photo-ph"
+  }, "\uD83D\uDE97"), /*#__PURE__*/React.createElement("div", {
+    className: "similar-info"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "similar-name"
+  }, vehicle.in_inventory && /*#__PURE__*/React.createElement("span", {
+    className: "in-stock-dot"
+  }), vehicle.model_year, " ", vehicle.model_code, vehicle.in_inventory && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      color: "#00a651",
+      marginLeft: 4
+    }
+  }, vehicle.stock_count, " in stock")), /*#__PURE__*/React.createElement("div", {
+    className: "similar-detail"
+  }, "MSRP ", fmt$(vehicle.msrp))), /*#__PURE__*/React.createElement("div", {
+    className: "similar-payment"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "similar-amount"
+  }, fmt$(vehicle.monthly)), /*#__PURE__*/React.createElement("div", {
+    className: `similar-diff ${diffClass}`
+  }, diffStr)));
+}
+
+// ─── Sales Screen ─────────────────────────────────────────────────────────────
+function SalesScreen({
+  user,
+  gmDiscounts,
+  onLogout
+}) {
+  const [query, setQuery] = useState("");
+  const [error, setError] = useState("");
+  const [vehicle, setVehicle] = useState(null);
+  const [rateModel, setRateModel] = useState(null);
+  const [payments, setPayments] = useState(null);
+  const [similar, setSimilar] = useState([]);
+  const [tier, setTier] = useState("T1");
+  const [mileage, setMileage] = useState(7500);
+  const [payWindow, setPayWindow] = useState(50);
+  const recalc = useCallback((v, rm, t, mi, pw) => {
+    if (!v || !rm) return;
+    const py = getAllPayments(rm.model_code, rm.model_year, t, mi, gmDiscounts);
+    setPayments(py);
+    const sim = findSimilarVehicles(rm.model_code, rm.model_year, t, mi, pw, gmDiscounts);
+    setSimilar(sim);
+  }, [gmDiscounts]);
+  const handleSearch = () => {
+    var _RATES_DATA$models3;
+    if (!query.trim()) return;
+    setError("");
+    const v = lookupVehicle(query.trim());
+    if (!v) {
+      setError("Vehicle not found. Check stock # or last 6 of VIN.");
+      setVehicle(null);
+      setPayments(null);
+      return;
+    }
+    const my = `MY${String(v.model_year).slice(-2)}`;
+    const key = `${my}_${v.model_code}`;
+    const rm = (_RATES_DATA$models3 = RATES_DATA.models) === null || _RATES_DATA$models3 === void 0 ? void 0 : _RATES_DATA$models3[key];
+    setVehicle(v);
+    setRateModel(rm || null);
+    if (!rm) {
+      setError(`No rate data for ${v.model_year} ${v.model_code}. May be cash-only or AMG.`);
+      setPayments(null);
+      setSimilar([]);
+      return;
+    }
+    const py = getAllPayments(v.model_code, my, tier, mileage, gmDiscounts);
+    setPayments(py);
+    const sim = findSimilarVehicles(v.model_code, my, tier, mileage, payWindow, gmDiscounts);
+    setSimilar(sim);
+  };
+  const handleTierChange = t => {
+    setTier(t);
+    if (rateModel) recalc(vehicle, rateModel, t, mileage, payWindow);
+  };
+  const handleMileageChange = m => {
+    const mi = parseInt(m);
+    setMileage(mi);
+    if (rateModel) recalc(vehicle, rateModel, tier, mi, payWindow);
+  };
+  const handleWindowChange = w => {
+    const pw = parseInt(w);
+    setPayWindow(pw);
+    if (rateModel) recalc(vehicle, rateModel, tier, mileage, pw);
+  };
+  const handleSimilarClick = s => {
+    var _RATES_DATA$models4;
+    // Find a vehicle in inventory for that model
+    const inv = INVENTORY.find(v => v.model_code === s.model_code);
+    const my = s.model_year;
+    const key = `${my}_${s.model_code}`;
+    const rm = (_RATES_DATA$models4 = RATES_DATA.models) === null || _RATES_DATA$models4 === void 0 ? void 0 : _RATES_DATA$models4[key];
+    setVehicle(inv || {
+      model_code: s.model_code,
+      model_year: s.model_year,
+      make: "Mercedes-Benz",
+      model: s.model_code,
+      year: parseInt("20" + my.slice(-2)),
+      msrp: s.msrp,
+      photo: s.photo
+    });
+    setRateModel(rm || null);
+    if (rm) {
+      const py = getAllPayments(s.model_code, my, tier, mileage, gmDiscounts);
+      setPayments(py);
+      const sim = findSimilarVehicles(s.model_code, my, tier, mileage, payWindow, gmDiscounts);
+      setSimilar(sim);
+    }
+    window.scrollTo(0, 0);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "app"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "header-logo"
+  }, "MB"), /*#__PURE__*/React.createElement("div", {
+    className: "header-title"
+  }, "Payment Tool"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      color: "#aaa"
+    }
+  }, user.full_name.split(" ")[0]), /*#__PURE__*/React.createElement("button", {
+    onClick: onLogout,
+    style: {
+      color: "#aaa",
+      background: "transparent",
+      border: "1px solid #444",
+      borderRadius: 6,
+      padding: "4px 10px",
+      fontSize: 12,
+      cursor: "pointer"
+    }
+  }, "Out"))), /*#__PURE__*/React.createElement("div", {
+    className: "main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-title"
+  }, "Search by Stock # or Last 6 of VIN"), /*#__PURE__*/React.createElement("div", {
+    className: "search-wrap"
+  }, /*#__PURE__*/React.createElement("input", {
+    className: "search-input",
+    type: "text",
+    value: query,
+    onChange: e => setQuery(e.target.value.toUpperCase()),
+    onKeyDown: e => e.key === "Enter" && handleSearch(),
+    placeholder: "e.g. 3N8744",
+    maxLength: 10,
+    autoCapitalize: "characters",
+    autoCorrect: "off"
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "search-btn",
+    onClick: handleSearch
+  }, "\u2192"))), error && /*#__PURE__*/React.createElement("div", {
+    className: "error-msg"
+  }, "\u26A0 ", error), vehicle && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-header"
+  }, vehicle.photo ? /*#__PURE__*/React.createElement("img", {
+    className: "vehicle-photo",
+    src: vehicle.photo,
+    alt: vehicle.model,
+    loading: "lazy"
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-photo-placeholder"
+  }, "\uD83D\uDE97"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-name"
+  }, vehicle.year, " ", vehicle.make || "Mercedes-Benz", " ", vehicle.model), vehicle.trim && /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-sub"
+  }, vehicle.trim), /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-msrp"
+  }, "MSRP ", fmt$(vehicle.msrp)), /*#__PURE__*/React.createElement("div", {
+    className: "vehicle-badges"
+  }, vehicle.stock && /*#__PURE__*/React.createElement("span", {
+    className: "badge badge-stock"
+  }, "#", vehicle.stock), vehicle.days > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "badge badge-age"
+  }, vehicle.days, "d"), vehicle.color && /*#__PURE__*/React.createElement("span", {
+    className: "badge badge-color"
+  }, vehicle.color.split(" ").pop()), !rateModel && /*#__PURE__*/React.createElement("span", {
+    className: "badge badge-nomatch"
+  }, "No Rates"))))), payments && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "control-label"
+  }, "Credit Tier"), /*#__PURE__*/React.createElement("select", {
+    className: "select",
+    value: tier,
+    onChange: e => handleTierChange(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "T1"
+  }, "Tier 1"), /*#__PURE__*/React.createElement("option", {
+    value: "T2"
+  }, "Tier 2"), /*#__PURE__*/React.createElement("option", {
+    value: "T3"
+  }, "Tier 3"), /*#__PURE__*/React.createElement("option", {
+    value: "T4"
+  }, "Tier 4"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "control-label"
+  }, "Miles/yr"), /*#__PURE__*/React.createElement("select", {
+    className: "select",
+    value: mileage,
+    onChange: e => handleMileageChange(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: 7500
+  }, "7,500"), /*#__PURE__*/React.createElement("option", {
+    value: 10000
+  }, "10,000"), /*#__PURE__*/React.createElement("option", {
+    value: 12000
+  }, "12,000"), /*#__PURE__*/React.createElement("option", {
+    value: 15000
+  }, "15,000"), /*#__PURE__*/React.createElement("option", {
+    value: 20000
+  }, "20,000"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "control-label"
+  }, "\xB1Window"), /*#__PURE__*/React.createElement("select", {
+    className: "select",
+    value: payWindow,
+    onChange: e => handleWindowChange(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: 50
+  }, "$50"), /*#__PURE__*/React.createElement("option", {
+    value: 100
+  }, "$100"), /*#__PURE__*/React.createElement("option", {
+    value: 150
+  }, "$150"), /*#__PURE__*/React.createElement("option", {
+    value: 200
+  }, "$200"))))), /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-title"
+  }, vehicle.model_code || vehicle.model, " \xB7 ", rateModel === null || rateModel === void 0 ? void 0 : rateModel.model_year, " \xB7 ", tier), payments.oemT3rc && /*#__PURE__*/React.createElement("div", {
+    className: "oem-ref"
+  }, "OEM ref (T3+RC): ", fmt$(payments.oemT3rc), "/mo \xB7 ", payments.oemTerm, "mo/10k mi \xA0\xB7\xA0 Acq Fee: ", fmt$(payments.acqFee), " at signing"), /*#__PURE__*/React.createElement(PaymentGrid, {
+    payments: payments,
+    mileage: mileage
+  })), similar.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-title"
+  }, "Similar Payments \xB1$", payWindow, " \xB7 ", tier, " \xB7 ", mileage === 7500 ? "7.5k" : mileage / 1000, "k mi \xB7 36mo"), /*#__PURE__*/React.createElement("div", {
+    className: "similar-list"
+  }, similar.map((s, i) => /*#__PURE__*/React.createElement(SimilarCard, {
+    key: i,
+    vehicle: s,
+    onSelect: handleSimilarClick
+  })))), similar.length === 0 && /*#__PURE__*/React.createElement("div", {
+    className: "card text-muted",
+    style: {
+      textAlign: "center",
+      padding: "20px"
+    }
+  }, "No similar vehicles within \xB1$", payWindow, ".", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12
+    }
+  }, "Try widening the window.")))), !vehicle && !error && /*#__PURE__*/React.createElement("div", {
+    className: "card",
+    style: {
+      textAlign: "center",
+      padding: "32px 16px",
+      color: "#aaa"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 48,
+      marginBottom: 12
+    }
+  }, "\u2299"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: "#555"
+    }
+  }, "Enter Stock # or Last 6 of VIN"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      marginTop: 6
+    }
+  }, "to see lease and finance payments"))));
+}
+
+// ─── GM Admin Panel ───────────────────────────────────────────────────────────
+function AdminPanel({
+  user,
+  gmDiscounts,
+  setGmDiscounts,
+  onLogout
+}) {
+  const [view, setView] = useState("discounts");
+  const [localDiscounts, setLocalDiscounts] = useState(Object.entries(gmDiscounts).map(([model_prefix, discount_pct]) => ({
+    model_prefix,
+    discount_pct
+  })));
+  const [saved, setSaved] = useState(false);
+  const CLASS_LABELS = {
+    CLA: "CLA-Class",
+    C: "C-Class",
+    CLE: "CLE-Class",
+    E: "E-Class",
+    GLA: "GLA-Class",
+    GLB: "GLB-Class",
+    GLC: "GLC-Class",
+    GLE: "GLE-Class",
+    GLS: "GLS-Class",
+    S: "S-Class",
+    EQ: "EQ Models",
+    AMG: "AMG GT",
+    SL: "SL-Class",
+    GT: "GT Models",
+    G: "G-Class",
+    default: "All Others"
+  };
+  const handleDiscountChange = (prefix, val) => {
+    setLocalDiscounts(prev => prev.map(d => d.model_prefix === prefix ? {
+      ...d,
+      discount_pct: parseFloat(val) || 0
+    } : d));
+    setSaved(false);
+  };
+  const handleSave = () => {
+    const newDisc = {};
+    localDiscounts.forEach(d => newDisc[d.model_prefix] = d.discount_pct);
+    setGmDiscounts(newDisc);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  // Inventory summary
+  const invSummary = useMemo(() => {
+    const counts = {};
+    for (const v of INVENTORY) {
+      counts[v.model_code] = (counts[v.model_code] || 0) + 1;
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "app"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "header-logo"
+  }, "MB"), /*#__PURE__*/React.createElement("div", {
+    className: "header-title"
+  }, "GM Dashboard"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      color: "#aaa"
+    }
+  }, user.full_name.split(" ")[0]), /*#__PURE__*/React.createElement("button", {
+    onClick: onLogout,
+    style: {
+      color: "#aaa",
+      background: "transparent",
+      border: "1px solid #444",
+      borderRadius: 6,
+      padding: "4px 10px",
+      fontSize: 12,
+      cursor: "pointer"
+    }
+  }, "Out"))), /*#__PURE__*/React.createElement("div", {
+    className: "main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card",
+    style: {
+      padding: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "tabs",
+    style: {
+      marginBottom: 0
+    }
+  }, [["discounts", "🏷️ Discounts"], ["inventory", "📦 Inventory"]].map(([v, label]) => /*#__PURE__*/React.createElement("div", {
+    key: v,
+    className: `tab ${view === v ? "active" : ""}`,
+    onClick: () => setView(v),
+    style: {
+      fontSize: 12,
+      padding: "8px 4px"
+    }
+  }, label)))), view === "discounts" && /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-title"
+  }, "Model Class Discounts (% off MSRP)"), saved && /*#__PURE__*/React.createElement("div", {
+    className: "success-msg"
+  }, "\u2713 Discounts saved for this session!"), /*#__PURE__*/React.createElement("div", {
+    className: "admin-grid"
+  }, localDiscounts.map(d => /*#__PURE__*/React.createElement("div", {
+    key: d.model_prefix,
+    className: "discount-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "discount-label"
+  }, CLASS_LABELS[d.model_prefix] || d.model_prefix), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    className: "discount-input",
+    value: d.discount_pct,
+    min: 0,
+    max: 15,
+    step: 0.5,
+    onChange: e => handleDiscountChange(d.model_prefix, e.target.value)
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "discount-pct"
+  }, "%")))), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary mt-2",
+    onClick: handleSave
+  }, "Save Discounts"), /*#__PURE__*/React.createElement("div", {
+    className: "text-sm text-muted mt-2",
+    style: {
+      marginTop: 8
+    }
+  }, "Note: Discount changes apply immediately to all payment calculations in this session.")), view === "inventory" && /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-title"
+  }, "Inventory Summary \u2014 ", INVENTORY.length, " New Vehicles"), /*#__PURE__*/React.createElement("table", {
+    className: "report-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Model"), /*#__PURE__*/React.createElement("th", null, "Count"))), /*#__PURE__*/React.createElement("tbody", null, invSummary.map(([mc, cnt]) => /*#__PURE__*/React.createElement("tr", {
+    key: mc
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, mc)), /*#__PURE__*/React.createElement("td", null, cnt))))), /*#__PURE__*/React.createElement("div", {
+    className: "divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "text-sm text-muted"
+  }, "To update inventory, use the full server-based version. Rates valid ", RATES_DATA.effective, " \u2013 ", RATES_DATA.expiry, "."))));
+}
+
+// ─── App Root ──────────────────────────────────────────────────────────────────
+function App() {
+  const [user, setUser] = useState(null);
+  const [gmDiscounts, setGmDiscounts] = useState(GM_DISCOUNTS_DEFAULT);
+  return user ? user.role === "gm" ? /*#__PURE__*/React.createElement(AdminPanel, {
+    user: user,
+    gmDiscounts: gmDiscounts,
+    setGmDiscounts: setGmDiscounts,
+    onLogout: () => setUser(null)
+  }) : /*#__PURE__*/React.createElement(SalesScreen, {
+    user: user,
+    gmDiscounts: gmDiscounts,
+    onLogout: () => setUser(null)
+  }) : /*#__PURE__*/React.createElement(LoginScreen, {
+    onLogin: setUser
+  });
+}
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
+</script>
+
+</body></html>
