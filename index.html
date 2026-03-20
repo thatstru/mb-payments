@@ -6,7 +6,7 @@
 <title>MB Payments – Mercedes-Benz of Encino</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f0f0;color:#1a1a1a}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#1a1a1b;color:#1a1a1a}
 :root{--black:#1a1a1a;--silver:#c0c0c0;--accent:#009ee3;--green:#00a651;--red:#e00;--orange:#e67e22;--r:12px;--sh:0 2px 12px rgba(0,0,0,.12)}
 .hidden{display:none!important}
 .screen{min-height:100vh}
@@ -71,19 +71,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .oem-ref{font-size:11px;color:#888;background:#f8f9fa;border-radius:6px;padding:6px 10px;margin-bottom:8px}
 .cilajet-note{font-size:11px;color:#555;background:#f0fff4;border-radius:6px;padding:6px 10px;margin-bottom:8px}
 .notice-info{font-size:12px;color:#0a73c4;background:#e8f4fd;border-radius:6px;padding:8px 10px;margin-bottom:10px}
-.similar-list{display:flex;flex-direction:column;gap:10px}
-.scard{display:flex;align-items:center;gap:10px;padding:12px;background:#f8f9fa;border-radius:10px;border:2px solid transparent;cursor:pointer}
+/* ── Similar / Upgrade tabs ── */
+.sim-tabs{display:flex;gap:6px;margin-bottom:10px}
+.sim-tab{flex:1;text-align:center;padding:7px 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:8px;border:1.5px solid #ddd;background:white;color:#888;cursor:pointer;transition:all .15s}
+.sim-tab.active{background:var(--black);color:white;border-color:var(--black)}
+.sim-tab.has-stock{border-color:var(--green);color:var(--green)}
+.sim-tab.active.has-stock{background:var(--green);border-color:var(--green);color:white}
+/* horizontal scroll row */
+.sim-panel{display:none}
+.sim-panel.active{display:block}
+.sim-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.sim-scroll::-webkit-scrollbar{display:none}
+/* individual bump card — vertical, fixed width */
+.scard{flex:0 0 148px;display:flex;flex-direction:column;background:#f8f9fa;border-radius:12px;border:2px solid #eee;cursor:pointer;overflow:hidden;transition:border-color .15s}
 .scard.instock{border-color:#c8e6c9}
-.sphoto{width:60px;height:44px;border-radius:6px;object-fit:cover;background:#e0e0e0;flex-shrink:0}
-.sphoto-ph{width:60px;height:44px;border-radius:6px;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.sinfo{flex:1;min-width:0}
-.sname{font-size:14px;font-weight:600}
-.sdetail{font-size:11px;color:#888;margin-top:2px}
-.spay{text-align:right;flex-shrink:0}
-.samount{font-size:18px;font-weight:700}
-.sdiff{font-size:11px;color:#888;margin-top:1px}
-.sdiff.pos{color:var(--red)}
-.sdiff.neg{color:var(--green)}
+.scard:active{opacity:.85}
+.sphoto{width:100%;height:90px;object-fit:cover;background:#e8e8e8;display:block}
+.sphoto-ph{width:100%;height:90px;background:#e8e8e8;display:flex;align-items:center;justify-content:center;font-size:30px}
+.scard-body{padding:8px 10px 10px}
+.sname{font-size:12px;font-weight:700;line-height:1.3;margin-bottom:2px}
+.sdetail{font-size:10px;color:#888}
+.scard-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.samount{font-size:17px;font-weight:700}
+.sdiff{font-size:10px;font-weight:600;padding:2px 6px;border-radius:20px;background:#fff3e0;color:var(--orange)}
+.sinv-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.sinv-badge.instock{background:#e8f5e9;color:var(--green)}
+.sinv-badge.order{background:#f5f5f5;color:#999}
+.sim-empty{font-size:13px;color:#aaa;text-align:center;padding:16px 0}
 .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px}
 .error-msg{background:#fff0f0;color:var(--red);padding:12px 14px;border-radius:8px;font-size:14px;margin-bottom:12px}
 .success-msg{background:#f0fff4;color:var(--green);padding:12px 14px;border-radius:8px;font-size:14px;margin-bottom:12px}
@@ -129,9 +143,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="login-screen">
     <div class="login-box">
       <div class="login-logo">
+        <div style="font-size:11px;font-weight:700;letter-spacing:3px;color:#aaa;text-transform:uppercase;margin-bottom:12px">BumpDesk</div>
         <div class="star">⊙</div>
         <div class="brand">MERCEDES-BENZ</div>
-        <div class="store">of Encino — Payment Tool</div>
+        <div class="store">of Encino</div>
       </div>
       <div class="input-group">
         <label class="input-label" for="login-user">Username</label>
@@ -151,8 +166,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div id="screen-sales" class="screen hidden">
   <div class="app">
     <div class="header">
-      <div class="header-logo">MB</div>
-      <div class="header-title">Payment Tool</div>
+      <div class="header-logo" style="font-size:13px;letter-spacing:1px">Mercedes-Benz of Encino</div>
+      <div class="header-title">BumpDesk</div>
       <div style="display:flex;align-items:center;gap:8px">
         <span id="sales-username" style="font-size:12px;color:#aaa"></span>
         <button class="btn-sm" onclick="logout()">Out</button>
@@ -225,7 +240,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <div id="similar-section" class="hidden">
           <div class="card">
             <div id="similar-title" class="card-title"></div>
-            <div id="similar-list" class="similar-list"></div>
+            <div class="sim-tabs">
+              <div id="stab-same" class="sim-tab active" onclick="switchSimTab(&#39;same&#39;)">Same Model</div>
+              <div id="stab-stepup" class="sim-tab" onclick="switchSimTab(&#39;stepup&#39;)">Step Up</div>
+              <div id="stab-other" class="sim-tab" onclick="switchSimTab(&#39;other&#39;)">Other</div>
+            </div>
+            <div id="sim-panel-same" class="sim-panel active"><div class="sim-scroll" id="sim-scroll-same"></div></div>
+            <div id="sim-panel-stepup" class="sim-panel"><div class="sim-scroll" id="sim-scroll-stepup"></div></div>
+            <div id="sim-panel-other" class="sim-panel"><div class="sim-scroll" id="sim-scroll-other"></div></div>
           </div>
         </div>
       </div>
@@ -237,8 +259,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div id="screen-admin" class="screen hidden">
   <div class="app">
     <div class="header">
-      <div class="header-logo">MB</div>
-      <div class="header-title">GM Dashboard</div>
+      <div class="header-logo" style="font-size:13px;letter-spacing:1px">Mercedes-Benz of Encino</div>
+      <div class="header-title">BumpDesk</div>
       <div style="display:flex;align-items:center;gap:8px">
         <span id="admin-username" style="font-size:12px;color:#aaa"></span>
         <button class="btn-sm" onclick="logout()">Out</button>
@@ -505,7 +527,7 @@ function lsSet(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch
 // ── State ────────────────────────────────────────────────────────
 var state = {
   user:null, vehicle:null, rateModel:null,
-  payments:null, similar:[],
+  payments:null, similar:{same:[],stepup:[],other:[]}, similarFlat:[], simTab:'same',
   tier:'T1', mileage:7500, payWindow:50, downPayment:0,
   activeTab:'lease', adminTab:'disc',
   discounts: (function(){
@@ -650,17 +672,48 @@ function lookupVehicle(q){
   if(!v)for(var i=0;i<INVENTORY.length;i++){if((INVENTORY[i].stock||'').toUpperCase().indexOf(u)>=0){v=INVENTORY[i];break;}}
   return v;
 }
+// ── Model family helpers ─────────────────────────────────────────
+function getModelFamily(mc){
+  if(!mc) return 'Other';
+  var c=mc.toUpperCase();
+  if(c.indexOf('GLS')===0) return 'GLS';
+  if(c.indexOf('GLE')===0) return 'GLE';
+  if(c.indexOf('GLC')===0) return 'GLC';
+  if(c.indexOf('GLB')===0) return 'GLB';
+  if(c.indexOf('GLA')===0) return 'GLA';
+  if(c.indexOf('CLE')===0) return 'CLE';
+  if(c.indexOf('CLA')===0) return 'CLA';
+  if(c.indexOf('AMG')===0) return 'AMG';
+  if(c.indexOf('EQS')===0) return 'EQS';
+  if(c.indexOf('EQE')===0) return 'EQE';
+  if(c.indexOf('EQB')===0) return 'EQB';
+  if(c.indexOf('SL')===0)  return 'SL';
+  if(c[0]==='C') return 'C';
+  if(c[0]==='E') return 'E';
+  if(c[0]==='S') return 'S';
+  if(c[0]==='A') return 'A';
+  if(c[0]==='B') return 'B';
+  return 'Other';
+}
+// Natural adjacent step-ups (family → families that are a logical upgrade pitch)
+var STEP_UP_MAP={
+  'GLA':['GLB','GLC'],'GLB':['GLC'],'GLC':['GLE'],'GLE':['GLS'],
+  'C':['E','CLE'],'E':['S'],'CLA':['CLE','C'],'CLE':['E'],
+  'EQE':['EQS'],'EQB':['EQE']
+};
 function findSimilar(model,tier,mileage,payWindow,downPayment){
   var base=calcLease(model,tier,36,mileage,downPayment);
-  if(!base) return [];
+  if(!base) return {same:[],stepup:[],other:[]};
   var target=base.monthly,win=payWindow;
+  var srcFamily=getModelFamily(model.model_code);
+  var stepFamilies=STEP_UP_MAP[srcFamily]||[];
   var invMap={};
   INVENTORY.forEach(function(v){
     if(!invMap[v.model_code])invMap[v.model_code]={count:0,photo:null};
     invMap[v.model_code].count++;
     if(!invMap[v.model_code].photo&&v.photo)invMap[v.model_code].photo=v.photo;
   });
-  var results=[],keys=Object.keys(RATES_DATA.models);
+  var same=[],stepup=[],other=[],keys=Object.keys(RATES_DATA.models);
   for(var i=0;i<keys.length;i++){
     var rm=RATES_DATA.models[keys[i]];
     if(rm.model_code===model.model_code&&rm.model_year===model.model_year) continue;
@@ -670,11 +723,16 @@ function findSimilar(model,tier,mileage,payWindow,downPayment){
     if(diff<=0||diff>win) continue;
     var inv=invMap[rm.model_code]||{count:0,photo:null};
     var gross=calcGross(rm);
-    results.push({model_code:rm.model_code,model_year:rm.model_year,monthly:sl.monthly,diff:diff,
-                  inStock:inv.count>0,stockCount:inv.count,photo:inv.photo,msrp:rm.total_msrp||rm.msrp,gross:gross});
+    var entry={model_code:rm.model_code,model_year:rm.model_year,monthly:sl.monthly,diff:diff,
+               inStock:inv.count>0,stockCount:inv.count,photo:inv.photo,msrp:rm.total_msrp||rm.msrp,gross:gross};
+    var fam=getModelFamily(rm.model_code);
+    if(fam===srcFamily) same.push(entry);
+    else if(stepFamilies.indexOf(fam)>=0) stepup.push(entry);
+    else other.push(entry);
   }
-  results.sort(function(a,b){return b.gross-a.gross;});
-  return results.slice(0,6);
+  function byGross(a,b){return b.gross-a.gross;}
+  same.sort(byGross); stepup.sort(byGross); other.sort(byGross);
+  return {same:same,stepup:stepup,other:other};
 }
 
 // ── DOM helpers ──────────────────────────────────────────────────
@@ -770,26 +828,70 @@ function renderPaymentGrid(payments,prefix){
   else switchTab(state.activeTab);
 }
 
+function buildSCardHTML(s,globalIdx){
+  var ds='+'+fmt(s.diff)+'/mo';
+  var inv=s.inStock
+    ?'<span class="sinv-badge instock">&#x2713; '+s.stockCount+' In Stock</span>'
+    :'<span class="sinv-badge order">Order / Trade</span>';
+  var photo=s.photo
+    ?'<img class="sphoto" src="'+s.photo+'" loading="lazy">'
+    :'<div class="sphoto-ph">&#x1F697;</div>';
+  return '<div class="scard'+(s.inStock?' instock':'')+'" onclick="clickSimilar('+globalIdx+')">'
+    +photo
+    +'<div class="scard-body">'
+      +'<div class="sname">'+s.model_year+' '+s.model_code+'</div>'
+      +'<div class="sdetail">MSRP '+fmt(s.msrp)+'</div>'
+      +inv
+      +'<div class="scard-foot">'
+        +'<div class="samount">'+fmt(s.monthly)+'</div>'
+        +'<div class="sdiff">+'+fmt(s.diff)+'</div>'
+      +'</div>'
+    +'</div>'
+  +'</div>';
+}
 function renderSimilar(similar){
-  if(!similar||similar.length===0){hideEl('similar-section');return;}
-  var html='';
-  similar.forEach(function(s,i){
-    var diff=s.diff;
-    var ds=diff===0?'same':(diff>0?'+'+fmt(Math.abs(diff)):'−'+fmt(Math.abs(diff)));
-    var dc=diff>0?' pos':diff<0?' neg':'';
-    html+='<div class="scard'+(s.inStock?' instock':'')+'" onclick="clickSimilar('+i+')">';
-    html+=s.photo?'<img class="sphoto" src="'+s.photo+'" loading="lazy">':'<div class="sphoto-ph">&#x1F697;</div>';
-    html+='<div class="sinfo"><div class="sname">';
-    if(s.inStock) html+='<span class="dot"></span>';
-    html+=s.model_year+' '+s.model_code;
-    if(s.inStock) html+=' <span style="font-size:10px;color:var(--green)">'+s.stockCount+' in stock</span>';
-    html+='</div><div class="sdetail">MSRP '+fmt(s.msrp)+'</div></div>';
-    html+='<div class="spay"><div class="samount">'+fmt(s.monthly)+'</div>';
-    html+='<div class="sdiff'+dc+'">'+ds+'</div></div></div>';
+  if(!similar||(similar.same.length+similar.stepup.length+similar.other.length===0)){
+    hideEl('similar-section');return;
+  }
+  // Build a flat index so clickSimilar still uses a single array
+  state.similarFlat=similar.same.concat(similar.stepup,similar.other);
+  var offset={same:0,stepup:similar.same.length,other:similar.same.length+similar.stepup.length};
+  function renderPanel(list,startIdx,scrollId,emptyMsg){
+    if(list.length===0){
+      setHTML(scrollId,'<div class="sim-empty">'+emptyMsg+'</div>');
+    } else {
+      var html='';
+      list.forEach(function(s,i){html+=buildSCardHTML(s,startIdx+i);});
+      setHTML(scrollId,html);
+    }
+  }
+  renderPanel(similar.same,   offset.same,   'sim-scroll-same',   'No same-model upgrades in range');
+  renderPanel(similar.stepup, offset.stepup, 'sim-scroll-stepup', 'No adjacent step-up models in range');
+  renderPanel(similar.other,  offset.other,  'sim-scroll-other',  'No other options in range');
+  // Tab badges — highlight tabs that have in-stock vehicles
+  ['same','stepup','other'].forEach(function(key){
+    var list=similar[key];
+    var tab=document.getElementById('stab-'+key);
+    var hasStock=list.some(function(s){return s.inStock;});
+    tab.classList.remove('has-stock');
+    if(hasStock) tab.classList.add('has-stock');
+    // disable styling on empty tabs
+    tab.style.opacity=list.length===0?'0.4':'1';
   });
-  setHTML('similar-list',html);
+  // Default to first non-empty tab
+  var first=similar.same.length>0?'same':similar.stepup.length>0?'stepup':'other';
+  switchSimTab(first);
   setText('similar-title','Upgrade Options up to +$'+state.payWindow+'/mo · '+state.tier+' · '+miLabel(state.mileage)+' mi · 36mo');
   showEl('similar-section');
+}
+function switchSimTab(key){
+  state.simTab=key;
+  ['same','stepup','other'].forEach(function(k){
+    var tab=document.getElementById('stab-'+k);
+    var panel=document.getElementById('sim-panel-'+k);
+    if(k===key){tab.classList.add('active');panel.classList.add('active');}
+    else{tab.classList.remove('active');panel.classList.remove('active');}
+  });
 }
 
 function renderDiscounts(){
@@ -899,7 +1001,7 @@ function login(){
   }
 }
 function logout(){
-  state.user=null;state.vehicle=null;state.rateModel=null;state.payments=null;state.similar=[];
+  state.user=null;state.vehicle=null;state.rateModel=null;state.payments=null;state.similar={same:[],stepup:[],other:[]};state.similarFlat=[];state.simTab='same';
   state.adminVehicle=null;state.adminRateModel=null;state.adminPayments=null;
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
@@ -1063,7 +1165,7 @@ function saveMfMarkup(){
   }
 }
 function clickSimilar(i){
-  var s=state.similar[i];if(!s) return;
+  var s=state.similarFlat[i];if(!s) return;
   var rm=RATES_DATA.models[s.model_year+'_'+s.model_code];if(!rm) return;
   var invYear=parseInt('20'+s.model_year.slice(-2));
   var inv=null;
