@@ -698,7 +698,7 @@ function getModelFamily(mc){
 // Natural adjacent step-ups (family → families that are a logical upgrade pitch)
 var STEP_UP_MAP={
   'GLA':['GLB','GLC'],'GLB':['GLC'],'GLC':['GLE'],'GLE':['GLS'],
-  'C':['E','CLE'],'E':['S'],'CLA':['CLE','C'],'CLE':['E'],
+  'C':['E','CLE'],'E':['CLE','GLE'],'CLA':['CLE','C'],'CLE':['E','GLE'],
   'EQE':['EQS'],'EQB':['EQE']
 };
 function findSimilar(model,tier,mileage,payWindow,downPayment){
