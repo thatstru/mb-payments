@@ -198,7 +198,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
               </select>
             </div>
             <div>
-              <div class="ctrl-label">± Window</div>
+              <div class="ctrl-label">Bump Range</div>
               <select id="sel-window" class="select">
                 <option value="50">$50</option><option value="100">$100</option>
                 <option value="150">$150</option><option value="200">$200</option>
@@ -285,6 +285,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button class="btn btn-primary mt" onclick="saveCilajet()">Save Cilajet Settings</button>
           <div class="text-sm">Cilajet is capitalized into all lease and finance payments. Saved to this browser.</div>
         </div>
+        <div class="card">
+          <div class="card-title">Lease Money Factor Markup</div>
+          <div class="adj-hint">Added to the buy-rate money factor on all lease calculations. Builds dealer reserve into every payment salesperson presents.</div>
+          <div id="mfmarkup-msg" class="hidden"></div>
+          <div class="disc-row">
+            <div class="disc-label">MF Markup</div>
+            <input id="mf-markup-input" class="cilajet-input" type="number" min="0" max="0.00100" step="0.00010" value="0.00030">
+            <div class="disc-unit">MF</div>
+          </div>
+          <button class="btn btn-primary mt" onclick="saveMfMarkup()">Save MF Markup</button>
+          <div class="text-sm">Standard dealer markup is +0.00030. Set to 0 to use buy-rate only. Saved to this browser.</div>
+        </div>
       </div>
 
       <!-- INVENTORY PANEL -->
@@ -340,7 +352,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
                 </select>
               </div>
               <div>
-                <div class="ctrl-label">± Window</div>
+                <div class="ctrl-label">Bump Range</div>
                 <select id="admin-sel-window" class="select">
                   <option value="50">$50</option><option value="100">$100</option>
                   <option value="150">$150</option><option value="200">$200</option>
@@ -502,6 +514,7 @@ var state = {
     return JSON.parse(JSON.stringify(GM_DISC));
   })(),
   cilajet: lsGet('mb_encino_cilajet', JSON.parse(JSON.stringify(CILAJET_DEFAULTS))),
+  mfMarkup: lsGet('mb_encino_mf_markup', 0.00030),
   adminVehicle:null, adminRateModel:null, adminPayments:null,
   adminTier:'T1', adminMileage:7500, adminPayWindow:50, adminDownPayment:0,
   adminActiveTab:'lease'
@@ -587,6 +600,7 @@ function calcLease(model,tier,term,mileage,downPayment){
   var resPct=getResPct(model,term,mileage);
   var mf=getMF(model,tier,term);
   if(resPct==null||mf==null) return null;
+  mf=mf+(state.mfMarkup||0);
   var totalMsrp=model.total_msrp||model.msrp||0;
   var discPct=getDiscount(model.model_code||'');
   var regional=model.regional_cash||0;
@@ -609,6 +623,15 @@ function calcFinance(model,tier,term,downPayment){
   var r=apr/12/100;
   var monthly=r===0?Math.round(principal/term):Math.round(principal*r*Math.pow(1+r,term)/(Math.pow(1+r,term)-1));
   return {monthly:monthly,apr:apr,term:term};
+}
+function calcGross(model){
+  var totalMsrp=model.total_msrp||model.msrp||0;
+  var softCost=totalMsrp*0.925;
+  var discPct=getDiscount(model.model_code||'');
+  var sellingPrice=totalMsrp*(1-discPct/100);
+  var frontEnd=sellingPrice-softCost;
+  var cilajet=getCilajet(totalMsrp);
+  return Math.round(frontEnd+cilajet);
 }
 function getAllPayments(model,tier,mileage,downPayment){
   var lease={},finance={};
@@ -644,12 +667,13 @@ function findSimilar(model,tier,mileage,payWindow,downPayment){
     var sl=calcLease(rm,tier,36,mileage,downPayment);
     if(!sl) continue;
     var diff=sl.monthly-target;
-    if(Math.abs(diff)>win) continue;
+    if(diff<=0||diff>win) continue;
     var inv=invMap[rm.model_code]||{count:0,photo:null};
+    var gross=calcGross(rm);
     results.push({model_code:rm.model_code,model_year:rm.model_year,monthly:sl.monthly,diff:diff,
-                  inStock:inv.count>0,stockCount:inv.count,photo:inv.photo,msrp:rm.total_msrp||rm.msrp});
+                  inStock:inv.count>0,stockCount:inv.count,photo:inv.photo,msrp:rm.total_msrp||rm.msrp,gross:gross});
   }
-  results.sort(function(a,b){return Math.abs(a.diff)-Math.abs(b.diff);});
+  results.sort(function(a,b){return b.gross-a.gross;});
   return results.slice(0,6);
 }
 
@@ -764,7 +788,7 @@ function renderSimilar(similar){
     html+='<div class="sdiff'+dc+'">'+ds+'</div></div></div>';
   });
   setHTML('similar-list',html);
-  setText('similar-title','Similar Payments ±$'+state.payWindow+' · '+state.tier+' · '+miLabel(state.mileage)+' mi · 36mo');
+  setText('similar-title','Upgrade Options up to +$'+state.payWindow+'/mo · '+state.tier+' · '+miLabel(state.mileage)+' mi · 36mo');
   showEl('similar-section');
 }
 
@@ -867,7 +891,7 @@ function login(){
   state.user=found;
   if(found.role==='gm'){
     setText('admin-username',found.full_name.split(' ')[0]);
-    renderDiscounts();renderCilajet();renderInventory();
+    renderDiscounts();renderCilajet();renderMfMarkup();renderInventory();
     showScreen('screen-admin');
   } else {
     setText('sales-username',found.full_name.split(' ')[0]);
@@ -1017,6 +1041,27 @@ function saveCilajet(){
   }
 }
 
+function renderMfMarkup(){
+  var el=document.getElementById('mf-markup-input');
+  if(el) el.value=(state.mfMarkup||0).toFixed(5);
+}
+function saveMfMarkup(){
+  var val=parseFloat(document.getElementById('mf-markup-input').value)||0;
+  state.mfMarkup=val;
+  lsSet('mb_encino_mf_markup',val);
+  var msg=document.getElementById('mfmarkup-msg');
+  msg.innerHTML='&#x2713; MF markup saved!';msg.className='success-msg';
+  msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
+  if(state.rateModel){
+    state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment);
+    state.similar=findSimilar(state.rateModel,state.tier,state.mileage,state.payWindow,state.downPayment);
+    renderPaymentGrid(state.payments);renderSimilar(state.similar);
+  }
+  if(state.adminRateModel){
+    state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment);
+    renderPaymentGrid(state.adminPayments,'admin');
+  }
+}
 function clickSimilar(i){
   var s=state.similar[i];if(!s) return;
   var rm=RATES_DATA.models[s.model_year+'_'+s.model_code];if(!rm) return;
