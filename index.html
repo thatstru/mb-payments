@@ -1030,9 +1030,6 @@ function clickSimilar(i){
   state.rateModel=rm;
   state.vehicle=inv||{year:invYear,make:'Mercedes-Benz',model:s.model_code,model_code:s.model_code,
                       model_year:s.model_year,msrp:s.msrp,photo:s.photo};
-  var dp=defaultDownPayment((inv?inv.msrp:s.msrp)||s.msrp||0);
-  state.downPayment=dp;
-  document.getElementById('inp-downpay').value=dp;
   renderVehicle(state.vehicle,rm);
   state.payments=getAllPayments(rm,state.tier,state.mileage,state.downPayment);
   state.similar=findSimilar(rm,state.tier,state.mileage,state.payWindow,state.downPayment);
