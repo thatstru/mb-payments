@@ -74,6 +74,59 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a1a1b;color:#f0f0f0;font-size:11px;line-height:1.5;padding:9px 11px;border-radius:8px;width:230px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4);pointer-events:none;font-weight:400}
 .tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1a1b}
 .tip-icon.tip-active~.tip-box{display:block}
+
+/* ── Desktop responsive (768px+) ─────────────────────────────── */
+@media(min-width:768px){
+  .app{max-width:1280px;margin:0 auto}
+  .header{padding:14px 24px}
+  .main{padding:20px 24px}
+  .card{padding:20px}
+  .card-title{font-size:14px;margin-bottom:14px}
+  .search-wrap{gap:10px}
+  .search-input{font-size:22px;padding:14px 16px}
+  .search-btn{padding:14px 22px;font-size:20px}
+
+  /* Two-column vehicle layout */
+  #vehicle-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    align-items:start;
+  }
+  #vehicle-card{grid-column:1;grid-row:1}
+  #controls-card{grid-column:2;grid-row:1}
+  #payments-card{grid-column:2;grid-row:2}
+  #similar-section{grid-column:1/3}
+
+  /* 4-column controls on desktop */
+  .controls-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+
+  /* Payment grid — all terms in one row */
+  .payment-grid{grid-template-columns:repeat(auto-fit,minmax(90px,1fr))}
+  .pcell{padding:14px 8px}
+  .pcell .amount{font-size:22px}
+
+  /* Upgrade cards — wider */
+  .scard{flex:0 0 172px}
+  .sphoto,.sphoto-ph{height:100px}
+
+  /* Vehicle photo larger */
+  .vehicle-photo,.vehicle-photo-ph{width:110px;height:84px}
+  .vehicle-name{font-size:17px}
+
+  /* Admin two-column check panel */
+  #admin-vehicle-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    align-items:start;
+  }
+  #admin-vehicle-section .card:first-child{grid-column:1;grid-row:1}
+  #admin-vehicle-section .card:nth-child(2){grid-column:2;grid-row:1}
+  #admin-vehicle-section .card:nth-child(3){grid-column:2;grid-row:2}
+  #admin-vehicle-section .card:nth-child(4){grid-column:1/3}
+  #admin-vehicle-section #admin-similar-section{grid-column:1/3}
+}
 .oem-ref{font-size:11px;color:#888;background:#f8f9fa;border-radius:6px;padding:6px 10px;margin-bottom:8px}
 .cilajet-note{font-size:11px;color:#555;background:#f0fff4;border-radius:6px;padding:6px 10px;margin-bottom:8px}
 .notice-info{font-size:12px;color:#0a73c4;background:#e8f4fd;border-radius:6px;padding:8px 10px;margin-bottom:10px}
@@ -189,7 +242,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       </div>
       <div id="search-error" class="error-msg hidden"></div>
       <div id="vehicle-section" class="hidden">
-        <div class="card">
+        <div class="card" id="vehicle-card">
           <div class="vehicle-header">
             <div id="vehicle-photo-wrap"></div>
             <div style="flex:1;min-width:0">
@@ -201,7 +254,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           </div>
           <div class="flag-area" id="sales-flag-area"></div>
         </div>
-        <div class="card">
+        <div class="card" id="controls-card">
           <div class="controls-grid">
             <div>
               <div class="ctrl-label tip-wrap">Credit Tier <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">T1 = top tier credit. T3 = most common approval. Moving from T1 to T3 increases the money factor by +0.0009, raising the payment.</span></div>
@@ -238,7 +291,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card" id="payments-card">
           <div id="payments-title" class="card-title"></div>
           <div id="oem-ref" class="oem-ref hidden"></div>
           <div id="cilajet-note" class="cilajet-note hidden"></div>
@@ -631,13 +684,13 @@ function getFinanceAPR(model,tier,term){
 }
 
 // ── Payment calculators ──────────────────────────────────────────
-function calcLease(model,tier,term,mileage,downPayment){
+function calcLease(model,tier,term,mileage,downPayment,actualMsrp){
   var dp=downPayment||0;
   var resPct=getResPct(model,term,mileage);
   var mf=getMF(model,tier,term);
   if(resPct==null||mf==null) return null;
   mf=mf+(state.mfMarkup||0);
-  var totalMsrp=model.total_msrp||model.msrp||0;
+  var totalMsrp=actualMsrp||(model.total_msrp||model.msrp||0);
   var discPct=getDiscount(model.model_code||'');
   var regional=model.regional_cash||0;
   var mib=model.mib||0;
@@ -649,10 +702,10 @@ function calcLease(model,tier,term,mileage,downPayment){
   var monthly=Math.round((netCap-residual)/term+(netCap+residual)*mf);
   return {monthly:monthly,mileage:mileage,term:term,acqFee:model.acq_fee||795};
 }
-function calcFinance(model,tier,term,downPayment){
+function calcFinance(model,tier,term,downPayment,actualMsrp){
   var dp=downPayment||0;
   var apr=getFinanceAPR(model,tier,term);
-  var totalMsrp=model.total_msrp||model.msrp||0;
+  var totalMsrp=actualMsrp||(model.total_msrp||model.msrp||0);
   var discPct=getDiscount(model.model_code||'');
   var cilajet=getCilajet(totalMsrp);
   var sellingPrice=totalMsrp*(1-discPct/100);
@@ -670,10 +723,10 @@ function calcGross(model,vehicleInvoice){
   var cilajet=getCilajet(totalMsrp);
   return Math.round(frontEnd+cilajet);
 }
-function getAllPayments(model,tier,mileage,downPayment){
+function getAllPayments(model,tier,mileage,downPayment,actualMsrp){
   var lease={},finance={};
-  LEASE_TERMS.forEach(function(t){var r=calcLease(model,tier,t,mileage,downPayment);if(r)lease[t]=r;});
-  FINANCE_TERMS.forEach(function(t){var r=calcFinance(model,tier,t,downPayment);if(r)finance[t]=r;});
+  LEASE_TERMS.forEach(function(t){var r=calcLease(model,tier,t,mileage,downPayment,actualMsrp);if(r)lease[t]=r;});
+  FINANCE_TERMS.forEach(function(t){var r=calcFinance(model,tier,t,downPayment,actualMsrp);if(r)finance[t]=r;});
   return {lease:lease,finance:finance,oemT3rc:model.oem_payment_t3_rc,oemTerm:model.oem_term,acqFee:model.acq_fee||795};
 }
 function getRateModel(modelCode,modelYear){
@@ -1080,7 +1133,8 @@ function doSearch(){
   document.getElementById('inp-downpay').value=dp;
   renderVehicle(v,rm);
   if(rm){
-    state.payments=getAllPayments(rm,state.tier,state.mileage,state.downPayment);
+    var vMsrp=v.total_msrp||v.msrp||0;
+  state.payments=getAllPayments(rm,state.tier,state.mileage,state.downPayment,vMsrp);
     state.similar=findSimilar(rm,state.tier,state.mileage,state.payWindow,state.downPayment);
     renderPaymentGrid(state.payments);renderSimilar(state.similar);
   } else {
@@ -1103,7 +1157,8 @@ function doAdminSearch(){
   document.getElementById('admin-inp-downpay').value=dp;
   renderVehicle(v,rm,'admin');
   if(rm){
-    state.adminPayments=getAllPayments(rm,state.adminTier,state.adminMileage,state.adminDownPayment);
+    var avMsrp=v.total_msrp||v.msrp||0;
+  state.adminPayments=getAllPayments(rm,state.adminTier,state.adminMileage,state.adminDownPayment,avMsrp);
     renderPaymentGrid(state.adminPayments,'admin');
   } else {
     setText('admin-search-error','No rate data for this vehicle.');showEl('admin-search-error');
@@ -1119,7 +1174,8 @@ function recalc(){
   state.payWindow=parseInt(document.getElementById('sel-window').value);
   state.downPayment=parseFloat(document.getElementById('inp-downpay').value)||0;
   if(!state.rateModel) return;
-  state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment);
+  var curMsrp=state.vehicle?(state.vehicle.total_msrp||state.vehicle.msrp||0):0;
+  state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment,curMsrp);
   state.similar=findSimilar(state.rateModel,state.tier,state.mileage,state.payWindow,state.downPayment);
   renderPaymentGrid(state.payments);renderSimilar(state.similar);
 }
@@ -1131,7 +1187,8 @@ function adminRecalc(){
   state.adminPayWindow=parseInt(document.getElementById('admin-sel-window').value);
   state.adminDownPayment=parseFloat(document.getElementById('admin-inp-downpay').value)||0;
   if(!state.adminRateModel) return;
-  state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment);
+  var curAMsrp=state.adminVehicle?(state.adminVehicle.total_msrp||state.adminVehicle.msrp||0):0;
+  state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment,curAMsrp);
   renderPaymentGrid(state.adminPayments,'admin');
 }
 
@@ -1184,12 +1241,14 @@ function saveCilajet(){
   msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
   // Recalc open results
   if(state.rateModel){
-    state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment);
+    var curMsrp=state.vehicle?(state.vehicle.total_msrp||state.vehicle.msrp||0):0;
+  state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment,curMsrp);
     state.similar=findSimilar(state.rateModel,state.tier,state.mileage,state.payWindow,state.downPayment);
     renderPaymentGrid(state.payments);renderSimilar(state.similar);
   }
   if(state.adminRateModel){
-    state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment);
+    var curAMsrp=state.adminVehicle?(state.adminVehicle.total_msrp||state.adminVehicle.msrp||0):0;
+  state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment,curAMsrp);
     renderPaymentGrid(state.adminPayments,'admin');
   }
 }
@@ -1206,12 +1265,14 @@ function saveMfMarkup(){
   msg.innerHTML='&#x2713; MF markup saved!';msg.className='success-msg';
   msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
   if(state.rateModel){
-    state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment);
+    var curMsrp=state.vehicle?(state.vehicle.total_msrp||state.vehicle.msrp||0):0;
+  state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment,curMsrp);
     state.similar=findSimilar(state.rateModel,state.tier,state.mileage,state.payWindow,state.downPayment);
     renderPaymentGrid(state.payments);renderSimilar(state.similar);
   }
   if(state.adminRateModel){
-    state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment);
+    var curAMsrp=state.adminVehicle?(state.adminVehicle.total_msrp||state.adminVehicle.msrp||0):0;
+  state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment,curAMsrp);
     renderPaymentGrid(state.adminPayments,'admin');
   }
 }
