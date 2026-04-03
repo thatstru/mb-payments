@@ -582,6 +582,10 @@ var FINANCE_TERMS = [24,36,48,60,72];
 
 var CILAJET_DEFAULTS = {standard:995, premium:1295, threshold:150000};
 
+// Default discount map — all zeros until GM sets values
+var GM_DISC = {};
+CLASS_ORDER.forEach(function(k){ if(k!=='default') GM_DISC[k]=0; });
+
 function fmt(n){ return '$'+Math.round(n).toLocaleString(); }
 function miLabel(m){ return m===7500?'7.5k':(m/1000)+'k'; }
 
