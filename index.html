@@ -3,181 +3,337 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>MB Payments – Mercedes-Benz of Encino</title>
+<title>BumpDesk — Mercedes-Benz of Encino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ── Reset ─────────────────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#1a1a1b;color:#1a1a1a}
-:root{--black:#1a1a1a;--silver:#c0c0c0;--accent:#009ee3;--green:#00a651;--red:#e00;--orange:#e67e22;--r:12px;--sh:0 2px 12px rgba(0,0,0,.12)}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#F8FAFC;color:#0F172A;-webkit-font-smoothing:antialiased}
+
+/* ── Design tokens ──────────────────────────────────────────────── */
+:root{
+  --indigo-900:#1e1b4b;
+  --indigo-700:#3730a3;
+  --indigo-600:#4F46E5;
+  --indigo-100:#E0E7FF;
+  --indigo-50:#EEF2FF;
+  --page-bg:#F8FAFC;
+  --card-bg:#FFFFFF;
+  --border:#E2E8F0;
+  --text-primary:#0F172A;
+  --text-secondary:#475569;
+  --text-muted:#94A3B8;
+  --green:#059669;
+  --green-bg:#D1FAE5;
+  --green-border:#6EE7B7;
+  --red:#DC2626;
+  --red-bg:#FEE2E2;
+  --orange:#D97706;
+  --orange-bg:#FEF3C7;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 6px rgba(0,0,0,.06),0 2px 4px rgba(0,0,0,.05);
+  --r:10px;
+}
+
+/* ── Utility ────────────────────────────────────────────────────── */
 .hidden{display:none!important}
 .screen{min-height:100vh}
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black);padding:24px}
-.login-box{background:white;border-radius:16px;padding:32px 24px;width:100%;max-width:360px}
-.login-logo{text-align:center;margin-bottom:24px}
-.login-logo .star{font-size:40px}
-.login-logo .brand{font-size:18px;font-weight:300;letter-spacing:3px;color:var(--black);margin-top:4px}
-.login-logo .store{font-size:12px;color:#666;margin-top:4px}
-.app{display:flex;flex-direction:column;min-height:100vh}
-.header{background:var(--black);color:white;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.header-logo{font-size:22px;font-weight:300;letter-spacing:2px;color:var(--silver)}
-.header-title{font-size:16px;font-weight:600;letter-spacing:.5px}
-.main{flex:1;padding:12px;max-width:480px;margin:0 auto;width:100%}
-.card{background:white;border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:12px}
-.card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:12px}
-.input{width:100%;border:1.5px solid #ddd;border-radius:8px;padding:12px 14px;font-size:16px;outline:none;transition:border .2s}
-.input:focus{border-color:var(--accent)}
-.input-group{margin-bottom:14px}
-.input-label{display:block;font-size:12px;font-weight:600;color:#444;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.btn{width:100%;padding:14px;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}
-.btn-primary{background:var(--black);color:white}
-.btn-sm{padding:6px 12px;font-size:12px;width:auto;border-radius:6px;cursor:pointer;border:1px solid #444;background:transparent;color:#aaa}
-.btn-flag{padding:8px 14px;font-size:13px;font-weight:600;width:auto;border-radius:8px;cursor:pointer;border:1.5px solid var(--orange);background:transparent;color:var(--orange)}
-.btn-flag:hover{background:var(--orange);color:white}
-.btn-resolve{padding:4px 10px;font-size:11px;width:auto;border-radius:6px;cursor:pointer;border:1px solid var(--green);background:transparent;color:var(--green)}
-.btn-resolve:hover{background:var(--green);color:white}
-.btn-danger{padding:8px 14px;font-size:13px;font-weight:600;width:auto;border-radius:8px;cursor:pointer;border:1.5px solid var(--red);background:transparent;color:var(--red)}
-.search-wrap{display:flex;gap:8px}
-.search-input{flex:1;border:1.5px solid #ddd;border-radius:8px;padding:12px 14px;font-size:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px;outline:none}
-.search-input:focus{border-color:var(--accent)}
-.search-btn{background:var(--black);color:white;border:none;border-radius:8px;padding:12px 18px;font-size:18px;cursor:pointer}
-.vehicle-header{display:flex;gap:12px;align-items:flex-start}
-.vehicle-photo{width:90px;height:68px;border-radius:8px;object-fit:cover;background:#f0f0f0;flex-shrink:0}
-.vehicle-photo-ph{width:90px;height:68px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
-.vehicle-name{font-size:17px;font-weight:700;line-height:1.2}
-.vehicle-sub{font-size:13px;color:#666;margin-top:3px}
-.vehicle-msrp{font-size:13px;color:#333;margin-top:4px}
-.vehicle-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.badge{font-size:10px;font-weight:600;padding:3px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
-.badge-stock{background:#e8f4fd;color:#0a73c4}
-.badge-age{background:#fff3e0;color:#e65100}
-.badge-color{background:#f3e5f5;color:#6a1b9a}
-.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ctrl-label{font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
-.select{border:1.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:14px;background:white;outline:none;width:100%}
-.select:focus{border-color:var(--accent)}
-.ctrl-input{border:1.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:14px;background:white;outline:none;width:100%}
-.ctrl-input:focus{border-color:var(--accent)}
-.tabs{display:flex;border-bottom:2px solid #eee;margin-bottom:12px}
-.tab{flex:1;text-align:center;padding:10px;font-size:14px;font-weight:600;color:#888;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-2px}
-.tab.active{color:var(--black);border-color:var(--black)}
-.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pcell{background:#f8f9fa;border-radius:10px;padding:12px;text-align:center;border:2px solid transparent}
-.pcell.featured{background:var(--black)}
-.pcell.featured .pamount{color:white}
-.pcell.featured .pterm,.pcell.featured .psub{color:#aaa}
-.pcell.nodata{opacity:.4}
-.pamount{font-size:22px;font-weight:700;color:var(--black)}
-.pterm{font-size:11px;color:#888;margin-top:2px}
-.psub{font-size:10px;color:#aaa;margin-top:1px}
-.tip-wrap{position:relative;display:inline-flex;align-items:center;gap:4px}
-.tip-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#ccc;color:#555;font-size:9px;font-weight:800;cursor:pointer;flex-shrink:0;line-height:1;user-select:none;-webkit-user-select:none;font-style:normal}
-.tip-icon:hover,.tip-icon.tip-active{background:#333;color:#fff}
-.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a1a1b;color:#f0f0f0;font-size:11px;line-height:1.5;padding:9px 11px;border-radius:8px;width:230px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4);pointer-events:none;font-weight:400}
-.tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1a1b}
-.tip-icon.tip-active~.tip-box{display:block}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-secondary);margin-bottom:10px}
+.text-sm{font-size:12px;color:var(--text-muted);margin-top:8px}
+.mt{margin-top:10px}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px}
 
-/* ── Desktop responsive (768px+) ─────────────────────────────── */
-@media(min-width:768px){
-  .header{padding:14px 24px}
-  .main{padding:20px 24px;max-width:720px}
-  .card{padding:20px}
-  .card-title{font-size:14px;margin-bottom:14px}
-  .search-wrap{gap:10px}
-  .search-input{font-size:22px;padding:14px 16px}
-  .search-btn{padding:14px 22px;font-size:20px}
-
-  /* 4-column controls on desktop */
-  .controls-grid{grid-template-columns:1fr 1fr 1fr 1fr}
-
-  /* Payment grid — all terms in one row */
-  .payment-grid{grid-template-columns:repeat(auto-fit,minmax(90px,1fr))}
-  .pcell{padding:14px 8px}
-
-  /* Upgrade cards — wider */
-  .scard{flex:0 0 172px}
-  .sphoto,.sphoto-ph{height:100px}
-
-  /* Vehicle photo larger */
-  .vehicle-photo,.vehicle-photo-ph{width:110px;height:84px}
+/* ── Login ──────────────────────────────────────────────────────── */
+.login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 0%,#3730a3 0%,#1e1b4b 55%,#0f0d2a 100%);
+  padding:24px;
 }
-.oem-ref{font-size:11px;color:#888;background:#f8f9fa;border-radius:6px;padding:6px 10px;margin-bottom:8px}
-.cilajet-note{font-size:11px;color:#555;background:#f0fff4;border-radius:6px;padding:6px 10px;margin-bottom:8px}
-.notice-info{font-size:12px;color:#0a73c4;background:#e8f4fd;border-radius:6px;padding:8px 10px;margin-bottom:10px}
-/* ── Similar / Upgrade tabs ── */
-.sim-tabs{display:flex;gap:6px;margin-bottom:10px}
-.sim-tab{flex:1;text-align:center;padding:7px 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:8px;border:1.5px solid #ddd;background:white;color:#888;cursor:pointer;transition:all .15s}
-.sim-tab.active{background:var(--black);color:white;border-color:var(--black)}
+.login-box{
+  background:white;border-radius:16px;padding:40px 36px;
+  width:100%;max-width:400px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-wordmark{font-size:22px;font-weight:700;color:var(--indigo-600);letter-spacing:-.5px;margin-bottom:14px}
+.login-star{font-size:38px;line-height:1;margin-bottom:8px}
+.login-brand{font-size:15px;font-weight:300;letter-spacing:4px;color:var(--text-primary)}
+.login-store{font-size:12px;color:var(--text-muted);margin-top:4px;letter-spacing:.5px}
+
+/* ── App shell ──────────────────────────────────────────────────── */
+.app{display:flex;flex-direction:column;min-height:100vh}
+.header{
+  background:var(--indigo-900);color:white;height:60px;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-brand{font-size:17px;font-weight:700;color:white;letter-spacing:-.3px}
+.header-sep{width:1px;height:18px;background:rgba(255,255,255,.18)}
+.header-dealer{font-size:13px;color:rgba(255,255,255,.5)}
+.header-right{display:flex;align-items:center;gap:10px}
+.header-user{font-size:13px;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ── Content areas ──────────────────────────────────────────────── */
+.main{flex:1;padding:20px 16px;max-width:560px;margin:0 auto;width:100%}
+.admin-main{flex:1;padding:20px 16px;max-width:860px;margin:0 auto;width:100%}
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.card{
+  background:var(--card-bg);border-radius:var(--r);
+  border:1px solid var(--border);box-shadow:var(--shadow-sm);
+  padding:20px;margin-bottom:14px;
+}
+.card-title{
+  font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--text-muted);margin-bottom:14px;
+}
+
+/* ── Forms / Inputs ─────────────────────────────────────────────── */
+.input{
+  width:100%;border:1.5px solid var(--border);border-radius:8px;
+  padding:11px 14px;font-size:15px;outline:none;
+  transition:border-color .15s,box-shadow .15s;font-family:inherit;color:var(--text-primary);
+}
+.input:focus{border-color:var(--indigo-600);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.input-group{margin-bottom:14px}
+.input-label{display:block;font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:5px}
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn{width:100%;padding:12px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-primary{background:var(--indigo-600);color:white}
+.btn-primary:hover{opacity:.9}
+.btn-sm{
+  padding:6px 14px;font-size:13px;width:auto;border-radius:6px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.8);font-family:inherit;font-weight:500;transition:background .15s;
+}
+.btn-sm:hover{background:rgba(255,255,255,.2)}
+.btn-flag{
+  padding:8px 16px;font-size:13px;font-weight:600;width:auto;border-radius:8px;cursor:pointer;
+  border:1.5px solid var(--orange);background:transparent;color:var(--orange);
+  font-family:inherit;transition:all .15s;
+}
+.btn-flag:hover{background:var(--orange);color:white}
+.btn-resolve{
+  padding:5px 12px;font-size:12px;width:auto;border-radius:6px;cursor:pointer;
+  border:1.5px solid var(--green);background:transparent;color:var(--green);
+  font-family:inherit;transition:all .15s;
+}
+.btn-resolve:hover{background:var(--green);color:white}
+.btn-danger{
+  padding:8px 16px;font-size:13px;font-weight:600;width:auto;border-radius:8px;cursor:pointer;
+  border:1.5px solid var(--red);background:transparent;color:var(--red);
+  font-family:inherit;transition:all .15s;
+}
+.btn-danger:hover{background:var(--red);color:white}
+
+/* ── Search bar ─────────────────────────────────────────────────── */
+.search-wrap{display:flex;gap:8px}
+.search-input{
+  flex:1;border:1.5px solid var(--border);border-radius:8px;
+  padding:12px 16px;font-size:20px;font-weight:600;
+  text-transform:uppercase;letter-spacing:2px;
+  outline:none;font-family:inherit;color:var(--text-primary);
+  transition:border-color .15s,box-shadow .15s;
+}
+.search-input:focus{border-color:var(--indigo-600);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.search-btn{
+  background:var(--indigo-600);color:white;border:none;border-radius:8px;
+  padding:12px 20px;font-size:18px;cursor:pointer;transition:opacity .15s;
+}
+.search-btn:hover{opacity:.9}
+
+/* ── Vehicle info ───────────────────────────────────────────────── */
+.vehicle-header{display:flex;gap:14px;align-items:flex-start}
+.vehicle-photo{width:100px;height:74px;border-radius:8px;object-fit:cover;background:#f0f0f0;flex-shrink:0}
+.vehicle-photo-ph{width:100px;height:74px;border-radius:8px;background:var(--indigo-50);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.vehicle-name{font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.25}
+.vehicle-sub{font-size:13px;color:var(--text-secondary);margin-top:3px}
+.vehicle-msrp{font-size:13px;color:var(--text-secondary);margin-top:4px;font-weight:500}
+.vehicle-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.badge-stock{background:var(--indigo-50);color:var(--indigo-600)}
+.badge-age{background:var(--orange-bg);color:var(--orange)}
+.badge-color{background:#F3E8FF;color:#7E22CE}
+.flag-area{display:flex;justify-content:flex-end;margin-top:8px}
+
+/* ── Controls grid ──────────────────────────────────────────────── */
+.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ctrl-label{font-size:11px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;display:block}
+.select{
+  border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;
+  font-size:14px;background:white;outline:none;width:100%;
+  font-family:inherit;color:var(--text-primary);transition:border-color .15s;
+}
+.select:focus{border-color:var(--indigo-600)}
+.ctrl-input{
+  border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;
+  font-size:14px;background:white;outline:none;width:100%;
+  font-family:inherit;color:var(--text-primary);transition:border-color .15s;
+}
+.ctrl-input:focus{border-color:var(--indigo-600)}
+.conquest-box{
+  display:flex;align-items:center;gap:10px;margin-top:12px;
+  padding:10px 14px;background:#ECFDF5;border-radius:8px;border:1.5px solid #A7F3D0;
+}
+.conquest-label{font-size:13px;font-weight:700;color:#065F46}
+.conquest-sub{font-size:11px;color:#047857;margin-top:2px}
+
+/* ── Payment tabs (Lease / Finance) ─────────────────────────────── */
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:14px}
+.tab{
+  padding:9px 16px;font-size:14px;font-weight:500;color:var(--text-muted);
+  border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-2px;
+  transition:color .15s,border-color .15s;
+}
+.tab.active{color:var(--indigo-600);border-color:var(--indigo-600);font-weight:600}
+.tab:hover:not(.active){color:var(--text-secondary)}
+
+/* ── Payment grid ───────────────────────────────────────────────── */
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pcell{
+  background:var(--page-bg);border-radius:8px;padding:14px 8px;
+  text-align:center;border:1.5px solid var(--border);
+}
+.pcell.featured{background:var(--indigo-600);border-color:var(--indigo-600)}
+.pcell.featured .pamount{color:white}
+.pcell.featured .pterm,.pcell.featured .psub{color:rgba(255,255,255,.7)}
+.pcell.nodata{opacity:.4}
+.pamount{font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-.5px}
+.pterm{font-size:11px;color:var(--text-muted);margin-top:3px}
+.psub{font-size:10px;color:var(--text-muted);margin-top:1px}
+
+/* ── Info strips ────────────────────────────────────────────────── */
+.oem-ref{font-size:12px;color:var(--text-secondary);background:var(--page-bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:10px}
+.cilajet-note{font-size:12px;color:#065F46;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:6px;padding:8px 12px;margin-bottom:10px}
+.notice-info{font-size:12px;color:var(--indigo-600);background:var(--indigo-50);border:1px solid var(--indigo-100);border-radius:6px;padding:8px 12px;margin-bottom:10px}
+.error-msg{background:var(--red-bg);color:var(--red);padding:12px 16px;border-radius:8px;font-size:14px;margin-bottom:12px;font-weight:500}
+.success-msg{background:#ECFDF5;color:var(--green);padding:12px 16px;border-radius:8px;font-size:14px;margin-bottom:12px;font-weight:500}
+
+/* ── Similar / Upgrade ──────────────────────────────────────────── */
+.sim-tabs{display:flex;gap:6px;margin-bottom:12px}
+.sim-tab{
+  flex:1;text-align:center;padding:8px 4px;font-size:12px;font-weight:600;
+  border-radius:8px;border:1.5px solid var(--border);background:white;color:var(--text-muted);
+  cursor:pointer;transition:all .15s;
+}
+.sim-tab.active{background:var(--indigo-600);color:white;border-color:var(--indigo-600)}
 .sim-tab.has-stock{border-color:var(--green);color:var(--green)}
 .sim-tab.active.has-stock{background:var(--green);border-color:var(--green);color:white}
-/* horizontal scroll row */
 .sim-panel{display:none}
 .sim-panel.active{display:block}
 .sim-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .sim-scroll::-webkit-scrollbar{display:none}
-/* individual bump card — vertical, fixed width */
-.scard{flex:0 0 148px;display:flex;flex-direction:column;background:#f8f9fa;border-radius:12px;border:2px solid #eee;cursor:pointer;overflow:hidden;transition:border-color .15s}
-.scard.instock{border-color:#c8e6c9}
+.scard{
+  flex:0 0 152px;display:flex;flex-direction:column;background:white;
+  border-radius:10px;border:1.5px solid var(--border);cursor:pointer;overflow:hidden;
+  transition:border-color .15s,box-shadow .15s;
+}
+.scard.instock{border-color:var(--green-border)}
+.scard:hover{box-shadow:var(--shadow-md)}
 .scard:active{opacity:.85}
 .sphoto{width:100%;height:90px;object-fit:cover;background:#e8e8e8;display:block}
-.sphoto-ph{width:100%;height:90px;background:#e8e8e8;display:flex;align-items:center;justify-content:center;font-size:30px}
-.scard-body{padding:8px 10px 10px}
-.sname{font-size:12px;font-weight:700;line-height:1.3;margin-bottom:2px}
-.sdetail{font-size:10px;color:#888}
-.scard-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
-.samount{font-size:17px;font-weight:700}
-.sdiff{font-size:10px;font-weight:600;padding:2px 6px;border-radius:20px;background:#fff3e0;color:var(--orange)}
-.sinv-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
-.sinv-badge.instock{background:#e8f5e9;color:var(--green)}
-.sinv-badge.order{background:#f5f5f5;color:#999}
-.sim-empty{font-size:13px;color:#aaa;text-align:center;padding:16px 0}
-.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px}
-.error-msg{background:#fff0f0;color:var(--red);padding:12px 14px;border-radius:8px;font-size:14px;margin-bottom:12px}
-.success-msg{background:#f0fff4;color:var(--green);padding:12px 14px;border-radius:8px;font-size:14px;margin-bottom:12px}
-.admin-tabs{display:flex;border-bottom:2px solid #eee;margin-bottom:0;flex-wrap:wrap}
-.admin-tab{flex:1;text-align:center;padding:8px 4px;font-size:11px;font-weight:600;color:#888;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-2px;min-width:60px}
-.admin-tab.active{color:var(--black);border-color:var(--black)}
-.disc-row{display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:8px;margin-bottom:6px}
-.disc-label{flex:1;font-weight:600;font-size:14px}
-.disc-input{width:70px;border:1.5px solid #ddd;border-radius:6px;padding:6px 8px;font-size:14px;text-align:center}
-.disc-unit{color:#888;font-size:13px;min-width:14px}
-.cilajet-input{width:90px;border:1.5px solid #ddd;border-radius:6px;padding:6px 8px;font-size:14px;text-align:center}
-.adj-hint{font-size:10px;color:#aaa;margin-bottom:10px}
+.sphoto-ph{width:100%;height:90px;background:var(--indigo-50);display:flex;align-items:center;justify-content:center;font-size:28px}
+.scard-body{padding:10px}
+.sname{font-size:12px;font-weight:700;line-height:1.3;margin-bottom:2px;color:var(--text-primary)}
+.sdetail{font-size:10px;color:var(--text-muted)}
+.scard-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.samount{font-size:17px;font-weight:700;color:var(--text-primary)}
+.sdiff{font-size:10px;font-weight:700;padding:3px 7px;border-radius:20px;background:var(--orange-bg);color:var(--orange)}
+.sinv-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;margin-top:4px;letter-spacing:.3px}
+.sinv-badge.instock{background:var(--green-bg);color:var(--green)}
+.sinv-badge.order{background:var(--page-bg);color:var(--text-muted)}
+.sim-empty{font-size:13px;color:var(--text-muted);text-align:center;padding:16px 0}
+
+/* ── Admin tabs (Stripe-style horizontal underline) ─────────────── */
+.admin-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px;overflow-x:auto}
+.admin-tab{
+  padding:12px 20px;font-size:14px;font-weight:500;color:var(--text-muted);
+  border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-2px;
+  transition:color .15s,border-color .15s;white-space:nowrap;
+}
+.admin-tab.active{color:var(--indigo-600);border-bottom-color:var(--indigo-600);font-weight:600}
+.admin-tab:hover:not(.active){color:var(--text-secondary)}
+
+/* ── Admin form rows ────────────────────────────────────────────── */
+.disc-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--page-bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
+.disc-label{flex:1;font-weight:500;font-size:14px;color:var(--text-primary)}
+.disc-input{width:72px;border:1.5px solid var(--border);border-radius:6px;padding:6px 8px;font-size:14px;text-align:center;font-family:inherit;outline:none;color:var(--text-primary)}
+.disc-input:focus{border-color:var(--indigo-600)}
+.disc-unit{color:var(--text-muted);font-size:13px;min-width:14px;font-weight:500}
+.cilajet-input{width:96px;border:1.5px solid var(--border);border-radius:6px;padding:6px 8px;font-size:14px;text-align:center;font-family:inherit;outline:none;color:var(--text-primary)}
+.cilajet-input:focus{border-color:var(--indigo-600)}
+.adj-hint{font-size:12px;color:var(--text-muted);margin-bottom:12px}
+
+/* ── Reports ────────────────────────────────────────────────────── */
 .report-table{width:100%;border-collapse:collapse;font-size:13px}
-.report-table th{text-align:left;padding:8px;border-bottom:2px solid #eee;font-size:11px;text-transform:uppercase;color:#888}
-.report-table td{padding:8px;border-bottom:1px solid #f0f0f0}
-.rcard{background:#f8f9fa;border-radius:10px;padding:12px;margin-bottom:10px;border-left:3px solid var(--orange)}
-.rcard.resolved{border-left-color:#ccc;opacity:.65}
-.rcard-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
-.rcard-stock{font-size:13px;font-weight:700;color:var(--black)}
-.rcard-ts{font-size:10px;color:#aaa}
-.rcard-model{font-size:12px;color:#666;margin-bottom:4px}
-.rcard-issue{font-size:13px;font-weight:600;color:var(--orange);margin-bottom:3px}
-.rcard.resolved .rcard-issue{color:#999}
-.rcard-notes{font-size:12px;color:#444;margin-bottom:8px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:flex-end;justify-content:center}
-.modal{background:white;border-radius:16px 16px 0 0;padding:24px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:16px}
-.modal-close{float:right;font-size:20px;cursor:pointer;color:#aaa;background:none;border:none;line-height:1}
-.modal select,.modal textarea{width:100%;border:1.5px solid #ddd;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;margin-bottom:12px}
-.modal select:focus,.modal textarea:focus{border-color:var(--accent)}
+.report-table th{text-align:left;padding:10px 8px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);font-weight:600}
+.report-table td{padding:10px 8px;border-bottom:1px solid var(--border);color:var(--text-primary)}
+.rcard{background:white;border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--orange)}
+.rcard.resolved{border-left-color:var(--border);opacity:.6}
+.rcard-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.rcard-stock{font-size:13px;font-weight:700;color:var(--text-primary)}
+.rcard-ts{font-size:11px;color:var(--text-muted)}
+.rcard-model{font-size:12px;color:var(--text-secondary);margin-bottom:5px}
+.rcard-issue{font-size:13px;font-weight:600;color:var(--orange);margin-bottom:4px}
+.rcard.resolved .rcard-issue{color:var(--text-muted)}
+.rcard-notes{font-size:12px;color:var(--text-secondary);margin-bottom:8px}
+
+/* ── Flag modal ─────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:999;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:white;border-radius:16px 16px 0 0;padding:28px 24px;width:100%;max-width:540px;max-height:85vh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:16px;color:var(--text-primary)}
+.modal-close{float:right;font-size:20px;cursor:pointer;color:var(--text-muted);background:none;border:none;line-height:1;font-family:inherit}
+.modal select,.modal textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;outline:none;margin-bottom:12px;font-family:inherit;color:var(--text-primary)}
+.modal select:focus,.modal textarea:focus{border-color:var(--indigo-600)}
 .modal textarea{height:90px;resize:vertical}
-.divider{height:1px;background:#eee;margin:16px 0}
-.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:10px}
-.text-sm{font-size:12px;color:#888;margin-top:8px}
-.mt{margin-top:8px}
-.flag-area{display:flex;justify-content:flex-end;margin-top:4px}
+
+/* ── Tooltips ───────────────────────────────────────────────────── */
+.tip-wrap{position:relative;display:inline-flex;align-items:center;gap:4px}
+.tip-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--border);color:var(--text-muted);font-size:9px;font-weight:800;cursor:pointer;flex-shrink:0;line-height:1;user-select:none;-webkit-user-select:none;font-style:normal;transition:background .15s,color .15s}
+.tip-icon:hover,.tip-icon.tip-active{background:var(--indigo-600);color:white}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;font-size:11px;line-height:1.5;padding:10px 12px;border-radius:8px;width:230px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.35);pointer-events:none;font-weight:400}
+.tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e293b}
+.tip-icon.tip-active~.tip-box{display:block}
+
+/* ── Desktop responsive ─────────────────────────────────────────── */
+@media(min-width:768px){
+  .header{padding:0 32px}
+  .main{padding:24px 32px;max-width:1120px}
+  .admin-main{padding:24px 32px}
+  .card{padding:24px}
+  .card-title{font-size:12px}
+  .search-input{font-size:22px;padding:14px 16px}
+  .search-btn{padding:14px 22px;font-size:20px}
+  .controls-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+  .payment-grid{grid-template-columns:repeat(auto-fit,minmax(88px,1fr))}
+  .pcell{padding:16px 8px}
+  .pamount{font-size:26px}
+  .scard{flex:0 0 168px}
+  .sphoto,.sphoto-ph{height:100px}
+  .vehicle-photo,.vehicle-photo-ph{width:116px;height:86px}
+  /* Two-column results layout on desktop */
+  .results-layout{display:grid;grid-template-columns:360px 1fr;gap:16px;align-items:start}
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  LOGIN                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-login" class="screen">
   <div class="login-screen">
     <div class="login-box">
       <div class="login-logo">
-        <div style="font-size:11px;font-weight:700;letter-spacing:3px;color:#aaa;text-transform:uppercase;margin-bottom:12px">BumpDesk</div>
-        <div class="star">&#x2299;</div>
-        <div class="brand">MERCEDES-BENZ</div>
-        <div class="store">of Encino</div>
+        <div class="login-wordmark">BumpDesk</div>
+        <div class="login-star">&#x2299;</div>
+        <div class="login-brand">MERCEDES-BENZ</div>
+        <div class="login-store">of Encino</div>
       </div>
       <div class="input-group">
         <label class="input-label" for="login-user">Username</label>
@@ -193,18 +349,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- SALES SCREEN -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  SALES SCREEN                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-sales" class="screen hidden">
   <div class="app">
     <div class="header">
-      <div class="header-logo" style="font-size:13px;letter-spacing:1px">Mercedes-Benz of Encino</div>
-      <div class="header-title">BumpDesk</div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span id="sales-username" style="font-size:12px;color:#aaa"></span>
-        <button class="btn-sm" onclick="logout()">Out</button>
+      <div class="header-left">
+        <div class="header-brand">BumpDesk</div>
+        <div class="header-sep"></div>
+        <div class="header-dealer">Mercedes-Benz of Encino</div>
+      </div>
+      <div class="header-right">
+        <span id="sales-username" class="header-user"></span>
+        <button class="btn-sm" onclick="logout()">Sign out</button>
       </div>
     </div>
     <div class="main">
+
+      <!-- Search -->
       <div class="card">
         <div class="card-title">Search by Stock # or Last 6 of VIN</div>
         <div class="search-wrap">
@@ -212,110 +375,133 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button id="search-btn" class="search-btn">&#x2192;</button>
         </div>
       </div>
-      <div id="search-error" class="error-msg hidden"></div>
-      <div id="vehicle-section" class="hidden">
-        <div class="card" id="vehicle-card">
-          <div class="vehicle-header">
-            <div id="vehicle-photo-wrap"></div>
-            <div style="flex:1;min-width:0">
-              <div id="vehicle-name" class="vehicle-name"></div>
-              <div id="vehicle-trim" class="vehicle-sub"></div>
-              <div id="vehicle-msrp" class="vehicle-msrp"></div>
-              <div id="vehicle-badges" class="vehicle-badges"></div>
-            </div>
-          </div>
-          <div class="flag-area" id="sales-flag-area"></div>
-        </div>
-        <div class="card" id="controls-card">
-          <div class="controls-grid">
-            <div>
-              <div class="ctrl-label tip-wrap">Credit Tier <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">T1 = top tier credit. T3 = most common approval. Moving from T1 to T3 increases the money factor by +0.0009, raising the payment.</span></div>
-              <select id="sel-tier" class="select">
-                <option value="T1">Tier 1</option><option value="T2">Tier 2</option>
-                <option value="T3">Tier 3</option><option value="T4">Tier 4</option>
-              </select>
-            </div>
-            <div>
-              <div class="ctrl-label">Miles / yr</div>
-              <select id="sel-miles" class="select">
-                <option value="7500">7,500</option><option value="10000">10,000</option>
-                <option value="12000">12,000</option><option value="15000">15,000</option>
-                <option value="20000">20,000</option>
-              </select>
-            </div>
-            <div>
-              <div class="ctrl-label tip-wrap">Bump Range <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Only upgrade options within this dollar range above the base monthly payment will appear in the Upgrade Options section.</span></div>
-              <select id="sel-window" class="select">
-                <option value="50">$50</option><option value="100">$100</option>
-                <option value="150">$150</option><option value="200">$200</option>
-              </select>
-            </div>
-            <div>
-              <div class="ctrl-label">Down Payment $</div>
-              <input id="inp-downpay" class="ctrl-input" type="number" min="0" max="99999" step="500" value="0" placeholder="0">
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;background:#f0fff4;border-radius:8px;border:1.5px solid #c8e6c9">
-            <input type="checkbox" id="chk-conquest" style="width:18px;height:18px;cursor:pointer;accent-color:var(--green)">
-            <div>
-              <div style="font-size:12px;font-weight:700;color:#2e7d32" class="tip-wrap">Conquest Discount &mdash; $2,000 <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Customer must have a 2020 or newer non-Mercedes vehicle. Registration required at delivery to receive the $2,000 cap cost reduction.</span></div>
-              <div style="font-size:10px;color:#555">Customer has a 2020+ competitive vehicle (registration required)</div>
-            </div>
-          </div>
-        </div>
-        <div class="card" id="payments-card">
-          <div id="payments-title" class="card-title"></div>
-          <div id="oem-ref" class="oem-ref hidden"></div>
-          <div id="cilajet-note" class="cilajet-note hidden"></div>
-          <div id="lease-notice" class="notice-info hidden"></div>
-          <div class="tabs">
-            <div id="tab-lease"   class="tab active" onclick="switchTab('lease')">&#x1F511; Lease</div>
-            <div id="tab-finance" class="tab"        onclick="switchTab('finance')">&#x1F4B3; Finance</div>
-          </div>
-          <div id="lease-grid"   class="payment-grid"></div>
-          <div id="finance-grid" class="payment-grid hidden"></div>
-        </div>
-        <div id="similar-section" class="hidden">
-          <div class="card">
-            <div id="similar-title" class="card-title"></div>
-            <div class="sim-tabs">
-              <div id="stab-same"  class="sim-tab active" onclick="switchSimTab('same')">Same Model</div>
-              <div id="stab-stepup" class="sim-tab"       onclick="switchSimTab('stepup')">Step Up</div>
-              <div id="stab-other" class="sim-tab"        onclick="switchSimTab('other')">Other</div>
-            </div>
-            <div id="sim-panel-same"   class="sim-panel active"><div class="sim-scroll" id="sim-scroll-same"></div></div>
-            <div id="sim-panel-stepup" class="sim-panel"><div class="sim-scroll" id="sim-scroll-stepup"></div></div>
-            <div id="sim-panel-other"  class="sim-panel"><div class="sim-scroll" id="sim-scroll-other"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- ADMIN SCREEN -->
+      <div id="search-error" class="error-msg hidden"></div>
+
+      <!-- Results — two-column on desktop -->
+      <div id="vehicle-section" class="hidden">
+        <div class="results-layout">
+
+          <!-- Left: vehicle info + controls -->
+          <div>
+            <div class="card" id="vehicle-card">
+              <div class="vehicle-header">
+                <div id="vehicle-photo-wrap"></div>
+                <div style="flex:1;min-width:0">
+                  <div id="vehicle-name" class="vehicle-name"></div>
+                  <div id="vehicle-trim" class="vehicle-sub"></div>
+                  <div id="vehicle-msrp" class="vehicle-msrp"></div>
+                  <div id="vehicle-badges" class="vehicle-badges"></div>
+                </div>
+              </div>
+              <div class="flag-area" id="sales-flag-area"></div>
+            </div>
+
+            <div class="card" id="controls-card">
+              <div class="controls-grid">
+                <div>
+                  <div class="ctrl-label tip-wrap">Credit Tier <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">T1 = top tier credit. T3 = most common approval. Moving from T1 to T3 increases the money factor by +0.0009, raising the payment.</span></div>
+                  <select id="sel-tier" class="select">
+                    <option value="T1">Tier 1</option><option value="T2">Tier 2</option>
+                    <option value="T3">Tier 3</option><option value="T4">Tier 4</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ctrl-label">Miles / yr</div>
+                  <select id="sel-miles" class="select">
+                    <option value="7500">7,500</option><option value="10000">10,000</option>
+                    <option value="12000">12,000</option><option value="15000">15,000</option>
+                    <option value="20000">20,000</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ctrl-label tip-wrap">Bump Range <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Only upgrade options within this dollar range above the base monthly payment will appear in the Upgrade Options section.</span></div>
+                  <select id="sel-window" class="select">
+                    <option value="50">$50</option><option value="100">$100</option>
+                    <option value="150">$150</option><option value="200">$200</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ctrl-label">Down Payment $</div>
+                  <input id="inp-downpay" class="ctrl-input" type="number" min="0" max="99999" step="500" value="0" placeholder="0">
+                </div>
+              </div>
+              <div class="conquest-box">
+                <input type="checkbox" id="chk-conquest" style="width:18px;height:18px;cursor:pointer;accent-color:var(--green)">
+                <div>
+                  <div class="conquest-label tip-wrap">Conquest Discount &mdash; $2,000 <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Customer must have a 2020 or newer non-Mercedes vehicle. Registration required at delivery to receive the $2,000 cap cost reduction.</span></div>
+                  <div class="conquest-sub">Customer has a 2020+ competitive vehicle (registration required)</div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /left -->
+
+          <!-- Right: payments + upgrade options -->
+          <div>
+            <div class="card" id="payments-card">
+              <div id="payments-title" class="card-title"></div>
+              <div id="oem-ref" class="oem-ref hidden"></div>
+              <div id="cilajet-note" class="cilajet-note hidden"></div>
+              <div id="lease-notice" class="notice-info hidden"></div>
+              <div class="tabs">
+                <div id="tab-lease"   class="tab active" onclick="switchTab('lease')">&#x1F511; Lease</div>
+                <div id="tab-finance" class="tab"        onclick="switchTab('finance')">&#x1F4B3; Finance</div>
+              </div>
+              <div id="lease-grid"   class="payment-grid"></div>
+              <div id="finance-grid" class="payment-grid hidden"></div>
+            </div>
+
+            <div id="similar-section" class="hidden">
+              <div class="card">
+                <div id="similar-title" class="card-title"></div>
+                <div class="sim-tabs">
+                  <div id="stab-same"   class="sim-tab active" onclick="switchSimTab('same')">Same Model</div>
+                  <div id="stab-stepup" class="sim-tab"        onclick="switchSimTab('stepup')">Step Up</div>
+                  <div id="stab-other"  class="sim-tab"        onclick="switchSimTab('other')">Other</div>
+                </div>
+                <div id="sim-panel-same"   class="sim-panel active"><div class="sim-scroll" id="sim-scroll-same"></div></div>
+                <div id="sim-panel-stepup" class="sim-panel"><div class="sim-scroll" id="sim-scroll-stepup"></div></div>
+                <div id="sim-panel-other"  class="sim-panel"><div class="sim-scroll" id="sim-scroll-other"></div></div>
+              </div>
+            </div>
+          </div><!-- /right -->
+
+        </div><!-- .results-layout -->
+      </div><!-- #vehicle-section -->
+
+    </div><!-- .main -->
+  </div><!-- .app -->
+</div><!-- #screen-sales -->
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  ADMIN SCREEN                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-admin" class="screen hidden">
   <div class="app">
     <div class="header">
-      <div class="header-logo" style="font-size:13px;letter-spacing:1px">Mercedes-Benz of Encino</div>
-      <div class="header-title">BumpDesk</div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span id="admin-username" style="font-size:12px;color:#aaa"></span>
-        <button class="btn-sm" onclick="logout()">Out</button>
+      <div class="header-left">
+        <div class="header-brand">BumpDesk</div>
+        <div class="header-sep"></div>
+        <div class="header-dealer">Mercedes-Benz of Encino</div>
+      </div>
+      <div class="header-right">
+        <span id="admin-username" class="header-user"></span>
+        <button class="btn-sm" onclick="logout()">Sign out</button>
       </div>
     </div>
-    <div class="main">
-      <div class="card" style="padding:8px">
-        <div class="admin-tabs">
-          <div id="atab-disc"   class="admin-tab active" onclick="switchAdminTab('disc')">&#x1F3F7;&#xFE0F; Pricing</div>
-          <div id="atab-inv"    class="admin-tab"        onclick="switchAdminTab('inv')">&#x1F4E6; Inventory</div>
-          <div id="atab-search" class="admin-tab"        onclick="switchAdminTab('search')">&#x1F50D; Check</div>
-          <div id="atab-rep"    class="admin-tab"        onclick="switchAdminTab('rep')">&#x1F6A9; Reports</div>
-        </div>
+    <div class="admin-main">
+
+      <!-- Stripe-style horizontal tab nav -->
+      <div class="admin-tabs">
+        <div id="atab-disc"   class="admin-tab active" onclick="switchAdminTab('disc')">&#x1F3F7;&#xFE0F; Pricing</div>
+        <div id="atab-inv"    class="admin-tab"        onclick="switchAdminTab('inv')">&#x1F4E6; Inventory</div>
+        <div id="atab-search" class="admin-tab"        onclick="switchAdminTab('search')">&#x1F50D; Spot Check</div>
+        <div id="atab-rep"    class="admin-tab"        onclick="switchAdminTab('rep')">&#x1F6A9; Reports</div>
       </div>
 
-      <!-- PRICING PANEL -->
+      <!-- ── PRICING PANEL ─────────────────────────────────────── -->
       <div id="admin-disc-panel">
+
         <div class="card">
           <div class="card-title">Model Price Adjustments</div>
           <div class="adj-hint">Positive % = discount off MSRP &nbsp;&bull;&nbsp; Negative % = markup over MSRP &nbsp;(e.g. &minus;10 = 10% over)</div>
@@ -324,16 +510,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button class="btn btn-primary mt" onclick="saveDiscounts()">Save Price Adjustments</button>
           <div class="text-sm">Only model classes with active inventory are shown. Saved to this browser.</div>
         </div>
+
         <div class="card">
           <div class="card-title tip-wrap">Dealer Accessories &mdash; Cilajet <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Paint and fabric protection add-on. The cost is capitalized into the lease/finance cap cost and reflected in every payment shown.</span></div>
           <div id="cilajet-msg" class="hidden"></div>
           <div class="disc-row">
-            <div class="disc-label">Standard <span id="cilajet-thresh-label" style="font-size:11px;color:#aaa">(under $150,000)</span></div>
+            <div class="disc-label">Standard <span id="cilajet-thresh-label" style="font-size:11px;color:var(--text-muted)">(under $150,000)</span></div>
             <input id="cilajet-std" class="cilajet-input" type="number" min="0" max="9999" step="50" value="995">
             <div class="disc-unit">$</div>
           </div>
           <div class="disc-row">
-            <div class="disc-label">Premium <span id="cilajet-thresh-label2" style="font-size:11px;color:#aaa">($150,000+)</span></div>
+            <div class="disc-label">Premium <span id="cilajet-thresh-label2" style="font-size:11px;color:var(--text-muted)">($150,000+)</span></div>
             <input id="cilajet-prem" class="cilajet-input" type="number" min="0" max="9999" step="50" value="1295">
             <div class="disc-unit">$</div>
           </div>
@@ -345,6 +532,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button class="btn btn-primary mt" onclick="saveCilajet()">Save Cilajet Settings</button>
           <div class="text-sm">Cilajet is capitalized into all lease and finance payments. Synced across all logins.</div>
         </div>
+
         <div class="card">
           <div class="card-title tip-wrap">Lease Money Factor Markup <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Added to the buy-rate money factor on all lease calculations. Builds dealer reserve silently into every payment. +0.00030 adds approximately $15–25/mo depending on vehicle price.</span></div>
           <div class="adj-hint">Added to the buy-rate money factor on all lease calculations. Builds dealer reserve into every payment salesperson presents.</div>
@@ -357,6 +545,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button class="btn btn-primary mt" onclick="saveMfMarkup()">Save MF Markup</button>
           <div class="text-sm">Standard dealer markup is +0.00030. Set to 0 to use buy-rate only. Synced across all logins.</div>
         </div>
+
         <div class="card">
           <div class="card-title tip-wrap">Acquisition Fee Markup <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Added on top of the $795 MBFS base acquisition fee. This markup is rolled into the cap cost and reflected in the monthly payment shown to salespeople. Base: $795. Total shown to customer = $795 + this amount.</span></div>
           <div class="adj-hint">Base MBFS acq fee is $795. Enter the dealer markup to add on top — it is rolled into the lease cap cost and raises the monthly payment accordingly.</div>
@@ -369,9 +558,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button class="btn btn-primary mt" onclick="saveAcqFeeMarkup()">Save Acq Fee Markup</button>
           <div class="text-sm">Set to 0 for no markup (customer pays base $795 only). Synced across all logins.</div>
         </div>
-      </div>
 
-      <!-- INVENTORY PANEL -->
+      </div><!-- #admin-disc-panel -->
+
+      <!-- ── INVENTORY PANEL ───────────────────────────────────── -->
       <div id="admin-inv-panel" class="hidden">
         <div class="card">
           <div class="card-title">Inventory Summary &mdash; <span id="inv-count"></span> New Vehicles</div>
@@ -384,7 +574,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         </div>
       </div>
 
-      <!-- SPOT-CHECK PANEL -->
+      <!-- ── SPOT-CHECK PANEL ──────────────────────────────────── -->
       <div id="admin-search-panel" class="hidden">
         <div class="card">
           <div class="card-title">Spot-Check Any Vehicle</div>
@@ -435,11 +625,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
                 <input id="admin-inp-downpay" class="ctrl-input" type="number" min="0" max="99999" step="500" value="0" placeholder="0">
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;background:#f0fff4;border-radius:8px;border:1.5px solid #c8e6c9">
+            <div class="conquest-box">
               <input type="checkbox" id="admin-chk-conquest" style="width:18px;height:18px;cursor:pointer;accent-color:var(--green)">
               <div>
-                <div style="font-size:12px;font-weight:700;color:#2e7d32" class="tip-wrap">Conquest Discount &mdash; $2,000 <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Customer must have a 2020 or newer non-Mercedes vehicle. Registration required at delivery to receive the $2,000 cap cost reduction.</span></div>
-                <div style="font-size:10px;color:#555">Customer has a 2020+ competitive vehicle (registration required)</div>
+                <div class="conquest-label tip-wrap">Conquest Discount &mdash; $2,000 <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Customer must have a 2020 or newer non-Mercedes vehicle. Registration required at delivery to receive the $2,000 cap cost reduction.</span></div>
+                <div class="conquest-sub">Customer has a 2020+ competitive vehicle (registration required)</div>
               </div>
             </div>
           </div>
@@ -456,33 +646,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             <div id="admin-finance-grid" class="payment-grid hidden"></div>
           </div>
           <div class="card" style="display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:13px;color:#888">See an issue with this result?</div>
+            <div style="font-size:13px;color:var(--text-muted)">See an issue with this result?</div>
             <button class="btn-flag" onclick="openFlagModal()">&#x1F6A9; Flag Issue</button>
           </div>
-        </div>
-      </div>
+        </div><!-- #admin-vehicle-section -->
+      </div><!-- #admin-search-panel -->
 
-      <!-- REPORTS PANEL -->
+      <!-- ── REPORTS PANEL ─────────────────────────────────────── -->
       <div id="admin-rep-panel" class="hidden">
         <div class="card" style="display:flex;align-items:center;justify-content:space-between">
           <div class="card-title" style="margin:0">Flagged Issues</div>
           <button class="btn-danger" onclick="clearResolvedReports()">Clear Resolved</button>
         </div>
         <div id="reports-empty" class="card hidden">
-          <div style="text-align:center;color:#aaa;padding:16px">No issues flagged yet.</div>
+          <div style="text-align:center;color:var(--text-muted);padding:16px">No issues flagged yet.</div>
         </div>
         <div id="reports-list"></div>
       </div>
-    </div>
-  </div>
-</div>
 
-<!-- FLAG MODAL -->
+    </div><!-- .admin-main -->
+  </div><!-- .app -->
+</div><!-- #screen-admin -->
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  FLAG MODAL                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="flag-modal" class="modal-overlay hidden">
   <div class="modal">
     <button class="modal-close" onclick="closeFlagModal()">&#x2715;</button>
     <div class="modal-title">&#x1F6A9; Flag an Issue</div>
-    <div style="font-size:13px;color:#666;margin-bottom:12px" id="flag-modal-desc"></div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px" id="flag-modal-desc"></div>
     <div>
       <div class="ctrl-label" style="margin-bottom:6px">Issue Type</div>
       <select id="flag-issue-type">
@@ -838,7 +1031,7 @@ function renderPaymentGrid(payments,prefix){
   var dp=prefix?state.adminDownPayment:state.downPayment;
   setText(pfx+'payments-title',(rm?rm.model_code:'')+' · '+(rm?rm.model_year:'')+' · '+tier);
   if(payments.oemT3rc){
-    setHTML(pfx+'oem-ref','<span class="tip-wrap">OEM ref (T3+RC): '+fmt(payments.oemT3rc)+'/mo \u00b7 '+(payments.oemTerm||36)+'mo/10k mi \u00b7 Acq: '+fmt(payments.acqFee)+'&nbsp;at signing&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB\'s published advertised payment using T3 rate with Regional Cash applied. Your actual payment differs based on this vehicle\'s MSRP, the customer\'s credit tier, and dealer MF markup.</span></span>');
+    setHTML(pfx+'oem-ref','<span class="tip-wrap">OEM ref (T3+RC): '+fmt(payments.oemT3rc)+'/mo · '+(payments.oemTerm||36)+'mo/10k mi · Acq: '+fmt(payments.acqFee)+'&nbsp;at signing&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB\'s published advertised payment using T3 rate with Regional Cash applied. Your actual payment differs based on this vehicle\'s MSRP, the customer\'s credit tier, and dealer MF markup.</span></span>');
     showEl(pfx+'oem-ref');
   } else { hideEl(pfx+'oem-ref'); }
 
@@ -847,7 +1040,7 @@ function renderPaymentGrid(payments,prefix){
     var cj=getCilajet(rm.total_msrp||rm.msrp||0);
     var conquestNote='';
     if(!prefix&&state.conquest) conquestNote=' · <span style="color:var(--green)">&#x2713; Conquest -$2,000</span>';
-    setHTML(pfx+'cilajet-note','&#x2728; Incl. Cilajet: '+fmt(cj)+(dp>0?' · Down: '+fmt(dp):'')+conquestNote+'<br><span style="font-size:10px;color:#888" class="tip-wrap">Incl. $1,000 Regional Cash · May 2026&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB regional incentive already included in this payment. Not a separate rebate — it has already been applied to the cap cost before calculating the payment shown.</span></span><span style="font-size:10px;color:#bbb"> &nbsp;· Payments est. before tax</span>');
+    setHTML(pfx+'cilajet-note','&#x2728; Incl. Cilajet: '+fmt(cj)+(dp>0?' · Down: '+fmt(dp):'')+conquestNote+'<br><span style="font-size:10px;color:var(--text-muted)" class="tip-wrap">Incl. $1,000 Regional Cash · May 2026&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB regional incentive already included in this payment. Not a separate rebate — it has already been applied to the cap cost before calculating the payment shown.</span></span><span style="font-size:10px;color:var(--text-muted)"> &nbsp;· Payments est. before tax</span>');
     showEl(pfx+'cilajet-note');
   } else { hideEl(pfx+'cilajet-note'); }
 
@@ -872,7 +1065,7 @@ function renderPaymentGrid(payments,prefix){
     lHTML+='<div class="pcell'+feat+'"><div class="pamount">'+fmt(p.monthly)+'</div>';
     lHTML+='<div class="pterm">'+t+' months</div><div class="psub">'+miLabel(mileage)+' mi/yr</div></div>';
   });
-  if(!lHTML) lHTML='<div style="color:#aaa;font-size:13px;padding:8px">No lease rates available.</div>';
+  if(!lHTML) lHTML='<div style="color:var(--text-muted);font-size:13px;padding:8px">No lease rates available.</div>';
   FINANCE_TERMS.forEach(function(t){
     var p=payments.finance[t];
     var feat=(t===60)?' featured':'';
@@ -998,7 +1191,7 @@ function renderReports(){
   r.forEach(function(rp,i){
     html+='<div class="rcard'+(rp.resolved?' resolved':'')+'"><div class="rcard-header">';
     html+='<div><span class="rcard-stock">Stock #'+rp.stock+'</span>';
-    if(rp.resolved) html+=' <span style="font-size:11px;color:#aaa;margin-left:6px">&#x2713; Resolved</span>';
+    if(rp.resolved) html+=' <span style="font-size:11px;color:var(--text-muted);margin-left:6px">&#x2713; Resolved</span>';
     html+='</div><span class="rcard-ts">'+rp.ts+'</span></div>';
     html+='<div class="rcard-model">'+rp.model+'</div>';
     html+='<div class="rcard-issue">'+rp.issue+'</div>';
