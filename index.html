@@ -834,7 +834,7 @@ function renderPaymentGrid(payments,prefix){
     var cj=getCilajet(rm.total_msrp||rm.msrp||0);
     var conquestNote='';
     if(!prefix&&state.conquest) conquestNote=' · <span style="color:var(--green)">&#x2713; Conquest -$2,000</span>';
-    setHTML(pfx+'cilajet-note','&#x2728; Incl. Cilajet: '+fmt(cj)+(dp>0?' · Down: '+fmt(dp):'')+conquestNote+'<br><span style="font-size:10px;color:#888" class="tip-wrap">Incl. $1,000 Regional Cash · April 2026&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB regional incentive already included in this payment. Not a separate rebate — it has already been applied to the cap cost before calculating the payment shown.</span></span>');
+    setHTML(pfx+'cilajet-note','&#x2728; Incl. Cilajet: '+fmt(cj)+(dp>0?' · Down: '+fmt(dp):'')+conquestNote+'<br><span style="font-size:10px;color:#888" class="tip-wrap">Incl. $1,000 Regional Cash · May 2026&nbsp;<i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">MB regional incentive already included in this payment. Not a separate rebate — it has already been applied to the cap cost before calculating the payment shown.</span></span><span style="font-size:10px;color:#bbb"> &nbsp;· Payments est. before tax</span>');
     showEl(pfx+'cilajet-note');
   } else { hideEl(pfx+'cilajet-note'); }
 
@@ -844,7 +844,7 @@ function renderPaymentGrid(payments,prefix){
     setHTML(pfx+'lease-notice','&#x2139;&#xFE0F; No MBFS lease rates available for this model this month.');
     showEl(pfx+'lease-notice');
   } else if(leaseTerms.length===1){
-    setHTML(pfx+'lease-notice','&#x2139;&#xFE0F; MBFS offers a <strong>'+leaseTerms[0]+'-month lease only</strong> on this model for April 2026 &mdash; this is an MBFS restriction, not a tool error.');
+    setHTML(pfx+'lease-notice','&#x2139;&#xFE0F; MBFS offers a <strong>'+leaseTerms[0]+'-month lease only</strong> on this model for May 2026 &mdash; this is an MBFS restriction, not a tool error.');
     showEl(pfx+'lease-notice');
   } else if(leaseTerms.length<=3){
     setHTML(pfx+'lease-notice','&#x2139;&#xFE0F; Only '+leaseTerms.join(', ')+'-month terms available from MBFS this period.');
@@ -1054,11 +1054,14 @@ function login(){
     // Fetch inventory + rates in parallel
     return Promise.all([
       fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/inventory').then(function(r){return r.json();}),
-      fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/rates').then(function(r){return r.json();})
+      fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/rates').then(function(r){return r.json();}),
+      fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{headers:{'Authorization':'Bearer '+AUTH_TOKEN}}).then(function(r){return r.json();})
     ]).then(function(results){
       INV_DATA=results[0];
       INVENTORY=INV_DATA.vehicles||[];
       RATES_DATA=results[1];
+      var settings=results[2]||{};
+      if(settings.mf_markup!=null) state.mfMarkup=settings.mf_markup;
       buildInvoiceMap();
       var displayName=role==='admin'?'GM Admin':'Salesperson';
       if(role==='admin'){
@@ -1237,6 +1240,13 @@ function saveMfMarkup(){
   var val=parseFloat(document.getElementById('mf-markup-input').value)||0;
   state.mfMarkup=val;
   lsSet('mb_encino_mf_markup',val);
+  if(AUTH_TOKEN){
+    fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+AUTH_TOKEN},
+      body:JSON.stringify({mf_markup:val})
+    });
+  }
   var msg=document.getElementById('mfmarkup-msg');
   msg.innerHTML='&#x2713; MF markup saved!';msg.className='success-msg';
   msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
