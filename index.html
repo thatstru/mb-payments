@@ -343,7 +343,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             <div class="disc-unit">$</div>
           </div>
           <button class="btn btn-primary mt" onclick="saveCilajet()">Save Cilajet Settings</button>
-          <div class="text-sm">Cilajet is capitalized into all lease and finance payments. Saved to this browser.</div>
+          <div class="text-sm">Cilajet is capitalized into all lease and finance payments. Synced across all logins.</div>
         </div>
         <div class="card">
           <div class="card-title tip-wrap">Lease Money Factor Markup <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Added to the buy-rate money factor on all lease calculations. Builds dealer reserve silently into every payment. +0.00030 adds approximately $15–25/mo depending on vehicle price.</span></div>
@@ -355,7 +355,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             <div class="disc-unit">MF</div>
           </div>
           <button class="btn btn-primary mt" onclick="saveMfMarkup()">Save MF Markup</button>
-          <div class="text-sm">Standard dealer markup is +0.00030. Set to 0 to use buy-rate only. Saved to this browser.</div>
+          <div class="text-sm">Standard dealer markup is +0.00030. Set to 0 to use buy-rate only. Synced across all logins.</div>
+        </div>
+        <div class="card">
+          <div class="card-title tip-wrap">Acquisition Fee Markup <i class="tip-icon" onclick="tipToggle(this)">i</i><span class="tip-box">Added on top of the $795 MBFS base acquisition fee. This markup is rolled into the cap cost and reflected in the monthly payment shown to salespeople. Base: $795. Total shown to customer = $795 + this amount.</span></div>
+          <div class="adj-hint">Base MBFS acq fee is $795. Enter the dealer markup to add on top — it is rolled into the lease cap cost and raises the monthly payment accordingly.</div>
+          <div id="acqmarkup-msg" class="hidden"></div>
+          <div class="disc-row">
+            <div class="disc-label">Acq Fee Markup</div>
+            <input id="acq-fee-markup-input" class="cilajet-input" type="number" min="0" max="2000" step="50" value="0">
+            <div class="disc-unit">$</div>
+          </div>
+          <button class="btn btn-primary mt" onclick="saveAcqFeeMarkup()">Save Acq Fee Markup</button>
+          <div class="text-sm">Set to 0 for no markup (customer pays base $795 only). Synced across all logins.</div>
         </div>
       </div>
 
@@ -368,7 +380,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             <tbody id="inv-tbody"></tbody>
           </table>
           <div class="divider"></div>
-          <div class="text-sm">Rates valid 2026-04-01 &ndash; 2026-04-30</div>
+          <div class="text-sm">Rates valid 2026-05-01 &ndash; 2026-05-31</div>
         </div>
       </div>
 
@@ -580,6 +592,7 @@ var state = {
   })(),
   cilajet: lsGet('mb_encino_cilajet', JSON.parse(JSON.stringify(CILAJET_DEFAULTS))),
   mfMarkup: lsGet('mb_encino_mf_markup', 0.00030),
+  acqFeeMarkup: lsGet('mb_encino_acq_fee_markup', 0),
   adminVehicle:null, adminRateModel:null, adminPayments:null,
   adminTier:'T1', adminMileage:7500, adminPayWindow:50, adminDownPayment:0,
   adminActiveTab:'lease'
@@ -673,7 +686,7 @@ function calcLease(model,tier,term,mileage,downPayment,actualMsrp){
   var cilajet=getCilajet(totalMsrp);
   var sellingPrice=totalMsrp*(1-discPct/100);
   var conquestDisc=(state.conquest?2000:0);
-  var netCap=sellingPrice+cilajet-dp-regional-mib-conquestDisc;
+  var netCap=sellingPrice+cilajet-dp-regional-mib-conquestDisc+(state.acqFeeMarkup||0);
   var residual=totalMsrp*resPct;
   var monthly=Math.round((netCap-residual)/term+(netCap+residual)*mf);
   return {monthly:monthly,mileage:mileage,term:term,acqFee:model.acq_fee||795};
@@ -703,7 +716,7 @@ function getAllPayments(model,tier,mileage,downPayment,actualMsrp){
   var lease={},finance={};
   LEASE_TERMS.forEach(function(t){var r=calcLease(model,tier,t,mileage,downPayment,actualMsrp);if(r)lease[t]=r;});
   FINANCE_TERMS.forEach(function(t){var r=calcFinance(model,tier,t,downPayment,actualMsrp);if(r)finance[t]=r;});
-  return {lease:lease,finance:finance,oemT3rc:model.oem_payment_t3_rc,oemTerm:model.oem_term,acqFee:model.acq_fee||795};
+  return {lease:lease,finance:finance,oemT3rc:model.oem_payment_t3_rc,oemTerm:model.oem_term,acqFee:(model.acq_fee||795)+(state.acqFeeMarkup||0)};
 }
 function getRateModel(modelCode,modelYear){
   var my=String(modelYear).length===4?'MY'+String(modelYear).slice(-2):modelYear;
@@ -1062,14 +1075,20 @@ function login(){
       RATES_DATA=results[1];
       var settings=results[2]||{};
       if(settings.mf_markup!=null) state.mfMarkup=settings.mf_markup;
+      if(settings.acq_fee_markup!=null) state.acqFeeMarkup=settings.acq_fee_markup;
+      if(settings.conquest!=null) state.conquest=settings.conquest;
+      if(settings.cilajet_standard!=null) state.cilajet.standard=settings.cilajet_standard;
+      if(settings.cilajet_premium!=null) state.cilajet.premium=settings.cilajet_premium;
+      if(settings.cilajet_threshold!=null) state.cilajet.threshold=settings.cilajet_threshold;
       buildInvoiceMap();
       var displayName=role==='admin'?'GM Admin':'Salesperson';
       if(role==='admin'){
         setText('admin-username','GM');
-        renderDiscounts();renderCilajet();renderMfMarkup();renderInventory();
+        renderDiscounts();renderCilajet();renderMfMarkup();renderAcqFeeMarkup();renderConquest();renderInventory();
         showScreen('screen-admin');
       } else {
         setText('sales-username',u.charAt(0).toUpperCase()+u.slice(1));
+        renderConquest();
         showScreen('screen-sales');
       }
       btn.disabled=false; btn.textContent='Sign In';
@@ -1214,6 +1233,13 @@ function saveCilajet(){
     threshold:parseInt(document.getElementById('cilajet-thresh').value)||150000
   };
   lsSet('mb_encino_cilajet',state.cilajet);
+  if(AUTH_TOKEN){
+    fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+AUTH_TOKEN},
+      body:JSON.stringify({cilajet_standard:state.cilajet.standard,cilajet_premium:state.cilajet.premium,cilajet_threshold:state.cilajet.threshold})
+    });
+  }
   updateCilajetLabels();
   var msg=document.getElementById('cilajet-msg');
   msg.innerHTML='&#x2713; Cilajet settings saved!';msg.className='success-msg';
@@ -1232,6 +1258,22 @@ function saveCilajet(){
   }
 }
 
+function renderConquest(){
+  var el=document.getElementById('chk-conquest');
+  if(el) el.checked=!!state.conquest;
+  var ael=document.getElementById('admin-chk-conquest');
+  if(ael) ael.checked=!!state.conquest;
+}
+function saveConquest(){
+  lsSet('mb_encino_conquest',state.conquest);
+  if(AUTH_TOKEN){
+    fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+AUTH_TOKEN},
+      body:JSON.stringify({conquest:state.conquest})
+    });
+  }
+}
 function renderMfMarkup(){
   var el=document.getElementById('mf-markup-input');
   if(el) el.value=(state.mfMarkup||0).toFixed(5);
@@ -1259,6 +1301,36 @@ function saveMfMarkup(){
   if(state.adminRateModel){
     var curAMsrp=state.adminVehicle?(state.adminVehicle.total_msrp||state.adminVehicle.msrp||0):0;
   state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment,curAMsrp);
+    renderPaymentGrid(state.adminPayments,'admin');
+  }
+}
+function renderAcqFeeMarkup(){
+  var el=document.getElementById('acq-fee-markup-input');
+  if(el) el.value=(state.acqFeeMarkup||0).toFixed(0);
+}
+function saveAcqFeeMarkup(){
+  var val=parseFloat(document.getElementById('acq-fee-markup-input').value)||0;
+  state.acqFeeMarkup=val;
+  lsSet('mb_encino_acq_fee_markup',val);
+  if(AUTH_TOKEN){
+    fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+AUTH_TOKEN},
+      body:JSON.stringify({acq_fee_markup:val})
+    });
+  }
+  var msg=document.getElementById('acqmarkup-msg');
+  msg.innerHTML='&#x2713; Acq fee markup saved!';msg.className='success-msg';
+  msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
+  if(state.rateModel){
+    var curMsrp=state.vehicle?(state.vehicle.total_msrp||state.vehicle.msrp||0):0;
+    state.payments=getAllPayments(state.rateModel,state.tier,state.mileage,state.downPayment,curMsrp);
+    state.similar=findSimilar(state.rateModel,state.tier,state.mileage,state.payWindow,state.downPayment);
+    renderPaymentGrid(state.payments);renderSimilar(state.similar);
+  }
+  if(state.adminRateModel){
+    var curAMsrp=state.adminVehicle?(state.adminVehicle.total_msrp||state.adminVehicle.msrp||0):0;
+    state.adminPayments=getAllPayments(state.adminRateModel,state.adminTier,state.adminMileage,state.adminDownPayment,curAMsrp);
     renderPaymentGrid(state.adminPayments,'admin');
   }
 }
@@ -1293,6 +1365,7 @@ document.getElementById('sel-miles').addEventListener('change',recalc);
 document.getElementById('sel-window').addEventListener('change',recalc);
 document.getElementById('inp-downpay').addEventListener('change',recalc);
 document.getElementById('chk-conquest').addEventListener('change',recalc);
+document.getElementById('chk-conquest').addEventListener('change',saveConquest);
 document.getElementById('admin-search-btn').addEventListener('click',doAdminSearch);
 document.getElementById('admin-search-input').addEventListener('keydown',function(e){if(e.key==='Enter')doAdminSearch();});
 document.getElementById('admin-sel-tier').addEventListener('change',adminRecalc);
@@ -1300,6 +1373,7 @@ document.getElementById('admin-sel-miles').addEventListener('change',adminRecalc
 document.getElementById('admin-sel-window').addEventListener('change',adminRecalc);
 document.getElementById('admin-inp-downpay').addEventListener('change',adminRecalc);
 document.getElementById('admin-chk-conquest').addEventListener('change',adminRecalc);
+document.getElementById('admin-chk-conquest').addEventListener('change',saveConquest);
 document.getElementById('flag-modal').addEventListener('click',function(e){if(e.target===this)closeFlagModal();});
 function tipToggle(el){
   var wasActive=el.classList.contains('tip-active');
