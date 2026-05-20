@@ -1307,7 +1307,7 @@ function updateCilajetLabels(){
 
 function renderInventory(){
   var counts={};
-  INVENTORY.forEach(function(v){counts[v.model_code]=(counts[v.model_code]||0)+1;});
+  INVENTORY.forEach(function(v){var key=v.model||v.model_code||'Unknown';counts[key]=(counts[key]||0)+1;});
   var sorted=Object.entries(counts).sort(function(a,b){return b[1]-a[1];});
   var html='';sorted.forEach(function(e){html+='<tr><td><strong>'+e[0]+'</strong></td><td>'+e[1]+'</td></tr>';});
   setHTML('inv-tbody',html);setText('inv-count',String(INVENTORY.length));
