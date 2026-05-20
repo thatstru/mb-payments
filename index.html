@@ -389,7 +389,13 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
         <div class="login-wordmark">BumpDesk</div>
         <div class="login-star">&#x2299;</div>
         <div class="login-brand">MERCEDES-BENZ</div>
-        <div class="login-store">of Encino</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="login-dealer">Dealership</label>
+        <select id="login-dealer" class="input" style="cursor:pointer">
+          <option value="mb-encino">Mercedes-Benz of Encino</option>
+          <option value="mb-valencia">Mercedes-Benz of Valencia</option>
+        </select>
       </div>
       <div class="input-group">
         <label class="input-label" for="login-user">Username</label>
@@ -825,7 +831,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <!-- DATA — fetched from API at login -->
 <script>
 var API_BASE    = 'https://api.bumpdesk.ai';
-var DEALER_SLUG = 'mb-encino';
+var DEALER_SLUG = 'mb-encino'; // updated dynamically on login
 var RATES_DATA  = {};
 var INV_DATA    = {vehicles:[]};
 var INVENTORY   = [];
@@ -1362,6 +1368,9 @@ function submitFlag(){
 
 // ── Login / Logout ───────────────────────────────────────────────
 function login(){
+  // Read dealer from dropdown
+  var dealerEl=document.getElementById('login-dealer');
+  DEALER_SLUG=dealerEl?dealerEl.value:'mb-encino';
   var u=document.getElementById('login-user').value.trim();
   var p=document.getElementById('login-pass').value;
   hideEl('login-error');
@@ -1383,6 +1392,9 @@ function login(){
     AUTH_TOKEN=res.data.token;
     localStorage.setItem('bd_token',AUTH_TOKEN);
     var role=res.data.role;
+    var dealerName=res.data.dealer_name||'Mercedes-Benz';
+    // Update sidebar dealer name on both screens
+    document.querySelectorAll('.sidebar-dealer').forEach(function(el){el.textContent=dealerName;});
     // Fetch inventory + rates in parallel
     return Promise.all([
       fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/inventory').then(function(r){return r.json();}),
@@ -1400,7 +1412,6 @@ function login(){
       if(settings.cilajet_premium!=null) state.cilajet.premium=settings.cilajet_premium;
       if(settings.cilajet_threshold!=null) state.cilajet.threshold=settings.cilajet_threshold;
       buildInvoiceMap();
-      var displayName=role==='admin'?'GM Admin':'Salesperson';
       if(role==='admin'){
         setText('admin-username','GM');
         renderDiscounts();renderCilajet();renderMfMarkup();renderAcqFeeMarkup();renderConquest();renderInventory();
