@@ -639,7 +639,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
           <div id="disc-msg" class="hidden"></div>
           <div id="disc-rows"></div>
           <button class="btn btn-primary mt" onclick="saveDiscounts()">Save Price Adjustments</button>
-          <div class="text-sm">Only model classes with active inventory are shown. Saved to this browser.</div>
+          <div class="text-sm">Only model classes with active inventory are shown. Synced across all logins.</div>
         </div>
 
         <div class="card">
@@ -1010,7 +1010,7 @@ function calcLease(model,tier,term,mileage,downPayment,actualMsrp){
   var mib=model.mib||0;
   var cilajet=getCilajet(totalMsrp);
   var sellingPrice=totalMsrp*(1-discPct/100);
-  var conquestDisc=(state.conquest?2000:0);
+  var conquestDisc=(state.conquest?1500:0);
   var netCap=sellingPrice+cilajet-dp-regional-mib-conquestDisc+(state.acqFeeMarkup||0);
   var residual=totalMsrp*resPct;
   var monthly=Math.round((netCap-residual)/term+(netCap+residual)*mf);
@@ -1411,6 +1411,7 @@ function login(){
       if(settings.cilajet_standard!=null) state.cilajet.standard=settings.cilajet_standard;
       if(settings.cilajet_premium!=null) state.cilajet.premium=settings.cilajet_premium;
       if(settings.cilajet_threshold!=null) state.cilajet.threshold=settings.cilajet_threshold;
+      if(settings.discounts!=null){ Object.keys(settings.discounts).forEach(function(k){if(state.discounts.hasOwnProperty(k))state.discounts[k]=settings.discounts[k];}); }
       buildInvoiceMap();
       if(role==='admin'){
         setText('admin-username','GM');
@@ -1551,6 +1552,13 @@ function saveDiscounts(){
     state.discounts[inp.dataset.key]=parseFloat(inp.value)||0;
   });
   lsSet('mb_encino_discounts',state.discounts);
+  if(AUTH_TOKEN){
+    fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+AUTH_TOKEN},
+      body:JSON.stringify({discounts:state.discounts})
+    });
+  }
   var msg=document.getElementById('disc-msg');
   msg.innerHTML='&#x2713; Price adjustments saved!';msg.className='success-msg';
   msg.classList.remove('hidden');setTimeout(function(){msg.classList.add('hidden');},3000);
@@ -1685,36 +1693,4 @@ function clickSimilar(i){
 }
 
 // ── Event listeners ──────────────────────────────────────────────
-document.getElementById('login-btn').addEventListener('click',login);
-document.getElementById('login-pass').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
-document.getElementById('login-user').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-pass').focus();});
-document.getElementById('search-btn').addEventListener('click',doSearch);
-document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
-document.getElementById('sel-tier').addEventListener('change',recalc);
-document.getElementById('sel-miles').addEventListener('change',recalc);
-document.getElementById('sel-window').addEventListener('change',recalc);
-document.getElementById('inp-downpay').addEventListener('change',recalc);
-document.getElementById('chk-conquest').addEventListener('change',recalc);
-document.getElementById('chk-conquest').addEventListener('change',saveConquest);
-document.getElementById('admin-search-btn').addEventListener('click',doAdminSearch);
-document.getElementById('admin-search-input').addEventListener('keydown',function(e){if(e.key==='Enter')doAdminSearch();});
-document.getElementById('admin-sel-tier').addEventListener('change',adminRecalc);
-document.getElementById('admin-sel-miles').addEventListener('change',adminRecalc);
-document.getElementById('admin-sel-window').addEventListener('change',adminRecalc);
-document.getElementById('admin-inp-downpay').addEventListener('change',adminRecalc);
-document.getElementById('admin-chk-conquest').addEventListener('change',adminRecalc);
-document.getElementById('admin-chk-conquest').addEventListener('change',saveConquest);
-document.getElementById('flag-modal').addEventListener('click',function(e){if(e.target===this)closeFlagModal();});
-function tipToggle(el){
-  var wasActive=el.classList.contains('tip-active');
-  document.querySelectorAll('.tip-icon.tip-active').forEach(function(e){e.classList.remove('tip-active');});
-  if(!wasActive) el.classList.add('tip-active');
-}
-document.addEventListener('click',function(e){
-  if(!e.target.classList.contains('tip-icon')){
-    document.querySelectorAll('.tip-icon.tip-active').forEach(function(el){el.classList.remove('tip-active');});
-  }
-},true);
-</script>
-</body>
-</html>
+document.getElementById('login-btn').ad
