@@ -168,6 +168,65 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .tip-box{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e293b;color:white;font-size:12px;font-weight:400;padding:8px 12px;border-radius:7px;white-space:nowrap;max-width:280px;white-space:normal;width:240px;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3);line-height:1.4}
 .tip-box.show{display:block}
 
+/* ── OffersDesk ── */
+.od-empty{text-align:center;padding:24px 0;color:var(--text-muted);font-size:13px}
+/* Recommendation cards */
+.od-recs-section{margin-bottom:20px}
+.od-recs-title{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+.od-recs-sub{font-size:12px;color:var(--text-muted);margin-bottom:14px}
+.od-tier-block{margin-bottom:18px}
+.od-tier-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.od-tier-pill{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.od-tier1-pill{background:#fef3c7;color:#92400e}
+.od-tier2-pill{background:#dbeafe;color:#1e40af}
+.od-tier3-pill{background:#f3f4f6;color:#6b7280}
+.od-tier-line{flex:1;height:1px;background:var(--border)}
+.od-recs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.od-rec-card{background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.od-rec-card.od-added{opacity:.45;pointer-events:none}
+.od-rec-model{font-size:13px;font-weight:700;color:var(--text-primary)}
+.od-rec-trim{font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.od-rec-stats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px}
+.od-rec-stat{font-size:10px;font-weight:600;background:var(--indigo-50);color:var(--indigo-700);padding:2px 6px;border-radius:4px}
+.od-rec-pay{font-size:24px;font-weight:900;color:var(--kia-red);line-height:1}
+.od-rec-pay-sub{font-size:10px;color:var(--text-muted);margin-bottom:6px}
+.od-inv-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;margin-bottom:6px;width:fit-content}
+.od-inv-some{background:#dcfce7;color:#166534}
+.od-inv-none{background:#f3f4f6;color:#6b7280}
+.od-rec-add-btn{margin-top:auto;padding:7px;background:var(--kia-red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.od-rec-add-btn:hover{opacity:.85}
+.od-rec-add-btn:disabled{background:var(--border);color:var(--text-muted);cursor:default;opacity:1}
+/* Featured offers */
+.od-feat-count{font-size:11px;font-weight:500;color:var(--text-muted);background:var(--page-bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px;margin-left:6px}
+.od-offer-card{background:var(--page-bg);border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.od-offer-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.od-offer-num{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted)}
+.od-remove{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;line-height:1;padding:0 2px}
+.od-remove:hover{color:#dc2626}
+.od-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.od-ctrl-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px}
+.od-result{background:white;border:1.5px solid var(--kia-red);border-radius:8px;padding:12px 14px}
+.od-monthly-wrap{display:flex;align-items:baseline;gap:6px;margin-bottom:8px}
+.od-monthly{font-size:30px;font-weight:900;color:var(--kia-red);line-height:1}
+.od-monthly-label{font-size:12px;color:var(--text-muted)}
+.od-das-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.od-das-item{font-size:12px}
+.od-das-val{font-weight:700;color:var(--text-primary);font-size:13px}
+.od-das-lbl{color:var(--text-muted);font-size:11px}
+.od-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.od-badge-ok{background:#dcfce7;color:#166534}
+.od-badge-fail{background:#fee2e2;color:#991b1b}
+/* Preview */
+.od-preview-section{margin-top:24px}
+.od-preview-hdr{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px}
+.od-preview-block{border:1.5px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px;background:white}
+.od-prev-model{font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:4px}
+.od-prev-pay{font-size:38px;font-weight:900;color:var(--kia-red);line-height:1}
+.od-prev-per{font-size:14px;font-weight:400;color:var(--text-muted)}
+.od-prev-terms{font-size:12px;color:var(--text-secondary);margin-top:6px;line-height:1.5}
+.od-prev-das{font-size:13px;font-weight:700;color:var(--text-primary);margin-top:8px}
+.od-prev-disclaimer{font-size:10px;color:var(--text-muted);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
 @media(max-width:700px){
   .main-content{margin-left:0}
   .sidebar{display:none!important}
@@ -176,6 +235,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   .controls-grid{grid-template-columns:repeat(2,1fr)}
   .similar-list{grid-template-columns:repeat(2,1fr)}
   .card{padding:14px}
+  .od-controls{grid-template-columns:1fr 1fr}
+  .od-das-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -366,9 +427,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
     </div>
     <div class="admin-tabs">
-      <div id="atab-disc" class="admin-tab active" onclick="switchAdminTab('disc')">🏷️ Pricing</div>
-      <div id="atab-inv"  class="admin-tab"        onclick="switchAdminTab('inv')">📦 Inventory</div>
-      <div id="atab-search" class="admin-tab"      onclick="switchAdminTab('search')">🔍 Spot Check</div>
+      <div id="atab-disc"   class="admin-tab active" onclick="switchAdminTab('disc')">🏷️ Pricing</div>
+      <div id="atab-inv"    class="admin-tab"        onclick="switchAdminTab('inv')">📦 Inventory</div>
+      <div id="atab-search" class="admin-tab"        onclick="switchAdminTab('search')">🔍 Spot Check</div>
+      <div id="atab-offers" class="admin-tab"        onclick="switchAdminTab('offers')">📢 OffersDesk</div>
     </div>
 
     <!-- PRICING PANEL -->
@@ -524,17 +586,29 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
     </div>
 
+    <!-- OFFERSDESK PANEL -->
+    <div id="admin-offers-panel" class="hidden">
+      <div class="card">
+        <div class="card-title">📢 OffersDesk — Advertised Lease Offers</div>
+        <div class="adj-hint">Program recommendations ranked by lease strength + inventory. Select up to 3 to feature. Max advertised DAS = min(15% × MSRP, $3,500) · Acq fee $650 shown separately · Monthly rounded up to nearest $__9.</div>
+      </div>
+      <!-- Recommendations (JS-rendered) -->
+      <div id="od-recs"></div>
+      <!-- Featured Offers (JS-rendered) -->
+      <div id="od-featured"></div>
+      <!-- Ad-Ready Preview (JS-rendered) -->
+      <div id="od-preview"></div>
+    </div>
+
   </div>
 </div>
 
 <script>
 
 // ── Constants ─────────────────────────────────────────────────────
-var API_BASE     = 'https://api.bumpdesk.ai';
-var _sub         = window.location.hostname.split('.')[0];
-var KIA_SLUG_MAP = {'kiacerritos':'kiacerritos','kiacarson':'kiacarson','kiadowntownla':'kiadowntownla'};
-var DEALER_SLUG  = KIA_SLUG_MAP[_sub] || 'kiacerritos';
-var AUTH_TOKEN   = localStorage.getItem('bd_kia_token') || null;
+var API_BASE    = 'https://api.bumpdesk.ai';
+var DEALER_SLUG = 'kiacerritos';
+var AUTH_TOKEN  = localStorage.getItem('bd_kia_token') || null;
 
 // Inventory loaded at login
 var INVENTORY = [];
@@ -796,10 +870,11 @@ function switchAdminPayTab(tab) {
 }
 
 function switchAdminTab(tab) {
-  ['disc','inv','search'].forEach(function(t){
+  ['disc','inv','search','offers'].forEach(function(t){
     document.getElementById('atab-'+t).classList.toggle('active', t===tab);
     document.getElementById('admin-'+t+'-panel').classList.toggle('hidden', t!==tab);
   });
+  if(tab === 'offers') renderOffersDesk();
 }
 
 function switchSimTab(tab) {
@@ -1173,6 +1248,319 @@ document.addEventListener('keydown', function(e){
   if(id === 'search-input')                           doSearch();
   if(id === 'admin-search-input')                     doAdminSearch();
 });
+
+// ════════════════════════════════════════════════════════════════════
+// OffersDesk — KFA CA Advertised Lease Offer Generator
+// Rules (per PROJECT_NOTES / KFA Bulletin 2026-069 + KMF confirmed):
+//   • Max advertised DAS = min(15% × MSRP, $3,500)
+//   • $650 KMF acq fee excluded from cap cost, shown separately
+//   • Advertised monthly = base monthly rounded UP to nearest ending in 9
+//   • T1-2 rate only (no MF markup on advertised specials)
+//   • Mileage: 10,000/yr (KFA base)
+// ════════════════════════════════════════════════════════════════════
+
+var odState = { selected: [], nextId: 1 };
+
+// ── Round UP n to nearest integer ending in 9 ─────────────────────
+function odRoundUp9(n) {
+  var c = Math.ceil(n);
+  var rem = c % 10;
+  return rem === 9 ? c : c + (9 - rem);
+}
+
+// ── Score models using INVENTORY + KFA_RATES, return Tier 1/2/3 list
+function odBuildRecommendations() {
+  // Count inventory units per model
+  var invCount = {};
+  INVENTORY.forEach(function(v){ if(v.model) invCount[v.model] = (invCount[v.model]||0)+1; });
+
+  // Build best rate record per model (highest-scoring 36mo program)
+  var best = {};
+  KFA_RATES.forEach(function(r) {
+    var m = r.model;
+    if(!m || !r.t36) return;
+    var lc  = r.t36.lc || 0;
+    var res = r.t36.r  || 0;
+    var mf  = r.t36['T12'];
+    // Score: lease cash most important, then residual above baseline, then inventory presence
+    var score = (lc / 100) * 3 + (res - 40) + ((invCount[m] || 0) / 2);
+    if(!best[m] || score > best[m].score) {
+      best[m] = { model: m, trim: r.trim, code: r.code, year: r.year,
+                  lc: lc, resPct: res, mf: mf, score: score, invCount: invCount[m] || 0 };
+    }
+  });
+
+  var recs = Object.keys(best).map(function(m){ return best[m]; });
+  recs.sort(function(a,b){ return b.score - a.score; });
+
+  recs.forEach(function(r) {
+    if(r.score >= 40)      r.tier = 1;
+    else if(r.score >= 15) r.tier = 2;
+    else                   r.tier = 3;
+  });
+  return recs;
+}
+
+// ── Compute a KFA CA-compliant advertised offer ───────────────────
+function odCalcOffer(msrp, term, rateRec) {
+  if(!rateRec || !msrp || msrp <= 0) return null;
+  var tk = 't' + term;
+  var t  = rateRec[tk];
+  if(!t) return null;
+  var mf = t['T12'];
+  if(mf == null) return null;
+
+  var lc     = t.lc || 0;
+  var resPct = t.r;
+  var rv     = msrp * resPct / 100;
+  var acc    = (state.cilajetAmount || 0) + (state.vanguardAmount || 0);
+  var maxDAS = Math.min(0.15 * msrp, 3500);
+
+  // Iterative solver: DAS = monthly + capReduction → converges in ~4 passes
+  var capRed = 0;
+  var rawMonthly = 0;
+  for(var iter = 0; iter < 6; iter++) {
+    var netCap = msrp + acc - lc - capRed;
+    rawMonthly = (netCap - rv) / term + (netCap + rv) * mf;
+    capRed = Math.max(0, maxDAS - rawMonthly);
+  }
+
+  var advMonthly  = odRoundUp9(rawMonthly);
+  var finalCapRed = Math.max(0, Math.round(maxDAS - advMonthly));
+  var totalDAS    = advMonthly + finalCapRed;
+  return {
+    monthly: advMonthly, capReduction: finalCapRed, totalDAS: totalDAS,
+    maxDAS: Math.round(maxDAS), acqFee: 650, rv: Math.round(rv),
+    resPct: resPct, lc: lc, mf: mf, acc: acc, term: term, msrp: msrp,
+    compliant: totalDAS <= maxDAS + 0.01
+  };
+}
+
+// ── KFA CA legal disclaimer ───────────────────────────────────────
+function odDisclaimer(offer, result, dealerName) {
+  var r = result;
+  var endDate = 'June 1, 2026';
+  var acqLine = '$' + r.acqFee + ' KMF acquisition fee is due at signing and is NOT included in the advertised monthly payment.';
+  var dasDesc = '$' + fmt(r.totalDAS) + ' total due at lease signing';
+  dasDesc += r.capReduction > 0
+    ? ' (includes first month\'s payment of $' + fmt(r.monthly) + ' and $' + fmt(r.capReduction) + ' capitalized cost reduction)'
+    : ' (first month\'s payment only; no capitalized cost reduction)';
+  dasDesc += '. ' + acqLine;
+  return dasDesc + ' Offer expires ' + endDate + '. MSRP $' + fmt(r.msrp) + '. ' +
+    r.resPct + '% residual value. ' + r.term + '-month lease at ' + (r.mf * 2400).toFixed(4) + ' APR equivalent. ' +
+    (r.lc > 0 ? '$' + fmt(r.lc) + ' lease cash applied. ' : '') +
+    (r.acc > 0 ? '$' + fmt(r.acc) + ' dealer-installed accessories (Cilajet' + (state.vanguardAmount > 0 ? '/Vanguard GPS' : '') + ') capitalized. ' : '') +
+    'Price does not include sales tax, vehicle registration fees, finance charges, documentation charges, dealer-installed equipment not listed, and any other fees required by law. ' +
+    '10,000 miles/yr allowance; $0.15/mi over. Based on ' + (dealerName || 'dealer') + ' participation. Lessee responsible for insurance. Not all buyers will qualify. ' +
+    'Tier 1-2 credit required (FICO 720+). See dealer for details.';
+}
+
+// ── GM selects a recommendation → Featured Offers ─────────────────
+function odSelectRec(code, year) {
+  if(odState.selected.length >= 3) { alert('Maximum 3 featured offers per brief.'); return; }
+  var rateRec = findRate(code, year);
+  if(!rateRec) return;
+  // Pre-fill MSRP with median from inventory for this model_code, else blank
+  var matching = INVENTORY.filter(function(v){ return v.model_code === code; });
+  if(!matching.length) matching = INVENTORY.filter(function(v){ return v.model === rateRec.model; });
+  var defaultMSRP = '';
+  if(matching.length) {
+    var msrps = matching.map(function(v){ return v.msrp || v.total_msrp || 0; }).filter(Boolean).sort(function(a,b){return a-b;});
+    if(msrps.length) defaultMSRP = msrps[Math.floor(msrps.length / 2)];
+  }
+  odState.selected.push({ id: odState.nextId++, code: code, year: year,
+                           model: rateRec.model, trim: rateRec.trim, msrp: defaultMSRP, term: 36 });
+  renderOffersDesk();
+}
+
+// ── Remove from Featured Offers ───────────────────────────────────
+function odDeselect(id) {
+  odState.selected = odState.selected.filter(function(o){ return o.id !== id; });
+  renderOffersDesk();
+}
+
+// ── Edit a featured offer field ───────────────────────────────────
+function odUpdateOffer(id, field, value) {
+  var o = odState.selected.find(function(o){ return o.id === id; });
+  if(!o) return;
+  if(field === 'msrp') o.msrp = parseFloat(value) || '';
+  if(field === 'term') o.term = parseInt(value);
+  renderOffersDesk();
+}
+
+// ── Main render ───────────────────────────────────────────────────
+function renderOffersDesk() {
+  var recsEl  = document.getElementById('od-recs');
+  var featEl  = document.getElementById('od-featured');
+  var prevEl  = document.getElementById('od-preview');
+  if(!recsEl || !featEl || !prevEl) return;
+
+  var dealerName   = 'Kia of Cerritos';
+  var recs         = odBuildRecommendations();
+  var selectedKeys = odState.selected.map(function(o){ return o.code + '|' + o.year; });
+
+  // ── SECTION 1: Recommendations ────────────────────────────────
+  var tierLabels    = {1:'Tier 1 — Feature These', 2:'Tier 2 — Strong Support', 3:'Tier 3 — Monitor / Move'};
+  var tierPillClass = {1:'od-tier1-pill', 2:'od-tier2-pill', 3:'od-tier3-pill'};
+
+  var recsHtml = '<div class="od-recs-section card">' +
+    '<div class="od-recs-title">🏆 Program Recommendations — May 2026</div>' +
+    '<div class="od-recs-sub">Ranked by lease program strength + dealer inventory. Click "+ Add to Brief" to feature an offer below.</div>';
+
+  [1,2,3].forEach(function(tier) {
+    var tierRecs = recs.filter(function(r){ return r.tier === tier; });
+    if(!tierRecs.length) return;
+
+    recsHtml += '<div class="od-tier-block">' +
+      '<div class="od-tier-hdr">' +
+        '<span class="od-tier-pill ' + tierPillClass[tier] + '">' + tierLabels[tier] + '</span>' +
+        '<div class="od-tier-line"></div>' +
+      '</div>' +
+      '<div class="od-recs-grid">';
+
+    tierRecs.forEach(function(rec) {
+      var key        = rec.code + '|' + rec.year;
+      var alreadyAdded = selectedKeys.indexOf(key) !== -1;
+
+      // Estimate payment using median inventory MSRP (or fallback)
+      var matching = INVENTORY.filter(function(v){ return v.model === rec.model && v.model_code === rec.code; });
+      if(!matching.length) matching = INVENTORY.filter(function(v){ return v.model === rec.model; });
+      var estMSRP = 35000;
+      if(matching.length) {
+        var ms = matching.map(function(v){ return v.msrp || v.total_msrp || 0; }).filter(Boolean).sort(function(a,b){return a-b;});
+        if(ms.length) estMSRP = ms[Math.floor(ms.length / 2)];
+      }
+      var rateRec   = findRate(rec.code, rec.year);
+      var estResult = rateRec ? odCalcOffer(estMSRP, 36, rateRec) : null;
+
+      var invBadge = rec.invCount > 0
+        ? '<span class="od-inv-badge od-inv-some">' + rec.invCount + ' in stock</span>'
+        : '<span class="od-inv-badge od-inv-none">0 in stock</span>';
+
+      var statsHtml = '';
+      if(rec.lc > 0) statsHtml += '<span class="od-rec-stat">$' + fmt(rec.lc) + ' Lease Cash</span>';
+      if(rec.resPct > 0) statsHtml += '<span class="od-rec-stat">' + rec.resPct + '% Residual</span>';
+      if(rec.mf != null) statsHtml += '<span class="od-rec-stat">' + (rec.mf * 2400).toFixed(2) + '% APR eq.</span>';
+
+      var payHtml = estResult
+        ? '<div class="od-rec-pay">$' + fmt(estResult.monthly) + '</div>' +
+          '<div class="od-rec-pay-sub">est. /mo · 36mo · ' + (matching.length ? 'from stock' : 'est. MSRP') + '</div>'
+        : '';
+
+      recsHtml += '<div class="od-rec-card' + (alreadyAdded ? ' od-added' : '') + '">' +
+        '<div class="od-rec-model">' + rec.year + ' Kia ' + rec.model + '</div>' +
+        '<div class="od-rec-trim">' + rec.trim + '</div>' +
+        invBadge +
+        '<div class="od-rec-stats">' + statsHtml + '</div>' +
+        payHtml +
+        '<button class="od-rec-add-btn" onclick="odSelectRec(\'' + rec.code + '\',' + rec.year + ')"' +
+          (alreadyAdded ? ' disabled' : '') + '>' +
+          (alreadyAdded ? '✓ Added to Brief' : '+ Add to Brief') +
+        '</button>' +
+      '</div>';
+    });
+
+    recsHtml += '</div></div>';
+  });
+
+  recsHtml += '</div>';
+  recsEl.innerHTML = recsHtml;
+
+  // ── SECTION 2: Featured Offers ────────────────────────────────
+  var featCount = odState.selected.length;
+  var featHtml  = '<div class="card" style="margin-top:0">' +
+    '<div class="card-title">✏️ Featured Offers <span class="od-feat-count">' + featCount + ' / 3</span></div>' +
+    (featCount === 0 ? '<div class="od-empty">No offers selected yet — click "+ Add to Brief" on any recommendation above.</div>' : '');
+
+  odState.selected.forEach(function(o, idx) {
+    var rateRec = findRate(o.code, o.year);
+    var result  = (rateRec && o.msrp) ? odCalcOffer(parseFloat(o.msrp), o.term, rateRec) : null;
+
+    var termOpts = [24,36,48].map(function(t){
+      return '<option value="'+t+'"'+(o.term===t?' selected':'')+'>'+t+'mo</option>';
+    }).join('');
+
+    var resultHtml = '';
+    if(result) {
+      var bc = result.compliant ? 'od-badge-ok' : 'od-badge-fail';
+      var bt = result.compliant ? '✅ Compliant' : '❌ DAS Exceeds Cap';
+      resultHtml = '<div class="od-result">' +
+        '<div class="od-monthly-wrap">' +
+          '<span class="od-monthly">$' + fmt(result.monthly) + '</span>' +
+          '<span class="od-monthly-label">/mo · ' + result.term + '-mo T1-2 · 10k mi/yr</span>' +
+        '</div>' +
+        '<div class="od-das-grid">' +
+          '<div class="od-das-item"><div class="od-das-val">$' + fmt(result.totalDAS) + '</div><div class="od-das-lbl">Total DAS</div></div>' +
+          '<div class="od-das-item"><div class="od-das-val">$' + fmt(result.monthly) + '</div><div class="od-das-lbl">1st Month</div></div>' +
+          '<div class="od-das-item"><div class="od-das-val">$' + fmt(result.capReduction) + '</div><div class="od-das-lbl">Cap Reduction</div></div>' +
+          '<div class="od-das-item"><div class="od-das-val">$' + fmt(result.acqFee) + '</div><div class="od-das-lbl">Acq Fee (sep.)</div></div>' +
+        '</div>' +
+        '<div><span class="od-badge ' + bc + '">' + bt + '</span>' +
+          '<span style="font-size:11px;color:var(--text-muted)"> Max DAS $' + fmt(result.maxDAS) +
+          ' · Residual $' + fmt(result.rv) + ' (' + result.resPct + '%) · MF ' + result.mf + '</span>' +
+        '</div>' +
+      '</div>';
+    } else if(o.msrp) {
+      resultHtml = '<div class="od-result" style="border-color:var(--border)"><span style="color:var(--text-muted);font-size:13px">No ' + o.term + '-month lease program for this model.</span></div>';
+    } else {
+      resultHtml = '<div style="font-size:12px;color:var(--text-muted);margin-top:4px">Enter MSRP to calculate payment.</div>';
+    }
+
+    featHtml += '<div class="od-offer-card">' +
+      '<div class="od-offer-hdr">' +
+        '<span class="od-offer-num">Offer ' + (idx+1) + ' — ' + o.year + ' Kia ' + o.model + ' ' + o.trim + '</span>' +
+        '<button class="od-remove" onclick="odDeselect(' + o.id + ')">×</button>' +
+      '</div>' +
+      '<div class="od-controls">' +
+        '<div><div class="od-ctrl-label">MSRP</div>' +
+          '<input type="number" class="kia-input" style="width:100%" placeholder="e.g. 29500"' +
+          ' value="' + (o.msrp||'') + '" onchange="odUpdateOffer(' + o.id + ',\'msrp\',this.value)">' +
+        '</div>' +
+        '<div><div class="od-ctrl-label">Term</div>' +
+          '<select class="select" style="width:100%" onchange="odUpdateOffer(' + o.id + ',\'term\',this.value)">' + termOpts + '</select>' +
+        '</div>' +
+        '<div style="display:flex;align-items:flex-end">' +
+          '<div style="font-size:11px;color:var(--text-muted);line-height:1.5">' + o.trim + '<br>T1-2 buy rate · no markup</div>' +
+        '</div>' +
+      '</div>' +
+      resultHtml +
+    '</div>';
+  });
+
+  featHtml += '</div>';
+  featEl.innerHTML = featHtml;
+
+  // ── SECTION 3: Ad-Ready Preview ───────────────────────────────
+  var readyOffers = odState.selected.filter(function(o){
+    var rr = findRate(o.code, o.year);
+    return o.msrp && rr && odCalcOffer(parseFloat(o.msrp), o.term, rr);
+  });
+
+  if(!readyOffers.length) { prevEl.innerHTML = ''; return; }
+
+  var prevHtml = '<div class="od-preview-section">' +
+    '<div class="od-preview-hdr">📄 Ad-Ready Preview — ' + dealerName + ' · May 2026</div>';
+
+  readyOffers.forEach(function(o) {
+    var rateRec = findRate(o.code, o.year);
+    var result  = odCalcOffer(parseFloat(o.msrp), o.term, rateRec);
+    if(!result) return;
+    var disclaimer = odDisclaimer({ year: o.year, model: o.model, trim: o.trim }, result, dealerName);
+    prevHtml += '<div class="od-preview-block">' +
+      '<div class="od-prev-model">' + o.year + ' Kia ' + o.model + ' — ' + o.trim + '</div>' +
+      '<div><span class="od-prev-pay">$' + fmt(result.monthly) + '</span><span class="od-prev-per">/mo*</span></div>' +
+      '<div class="od-prev-terms">' + result.term + '-month lease · 10,000 mi/yr · T1-2 credit</div>' +
+      '<div class="od-prev-das">$' + fmt(result.totalDAS) + ' due at signing' +
+        (result.capReduction > 0 ? ' (incl. $' + fmt(result.capReduction) + ' cap reduction)' : '') +
+        ' + $' + fmt(result.acqFee) + ' acq fee' +
+      '</div>' +
+      '<div class="od-prev-disclaimer">*' + disclaimer + '</div>' +
+    '</div>';
+  });
+
+  prevHtml += '</div>';
+  prevEl.innerHTML = prevHtml;
+}
 
 </script>
 </body>
