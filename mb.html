@@ -461,8 +461,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <div class="card">
         <div class="card-title">Search by Stock # or Last 6 of VIN</div>
         <div class="search-wrap">
-          <input id="search-input" class="search-input" type="text" placeholder="e.g. 3N8744" maxlength="10" autocapitalize="characters" autocorrect="off">
-          <button id="search-btn" class="search-btn">&#x2192;</button>
+          <input id="search-input" class="search-input" type="text" placeholder="e.g. 3N8744" maxlength="10" autocapitalize="characters" autocorrect="off" onkeypress="if(event.key==='Enter')doSearch()">
+          <button id="search-btn" class="search-btn" onclick="doSearch()">&#x2192;</button>
         </div>
       </div>
 
@@ -706,8 +706,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
         <div class="card">
           <div class="card-title">Spot-Check Any Vehicle</div>
           <div class="search-wrap">
-            <input id="admin-search-input" class="search-input" type="text" placeholder="Stock # or last 6 VIN" maxlength="10" autocapitalize="characters" autocorrect="off">
-            <button id="admin-search-btn" class="search-btn">&#x2192;</button>
+            <input id="admin-search-input" class="search-input" type="text" placeholder="Stock # or last 6 VIN" maxlength="10" autocapitalize="characters" autocorrect="off" onkeypress="if(event.key==='Enter')doAdminSearch()">
+            <button id="admin-search-btn" class="search-btn" onclick="doAdminSearch()">&#x2192;</button>
           </div>
         </div>
         <div id="admin-search-error" class="error-msg hidden"></div>
