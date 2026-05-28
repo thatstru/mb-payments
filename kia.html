@@ -530,9 +530,11 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <script>
 
 // ── Constants ─────────────────────────────────────────────────────
-var API_BASE    = 'https://api.bumpdesk.ai';
-var DEALER_SLUG = 'kiacerritos';
-var AUTH_TOKEN  = localStorage.getItem('bd_kia_token') || null;
+var API_BASE     = 'https://api.bumpdesk.ai';
+var _sub         = window.location.hostname.split('.')[0];
+var KIA_SLUG_MAP = {'kiacerritos':'kiacerritos','kiacarson':'kiacarson','kiadowntownla':'kiadowntownla'};
+var DEALER_SLUG  = KIA_SLUG_MAP[_sub] || 'kiacerritos';
+var AUTH_TOKEN   = localStorage.getItem('bd_kia_token') || null;
 
 // Inventory loaded at login
 var INVENTORY = [];
