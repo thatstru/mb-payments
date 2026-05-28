@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BumpDesk — Kia of Cerritos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#F8FAFC;color:#0F172A;-webkit-font-smoothing:antialiased}
+:root{
+  --kia-red:#BB162B;
+  --indigo-900:#1e1b4b;--indigo-700:#3730a3;--indigo-600:#4F46E5;--indigo-100:#E0E7FF;--indigo-50:#EEF2FF;
+  --page-bg:#F8FAFC;--card-bg:#FFFFFF;--border:#E2E8F0;--text-primary:#0F172A;--text-secondary:#475569;--text-muted:#94A3B8;
+  --green:#059669;--green-bg:#D1FAE5;--green-border:#6EE7B7;--red:#DC2626;--red-bg:#FEE2E2;--orange:#D97706;--orange-bg:#FEF3C7;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 6px rgba(0,0,0,.06),0 2px 4px rgba(0,0,0,.05);
+  --r:10px;
+}
+.hidden{display:none!important}
+.screen{min-height:100vh}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-secondary);margin-bottom:10px}
+.text-sm{font-size:12px;color:var(--text-muted);margin-top:8px}
+.mt{margin-top:10px}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px}
+
+/* ── Login ── */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,#BB162B 0%,#7a0e1c 50%,#2d0509 100%);padding:24px}
+.login-box{background:white;border-radius:16px;padding:40px 36px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-wordmark{font-size:22px;font-weight:700;color:var(--kia-red);letter-spacing:-.5px;margin-bottom:14px}
+.login-kia{font-size:38px;font-weight:900;letter-spacing:2px;color:var(--kia-red);line-height:1;margin-bottom:4px}
+.login-brand{font-size:15px;font-weight:300;letter-spacing:4px;color:var(--text-primary)}
+.login-store{font-size:12px;color:var(--text-muted);margin-top:4px;letter-spacing:.5px}
+.login-label{font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px}
+.login-input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;outline:none;color:var(--text-primary);transition:border-color .15s}
+.login-input:focus{border-color:var(--kia-red)}
+.login-field{margin-bottom:16px}
+.login-btn{width:100%;background:var(--kia-red);color:white;border:none;border-radius:8px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:opacity .15s}
+.login-btn:hover{opacity:.9}
+.login-error{color:var(--red);font-size:13px;margin-top:8px;text-align:center}
+
+/* ── Sidebar ── */
+.sidebar{width:220px;flex-shrink:0;background:var(--indigo-900);display:none;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow:hidden}
+.sidebar-brand{padding:22px 18px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar-wordmark{font-size:18px;font-weight:700;color:white;letter-spacing:-.4px}
+.sidebar-dealer{font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;letter-spacing:.3px}
+.sidebar-nav{flex:1;padding:10px 0;overflow-y:auto}
+.nav-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.25);padding:12px 18px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;border-left:3px solid transparent;transition:all .15s}
+.nav-item:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.05)}
+.nav-item.active{color:white;background:rgba(255,255,255,.1);border-left-color:var(--kia-red)}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-bottom{padding:16px 18px;border-top:1px solid rgba(255,255,255,.1)}
+.sidebar-user{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:8px}
+.btn-sm{font-size:12px;font-weight:500;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-sm:hover{background:rgba(255,255,255,.15);color:white}
+
+/* ── Main layout ── */
+.main-layout{display:flex;min-height:100vh}
+.main-content{flex:1;margin-left:220px;padding:0;overflow:hidden}
+.page{padding:24px;max-width:960px;margin:0 auto;display:none}
+.page.active{display:block}
+
+/* ── Header bar ── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.page-title{font-size:20px;font-weight:700;color:var(--text-primary)}
+.page-sub{font-size:13px;color:var(--text-muted)}
+
+/* ── Cards ── */
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.card-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:14px}
+
+/* ── Search ── */
+.search-wrap{display:flex;gap:8px}
+.search-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;color:var(--text-primary);transition:border-color .15s}
+.search-input:focus{border-color:var(--kia-red)}
+.search-btn{background:var(--kia-red);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:16px;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.search-btn:hover{opacity:.85}
+
+/* ── Vehicle card ── */
+.vehicle-header{display:flex;gap:16px;align-items:flex-start}
+.vehicle-photo{width:120px;height:80px;border-radius:8px;object-fit:cover;background:#f1f5f9;flex-shrink:0}
+.vehicle-name{font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.vehicle-sub{font-size:13px;color:var(--text-secondary);margin-bottom:4px}
+.vehicle-msrp{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+.vehicle-badges{display:flex;flex-wrap:wrap;gap:4px}
+.badge{font-size:11px;font-weight:500;padding:3px 7px;border-radius:4px;background:var(--indigo-100);color:var(--indigo-700)}
+
+/* ── Controls ── */
+.controls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:0}
+.ctrl-label{font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:5px}
+.select{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:8px 10px;font-size:13px;font-family:inherit;outline:none;color:var(--text-primary);background:white;cursor:pointer;transition:border-color .15s}
+.select:focus{border-color:var(--kia-red)}
+.input-dollar{position:relative;display:flex;align-items:center}
+.input-dollar input{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:8px 10px 8px 22px;font-size:13px;font-family:inherit;outline:none;color:var(--text-primary);transition:border-color .15s}
+.input-dollar input:focus{border-color:var(--kia-red)}
+.input-dollar::before{content:'$';position:absolute;left:8px;font-size:13px;color:var(--text-muted);z-index:1}
+
+/* ── Tab toggle ── */
+.tab-bar{display:flex;gap:4px;margin-bottom:16px;background:var(--page-bg);border-radius:8px;padding:4px;border:1px solid var(--border)}
+.tab-btn{flex:1;padding:7px 10px;border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--text-secondary);background:transparent;transition:all .15s}
+.tab-btn.active{background:white;color:var(--text-primary);box-shadow:var(--shadow-sm);font-weight:600}
+
+/* ── Payment grid ── */
+.grid-wrap{overflow-x:auto}
+.payment-grid{width:100%;border-collapse:collapse;font-size:13px}
+.payment-grid th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);padding:8px 12px;text-align:center;border-bottom:2px solid var(--border)}
+.payment-grid th.col-label{text-align:left}
+.payment-grid td{padding:9px 12px;text-align:center;border-bottom:1px solid var(--border);vertical-align:middle}
+.payment-grid td.col-label{text-align:left;font-size:12px;color:var(--text-secondary);font-weight:500}
+.payment-grid tr:last-child td{border-bottom:none}
+.pay-cell{font-size:18px;font-weight:700;color:var(--text-primary);line-height:1}
+.pay-cell.featured{color:var(--kia-red)}
+.pay-cell.disabled{color:var(--text-muted);font-size:13px;font-weight:400}
+.grid-note{font-size:11px;color:var(--text-muted);margin-top:8px}
+
+/* ── Similar vehicles ── */
+.similar-tabs{display:flex;gap:6px;margin-bottom:12px}
+.sim-tab{font-size:12px;padding:5px 10px;border:1.5px solid var(--border);border-radius:6px;cursor:pointer;background:white;color:var(--text-secondary);transition:all .15s;font-family:inherit}
+.sim-tab.active{border-color:var(--kia-red);color:var(--kia-red);font-weight:600}
+.similar-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sim-card{border:1.5px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:all .15s;background:white}
+.sim-card:hover{border-color:var(--kia-red);box-shadow:var(--shadow-md)}
+.sim-model{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+.sim-trim{font-size:11px;color:var(--text-muted);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sim-msrp{font-size:12px;color:var(--text-secondary);margin-bottom:4px}
+.sim-pay{font-size:15px;font-weight:700;color:var(--kia-red)}
+.sim-stock{font-size:10px;color:var(--text-muted)}
+
+/* ── Accessories note ── */
+.acc-note{font-size:12px;color:#065F46;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:6px;padding:8px 12px;margin-bottom:10px}
+
+/* ── Error/success ── */
+.error-msg{color:var(--red);font-size:13px;padding:10px 14px;background:var(--red-bg);border-radius:8px;margin-bottom:12px}
+.success-msg{color:var(--green);font-size:13px}
+
+/* ── Admin panel ── */
+.admin-screen{display:flex;min-height:100vh}
+.admin-sidebar{width:220px;flex-shrink:0;background:var(--indigo-900);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.admin-main{margin-left:220px;padding:24px;max-width:900px}
+.admin-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--page-bg);border-radius:8px;padding:4px;border:1px solid var(--border)}
+.admin-tab{flex:1;padding:8px;border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--text-secondary);background:transparent;transition:all .15s;text-align:center}
+.admin-tab.active{background:white;color:var(--text-primary);box-shadow:var(--shadow-sm);font-weight:600}
+
+/* ── GM dashboard components ── */
+.disc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.disc-label{flex:1;font-size:13px;color:var(--text-secondary)}
+.disc-unit{font-size:13px;color:var(--text-muted);min-width:20px}
+.adj-hint{font-size:11px;color:var(--text-muted);margin-bottom:12px}
+.btn{border:none;border-radius:7px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-primary{background:var(--kia-red);color:white}
+.btn-primary:hover{opacity:.88}
+.kia-input{width:96px;border:1.5px solid var(--border);border-radius:6px;padding:6px 8px;font-size:14px;text-align:center;font-family:inherit;outline:none;color:var(--text-primary)}
+.kia-input:focus{border-color:var(--kia-red)}
+
+/* ── Inventory table ── */
+.report-table{width:100%;border-collapse:collapse;font-size:13px}
+.report-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:8px 12px;border-bottom:2px solid var(--border);text-align:left}
+.report-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+.report-table tr:last-child td{border-bottom:none}
+
+/* ── Tooltip ── */
+.tip-wrap{position:relative;display:inline-block}
+.tip-icon{font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:50%;width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:4px;font-style:normal}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e293b;color:white;font-size:12px;font-weight:400;padding:8px 12px;border-radius:7px;white-space:nowrap;max-width:280px;white-space:normal;width:240px;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3);line-height:1.4}
+.tip-box.show{display:block}
+
+@media(max-width:700px){
+  .main-content{margin-left:0}
+  .sidebar{display:none!important}
+  .admin-main{margin-left:0;padding:16px}
+  .admin-sidebar{display:none!important}
+  .controls-grid{grid-template-columns:repeat(2,1fr)}
+  .similar-list{grid-template-columns:repeat(2,1fr)}
+  .card{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ───────────────────────────────────────────────────── -->
+<div id="login-screen" class="login-screen screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-wordmark">BumpDesk</div>
+      <div class="login-kia">KIA</div>
+      <div class="login-brand">OF CERRITOS</div>
+      <div class="login-store">Powered by BumpDesk</div>
+    </div>
+    <div class="login-field">
+      <div class="login-label">Username</div>
+      <input id="login-user" class="login-input" type="text" autocomplete="username" placeholder="Enter username">
+    </div>
+    <div class="login-field">
+      <div class="login-label">Password</div>
+      <input id="login-pass" class="login-input" type="password" autocomplete="current-password" placeholder="Enter password">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div id="login-error" class="login-error hidden"></div>
+  </div>
+</div>
+
+<!-- ── MAIN APP (salesperson desk) ───────────────────────────────── -->
+<div id="app-screen" class="main-layout hidden">
+  <div class="sidebar" id="main-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-wordmark">BumpDesk</div>
+      <div class="sidebar-dealer">Kia of Cerritos</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">Desk Tool</div>
+      <div class="nav-item active" id="nav-desk" onclick="switchPage('desk')">
+        <span class="nav-icon">🔍</span>Vehicle Search
+      </div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user" id="sidebar-user"></div>
+      <button class="btn-sm" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <!-- DESK PAGE -->
+    <div id="page-desk" class="page active">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Kia of Cerritos</div>
+          <div class="page-sub">Deal Desk — May 2026</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Search by Stock # or Last 6 of VIN</div>
+        <div class="search-wrap">
+          <input id="search-input" class="search-input" type="text" placeholder="Stock # or last 6 VIN" maxlength="10" autocapitalize="characters" autocorrect="off" onkeydown="if(event.key==='Enter')doSearch()">
+          <button class="search-btn" onclick="doSearch()">→</button>
+        </div>
+      </div>
+
+      <div id="search-error" class="error-msg hidden"></div>
+
+      <div id="vehicle-section" class="hidden">
+        <div class="card">
+          <div class="vehicle-header">
+            <div id="photo-wrap"></div>
+            <div style="flex:1;min-width:0">
+              <div id="veh-name" class="vehicle-name"></div>
+              <div id="veh-trim" class="vehicle-sub"></div>
+              <div id="veh-msrp" class="vehicle-msrp"></div>
+              <div id="veh-badges" class="vehicle-badges"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="controls-grid">
+            <div>
+              <div class="ctrl-label">Credit Tier</div>
+              <select id="sel-tier" class="select" onchange="onParamChange()">
+                <option value="T12">T1-2 (720+)</option>
+                <option value="T3">T3 (700–719)</option>
+                <option value="T4">T4 (680–699)</option>
+                <option value="T5">T5 (660–679)</option>
+                <option value="T6">T6 (640–659)</option>
+                <option value="T7">T7 (620–639)</option>
+              </select>
+            </div>
+            <div>
+              <div class="ctrl-label">Mileage</div>
+              <select id="sel-mileage" class="select" onchange="onParamChange()">
+                <option value="10000">10,000/yr</option>
+                <option value="12000">12,000/yr</option>
+                <option value="15000">15,000/yr</option>
+              </select>
+            </div>
+            <div>
+              <div class="ctrl-label">Down Payment</div>
+              <div class="input-dollar">
+                <input id="inp-dp" type="number" min="0" max="50000" step="500" value="0" onchange="onParamChange()">
+              </div>
+            </div>
+            <div>
+              <div class="ctrl-label">Payment Window</div>
+              <select id="sel-window" class="select" onchange="onParamChange()">
+                <option value="75">Up to $75</option>
+                <option value="100" selected>Up to $100</option>
+                <option value="150">Up to $150</option>
+                <option value="200">Up to $200</option>
+                <option value="9999">Any</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div id="payments-title" class="card-title"></div>
+          <div id="acc-note" class="acc-note hidden"></div>
+          <div class="tab-bar">
+            <button class="tab-btn active" id="tab-lease" onclick="switchPayTab('lease')">Lease</button>
+            <button class="tab-btn" id="tab-finance" onclick="switchPayTab('finance')">Finance</button>
+          </div>
+          <div id="lease-section">
+            <div class="grid-wrap">
+              <table class="payment-grid" id="lease-grid">
+                <thead><tr>
+                  <th class="col-label">Term</th>
+                  <th>T1-2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th>
+                </tr></thead>
+                <tbody id="lease-tbody"></tbody>
+              </table>
+            </div>
+            <div class="grid-note" id="lease-note"></div>
+          </div>
+          <div id="finance-section" class="hidden">
+            <div class="grid-wrap">
+              <table class="payment-grid" id="finance-grid">
+                <thead><tr>
+                  <th class="col-label">Term</th>
+                  <th>Promo</th><th>Std Rate</th>
+                </tr></thead>
+                <tbody id="finance-tbody"></tbody>
+              </table>
+            </div>
+            <div class="grid-note">Finance payments estimated before tax. Standard rates vary by tier and lender.</div>
+          </div>
+        </div>
+
+        <div class="card" id="similar-section" style="display:none">
+          <div id="similar-title" class="card-title"></div>
+          <div class="similar-tabs">
+            <button class="sim-tab active" onclick="switchSimTab('same')">Same Model</button>
+            <button class="sim-tab" onclick="switchSimTab('stepup')">Step Up</button>
+            <button class="sim-tab" onclick="switchSimTab('other')">Other</button>
+          </div>
+          <div id="similar-list" class="similar-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GM ADMIN ──────────────────────────────────────────────────── -->
+<div id="admin-screen" class="hidden">
+  <div class="admin-sidebar sidebar" style="display:flex!important">
+    <div class="sidebar-brand">
+      <div class="sidebar-wordmark">BumpDesk GM</div>
+      <div class="sidebar-dealer">Kia of Cerritos</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">Dashboard</div>
+      <div class="nav-item active">⚙️ Settings</div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user" id="admin-sidebar-user"></div>
+      <button class="btn-sm" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+  <div class="admin-main">
+    <div class="page-header" style="margin-bottom:20px">
+      <div>
+        <div class="page-title">GM Dashboard</div>
+        <div class="page-sub">Kia of Cerritos · May 2026</div>
+      </div>
+    </div>
+    <div class="admin-tabs">
+      <div id="atab-disc" class="admin-tab active" onclick="switchAdminTab('disc')">🏷️ Pricing</div>
+      <div id="atab-inv"  class="admin-tab"        onclick="switchAdminTab('inv')">📦 Inventory</div>
+      <div id="atab-search" class="admin-tab"      onclick="switchAdminTab('search')">🔍 Spot Check</div>
+    </div>
+
+    <!-- PRICING PANEL -->
+    <div id="admin-disc-panel">
+
+      <div class="card">
+        <div class="card-title">Model Price Adjustments</div>
+        <div class="adj-hint">Positive % = discount off MSRP &nbsp;•&nbsp; e.g. 5 = 5% under MSRP</div>
+        <div id="disc-msg" class="hidden"></div>
+        <div id="disc-rows"></div>
+        <button class="btn btn-primary mt" onclick="saveDiscounts()">Save Price Adjustments</button>
+        <div class="text-sm">Only classes with active inventory are shown. Synced across all logins.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title tip-wrap">Dealer Accessories — Cilajet
+          <i class="tip-icon" onclick="tipToggle(this)">i</i>
+          <span class="tip-box">Paint and fabric protection. Capitalized into the lease cap cost and rolled into every lease payment shown.</span>
+        </div>
+        <div id="cilajet-msg" class="hidden"></div>
+        <div class="disc-row">
+          <div class="disc-label">Cilajet Amount</div>
+          <input id="cilajet-amt" class="kia-input" type="number" min="0" max="4999" step="50" value="995">
+          <div class="disc-unit">$</div>
+        </div>
+        <button class="btn btn-primary mt" onclick="saveCilajet()">Save Cilajet</button>
+        <div class="text-sm">Capitalized into all lease payments. Synced across all logins.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title tip-wrap">Dealer Accessories — Vanguard GPS
+          <i class="tip-icon" onclick="tipToggle(this)">i</i>
+          <span class="tip-box">GPS tracking system. Capitalized into the lease cap cost alongside Cilajet and reflected in every payment shown.</span>
+        </div>
+        <div id="vanguard-msg" class="hidden"></div>
+        <div class="disc-row">
+          <div class="disc-label">Vanguard GPS Amount</div>
+          <input id="vanguard-amt" class="kia-input" type="number" min="0" max="4999" step="50" value="995">
+          <div class="disc-unit">$</div>
+        </div>
+        <button class="btn btn-primary mt" onclick="saveVanguard()">Save Vanguard GPS</button>
+        <div class="text-sm">Capitalized into all lease payments. Synced across all logins.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title tip-wrap">Lease Money Factor Markup
+          <i class="tip-icon" onclick="tipToggle(this)">i</i>
+          <span class="tip-box">Added to the buy-rate money factor for T3–T7 tiers only. KFA does not allow markup on T1-2 advertised specials. +0.00040 adds approximately $12–20/mo depending on vehicle price.</span>
+        </div>
+        <div class="adj-hint">Applies to T3–T7 only. T1-2 is always shown at buy rate (KFA advertised special restriction).</div>
+        <div id="mfmarkup-msg" class="hidden"></div>
+        <div class="disc-row">
+          <div class="disc-label">MF Markup</div>
+          <input id="mf-markup-input" class="kia-input" type="number" min="0" max="0.00040" step="0.00010" value="0">
+          <div class="disc-unit">MF</div>
+        </div>
+        <button class="btn btn-primary mt" onclick="saveMfMarkup()">Save MF Markup</button>
+        <div class="text-sm">Set to 0 to use buy-rate for all tiers. Max 0.00040 per KFA policy. Synced across all logins.</div>
+      </div>
+
+    </div><!-- #admin-disc-panel -->
+
+    <!-- INVENTORY PANEL -->
+    <div id="admin-inv-panel" class="hidden">
+      <div class="card">
+        <div class="card-title">Inventory Summary — <span id="inv-count"></span> New Vehicles</div>
+        <table class="report-table">
+          <thead><tr><th>Model</th><th>Count</th></tr></thead>
+          <tbody id="inv-tbody"></tbody>
+        </table>
+        <div class="divider"></div>
+        <div class="text-sm">Rates valid 2026-05-05 – 2026-06-01</div>
+      </div>
+    </div>
+
+    <!-- SPOT CHECK PANEL -->
+    <div id="admin-search-panel" class="hidden">
+      <div class="card">
+        <div class="card-title">Spot-Check Any Vehicle</div>
+        <div class="search-wrap">
+          <input id="admin-search-input" class="search-input" type="text" placeholder="Stock # or last 6 VIN" maxlength="10" autocapitalize="characters" autocorrect="off">
+          <button class="search-btn" onclick="doAdminSearch()">→</button>
+        </div>
+      </div>
+      <div id="admin-search-error" class="error-msg hidden"></div>
+      <div id="admin-vehicle-section" class="hidden">
+        <div class="card">
+          <div class="vehicle-header">
+            <div id="admin-photo-wrap"></div>
+            <div style="flex:1;min-width:0">
+              <div id="admin-veh-name" class="vehicle-name"></div>
+              <div id="admin-veh-trim" class="vehicle-sub"></div>
+              <div id="admin-veh-msrp" class="vehicle-msrp"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="controls-grid">
+            <div>
+              <div class="ctrl-label">Credit Tier</div>
+              <select id="admin-sel-tier" class="select" onchange="onAdminParamChange()">
+                <option value="T12">T1-2 (720+)</option>
+                <option value="T3">T3 (700–719)</option>
+                <option value="T4">T4 (680–699)</option>
+                <option value="T5">T5 (660–679)</option>
+                <option value="T6">T6 (640–659)</option>
+                <option value="T7">T7 (620–639)</option>
+              </select>
+            </div>
+            <div>
+              <div class="ctrl-label">Mileage</div>
+              <select id="admin-sel-mileage" class="select" onchange="onAdminParamChange()">
+                <option value="10000">10,000/yr</option>
+                <option value="12000">12,000/yr</option>
+                <option value="15000">15,000/yr</option>
+              </select>
+            </div>
+            <div>
+              <div class="ctrl-label">Down Payment</div>
+              <div class="input-dollar">
+                <input id="admin-inp-dp" type="number" min="0" max="50000" step="500" value="0" onchange="onAdminParamChange()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="admin-payments-title" class="card-title"></div>
+          <div id="admin-acc-note" class="acc-note hidden"></div>
+          <div class="tab-bar">
+            <button class="tab-btn active" id="admin-tab-lease" onclick="switchAdminPayTab('lease')">Lease</button>
+            <button class="tab-btn" id="admin-tab-finance" onclick="switchAdminPayTab('finance')">Finance</button>
+          </div>
+          <div id="admin-lease-section">
+            <div class="grid-wrap">
+              <table class="payment-grid">
+                <thead><tr>
+                  <th class="col-label">Term</th>
+                  <th>T1-2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th>
+                </tr></thead>
+                <tbody id="admin-lease-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="admin-finance-section" class="hidden">
+            <div class="grid-wrap">
+              <table class="payment-grid">
+                <thead><tr><th class="col-label">Term</th><th>Promo</th><th>Std Rate</th></tr></thead>
+                <tbody id="admin-finance-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+// ── Constants ─────────────────────────────────────────────────────
+var API_BASE    = 'https://api.bumpdesk.ai';
+var DEALER_SLUG = 'kiacerritos';
+var AUTH_TOKEN  = localStorage.getItem('bd_kia_token') || null;
+
+// Inventory loaded at login
+var INVENTORY = [];
+
+// ── KFA Rate data ─────────────────────────────────────────────────
+var KFA_RATES = [{"code":"MAC4225","year":2026,"model":"Carnival","trim":"LX 3.5L GDI FWD 8AT","t24":{"lc":2080,"r":71,"T12":0.00193,"T3":0.00228},"t36":{"lc":1990,"r":64,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2730,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAC4235","year":2026,"model":"Carnival","trim":"LXS 3.5L GDI FWD 8AT","t24":{"lc":2490,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2290,"r":63,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3030,"r":51,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAC4245","year":2026,"model":"Carnival","trim":"EX 3.5L GDI FWD 8AT","t24":{"lc":2290,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2060,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2430,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAC4285","year":2026,"model":"Carnival","trim":"SX 3.5L GDI FWD 8AT","t24":{"lc":2440,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2160,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2580,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAC4295","year":2026,"model":"Carnival","trim":"SX Prestige 3.5L GDI FWD 8AT","t24":{"lc":2740,"r":69,"T12":0.00193,"T3":0.00228},"t36":{"lc":2210,"r":62,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2080,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAH4235","year":2026,"model":"Carnival Hybrid","trim":"LXS 1.6T GDI FWD 6AT","t24":{"lc":2940,"r":69,"T12":0.00192,"T3":0.00227},"t36":{"lc":2590,"r":62,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3280,"r":50,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"MAH4245","year":2026,"model":"Carnival Hybrid","trim":"EX 1.6T GDI FWD 6AT","t24":{"lc":2640,"r":70,"T12":0.00193,"T3":0.00228},"t36":{"lc":2260,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3030,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"MAH4285","year":2026,"model":"Carnival Hybrid","trim":"SX 1.6T GDI FWD 6AT","t24":{"lc":2590,"r":70,"T12":0.00193,"T3":0.00228},"t36":{"lc":2110,"r":63,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2480,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"MAH4295","year":2026,"model":"Carnival Hybrid","trim":"SX Prestige 1.6T GDI FWD 6AT","t24":{"lc":3040,"r":69,"T12":0.00194,"T3":0.00229},"t36":{"lc":2310,"r":62,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2180,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"2AC3224","year":2026,"model":"K4","trim":"LXS (4D) 2.0L MPI FWD IVT","t24":{"lc":1010,"r":72,"T12":0.0019,"T3":0.00225},"t36":{"lc":1320,"r":65,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":1890,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"2AC3244","year":2026,"model":"K4","trim":"EX (4D) 2.0L MPI FWD IVT","t24":{"lc":650,"r":74,"T12":0.00208,"T3":0.00243},"t36":{"lc":980,"r":66,"T12":0.00219,"T3":0.00254,"T4":0.00284,"T5":0.00309,"T6":0.00329,"T7":0.00349},"t48":{"lc":1490,"r":53,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"2AC3254","year":2026,"model":"K4","trim":"GT-Line (4D) 2.0L MPI FWD IVT","t24":{"lc":660,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":990,"r":66,"T12":0.00221,"T3":0.00256,"T4":0.00286,"T5":0.00311,"T6":0.00331,"T7":0.00351},"t48":{"lc":1290,"r":54,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"2AC6254","year":2026,"model":"K4","trim":"GT-Line Turbo (4D) 1.6T GDI FWD 8AT","t24":{"lc":660,"r":73,"T12":0.00197,"T3":0.00232},"t36":{"lc":990,"r":66,"T12":0.00224,"T3":0.00259,"T4":0.00289,"T5":0.00314,"T6":0.00334,"T7":0.00354},"t48":{"lc":1040,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"2AC3245","year":2026,"model":"K4","trim":"EX (5D) 2.0L MPI FWD IVT","t24":{"lc":660,"r":73,"T12":0.0019,"T3":0.00225},"t36":{"lc":960,"r":66,"T12":0.00226,"T3":0.00261,"T4":0.00291,"T5":0.00316,"T6":0.00336,"T7":0.00356},"t48":{"lc":1040,"r":55,"T12":0.00261,"T3":0.00296,"T4":0.00326,"T5":0.00351,"T6":0.00371,"T7":0.00391}},{"code":"2AC3255","year":2026,"model":"K4","trim":"GT-Line (5D) 2.0L MPI FWD IVT","t24":{"lc":660,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":990,"r":66,"T12":0.00222,"T3":0.00257,"T4":0.00287,"T5":0.00312,"T6":0.00332,"T7":0.00352},"t48":{"lc":1040,"r":55,"T12":0.00254,"T3":0.00289,"T4":0.00319,"T5":0.00344,"T6":0.00364,"T7":0.00384}},{"code":"2AC6255","year":2026,"model":"K4","trim":"GT-Line Turbo (5D) 1.6T GDI FWD 8AT","t24":{"lc":660,"r":73,"T12":0.00198,"T3":0.00233},"t36":{"lc":990,"r":66,"T12":0.00224,"T3":0.00259,"T4":0.00289,"T5":0.00314,"T6":0.00334,"T7":0.00354},"t48":{"lc":1040,"r":56,"T12":0.00269,"T3":0.00304,"T4":0.00334,"T5":0.00359,"T6":0.00379,"T7":0.00399}},{"code":"LAC4234","year":2026,"model":"K5","trim":"LXS 2.5 GDI FWD 8AT","t24":{"lc":1960,"r":68,"T12":0.00193,"T3":0.00228},"t36":{"lc":1820,"r":61,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":1290,"r":53,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"LAC4254","year":2026,"model":"K5","trim":"GT-Line 2.5 GDI FWD 8AT","t24":{"lc":1010,"r":71,"T12":0.00192,"T3":0.00227},"t36":{"lc":990,"r":64,"T12":0.0022,"T3":0.00255,"T4":0.00285,"T5":0.0031,"T6":0.0033,"T7":0.0035},"t48":{"lc":1040,"r":54,"T12":0.00268,"T3":0.00303,"T4":0.00333,"T5":0.00358,"T6":0.00378,"T7":0.00398}},{"code":"LAC4264","year":2026,"model":"K5","trim":"EX 2.5 GDI FWD 8AT","t24":{"lc":1760,"r":69,"T12":0.00194,"T3":0.00229},"t36":{"lc":1540,"r":62,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":1040,"r":53,"T12":0.00252,"T3":0.00287,"T4":0.00317,"T5":0.00342,"T6":0.00362,"T7":0.00382}},{"code":"LAC6284","year":2026,"model":"K5","trim":"GT 2.5T GDI FWD 8DCT","t24":{"lc":1410,"r":70,"T12":0.00193,"T3":0.00228},"t36":{"lc":1240,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":1040,"r":54,"T12":0.00264,"T3":0.00299,"T4":0.00329,"T5":0.00354,"T6":0.00374,"T7":0.00394}},{"code":"LAC4454","year":2026,"model":"K5","trim":"GT-Line 2.5 GDI AWD 8AT","t24":{"lc":1060,"r":71,"T12":0.00193,"T3":0.00228},"t36":{"lc":990,"r":64,"T12":0.00219,"T3":0.00254,"T4":0.00284,"T5":0.00309,"T6":0.00329,"T7":0.00349},"t48":{"lc":1040,"r":54,"T12":0.00266,"T3":0.00301,"T4":0.00331,"T5":0.00356,"T6":0.00376,"T7":0.00396}},{"code":"GAH4225","year":2026,"model":"Niro","trim":"LX 1.6L GDI FWD 6DCT","t24":{"lc":2910,"r":67,"T12":0.0019,"T3":0.00225},"t36":{"lc":3120,"r":60,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":3640,"r":48,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"GAH4245","year":2026,"model":"Niro","trim":"EX 1.6L GDI FWD 6DCT","t24":{"lc":2760,"r":69,"T12":0.0019,"T3":0.00225},"t36":{"lc":3020,"r":62,"T12":0.00218,"T3":0.00253,"T4":0.00283,"T5":0.00308,"T6":0.00328,"T7":0.00348},"t48":{"lc":3390,"r":51,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"GAH4265","year":2026,"model":"Niro","trim":"SX 1.6L GDI FWD 6DCT","t24":{"lc":2360,"r":70,"T12":0.00194,"T3":0.00229},"t36":{"lc":2610,"r":63,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3040,"r":52,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"GAH4275","year":2026,"model":"Niro","trim":"SX Touring 1.6L GDI FWD 6DCT","t24":{"lc":2910,"r":68,"T12":0.00191,"T3":0.00226},"t36":{"lc":3060,"r":61,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3440,"r":50,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"KAC2225","year":2026,"model":"Seltos","trim":"LX 2.0L MPI FWD IVT","t24":{"lc":2890,"r":64,"T12":0.00193,"T3":0.00228},"t36":{"lc":2700,"r":57,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2080,"r":49,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"KAC2235","year":2026,"model":"Seltos","trim":"S 2.0L MPI FWD IVT","t24":{"lc":1890,"r":68,"T12":0.00193,"T3":0.00228},"t36":{"lc":1660,"r":61,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":1280,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"KAC2245","year":2026,"model":"Seltos","trim":"EX 2.0L MPI FWD IVT","t24":{"lc":1140,"r":71,"T12":0.00191,"T3":0.00226},"t36":{"lc":960,"r":64,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":680,"r":55,"T12":0.0026,"T3":0.00295,"T4":0.00325,"T5":0.0035,"T6":0.0037,"T7":0.0039}},{"code":"KAC2425","year":2026,"model":"Seltos","trim":"LX 2.0L MPI AWD IVT","t24":{"lc":2240,"r":67,"T12":0.00195,"T3":0.0023},"t36":{"lc":1950,"r":60,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":1580,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"KAC2435","year":2026,"model":"Seltos","trim":"S 2.0L MPI AWD IVT","t24":{"lc":1140,"r":71,"T12":0.0019,"T3":0.00225},"t36":{"lc":960,"r":64,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":830,"r":54,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"KAC2445","year":2026,"model":"Seltos","trim":"EX 2.0L MPI AWD IVT","t24":{"lc":1190,"r":71,"T12":0.00194,"T3":0.00229},"t36":{"lc":960,"r":64,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":680,"r":55,"T12":0.00261,"T3":0.00296,"T4":0.00326,"T5":0.00351,"T6":0.00371,"T7":0.00391}},{"code":"KAC4485","year":2026,"model":"Seltos","trim":"SX 1.6T GDI AWD 8AT","t24":{"lc":790,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":660,"r":66,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":680,"r":56,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"7AC3225","year":2026,"model":"Sorento","trim":"LX 2.5L GDI FWD 8AT","t24":{"lc":2880,"r":69,"T12":0.00192,"T3":0.00227},"t36":{"lc":2840,"r":62,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":3150,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC3235","year":2026,"model":"Sorento","trim":"S 2.5L GDI FWD 8AT","t24":{"lc":3080,"r":69,"T12":0.00192,"T3":0.00227},"t36":{"lc":2940,"r":62,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3050,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC6255","year":2026,"model":"Sorento","trim":"EX 2.5T GDI FWD 8AT","t24":{"lc":2980,"r":69,"T12":0.00193,"T3":0.00228},"t36":{"lc":2870,"r":62,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3100,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC6275","year":2026,"model":"Sorento","trim":"SX 2.5T GDI FWD 8AT","t24":{"lc":2330,"r":71,"T12":0.00193,"T3":0.00228},"t36":{"lc":2220,"r":64,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2550,"r":53,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC3435","year":2026,"model":"Sorento","trim":"S 2.5L GDI AWD 8AT","t24":{"lc":3030,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2840,"r":63,"T12":0.00213,"T3":0.00248,"T4":0.00278,"T5":0.00303,"T6":0.00323,"T7":0.00343},"t48":{"lc":3150,"r":51,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"7AC6455","year":2026,"model":"Sorento","trim":"EX 2.5T GDI AWD 8AT","t24":{"lc":2080,"r":72,"T12":0.00193,"T3":0.00228},"t36":{"lc":2070,"r":65,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2850,"r":53,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"7AC6465","year":2026,"model":"Sorento","trim":"X-Line EX 2.5T GDI AWD 8AT","t24":{"lc":2130,"r":72,"T12":0.00193,"T3":0.00228},"t36":{"lc":2120,"r":65,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2800,"r":53,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC6485","year":2026,"model":"Sorento","trim":"X-Line SX 2.5T GDI AWD 8AT","t24":{"lc":1880,"r":73,"T12":0.00194,"T3":0.00229},"t36":{"lc":1820,"r":66,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2350,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC6495","year":2026,"model":"Sorento","trim":"X-Line SX-P 2.5T GDI AWD 8AT","t24":{"lc":1930,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":1820,"r":66,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2400,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AC64A5","year":2026,"model":"Sorento","trim":"X-Pro SX-P 2.5T GDI AWD 8AT","t24":{"lc":1830,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":1820,"r":66,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2400,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AH4245","year":2026,"model":"Sorento Hybrid","trim":"EX 1.6T GDI FWD 6AT","t24":{"lc":4270,"r":67,"T12":0.00192,"T3":0.00227},"t36":{"lc":4050,"r":60,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":4400,"r":49,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"7AH4445","year":2026,"model":"Sorento Hybrid","trim":"EX 1.6T GDI AWD 6AT","t24":{"lc":3020,"r":71,"T12":0.00194,"T3":0.00229},"t36":{"lc":2790,"r":64,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":3700,"r":52,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"7AH4465","year":2026,"model":"Sorento Hybrid","trim":"X-Line SX-Prestige 1.6T GDI AWD 6AT","t24":{"lc":1330,"r":74,"T12":0.00193,"T3":0.00228},"t36":{"lc":1320,"r":67,"T12":0.0023,"T3":0.00265,"T4":0.00295,"T5":0.0032,"T6":0.0034,"T7":0.0036},"t48":{"lc":2250,"r":54,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"4AC2225","year":2026,"model":"Sportage","trim":"LX 2.5L GDI FWD 8AT","t24":{"lc":2310,"r":71,"T12":0.00192,"T3":0.00227},"t36":{"lc":2630,"r":64,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2890,"r":54,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2425","year":2026,"model":"Sportage","trim":"LX 2.5L GDI AWD 8AT","t24":{"lc":2500,"r":71,"T12":0.00192,"T3":0.00227},"t36":{"lc":2760,"r":64,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2840,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2245","year":2026,"model":"Sportage","trim":"EX 2.5L GDI FWD 8AT","t24":{"lc":1700,"r":73,"T12":0.00194,"T3":0.00229},"t36":{"lc":1940,"r":66,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":1940,"r":57,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2445","year":2026,"model":"Sportage","trim":"EX 2.5L GDI AWD 8AT","t24":{"lc":1450,"r":74,"T12":0.00191,"T3":0.00226},"t36":{"lc":1790,"r":67,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2090,"r":57,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2265","year":2026,"model":"Sportage","trim":"SX 2.5L GDI FWD 8AT","t24":{"lc":1750,"r":73,"T12":0.00193,"T3":0.00228},"t36":{"lc":1990,"r":66,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2040,"r":57,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"4AC2285","year":2026,"model":"Sportage","trim":"SX-Prestige 2.5L GDI FWD 8AT","t24":{"lc":1950,"r":72,"T12":0.00193,"T3":0.00228},"t36":{"lc":2090,"r":65,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2040,"r":56,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"4AC2485","year":2026,"model":"Sportage","trim":"SX-Prestige 2.5L GDI AWD 8AT","t24":{"lc":1950,"r":72,"T12":0.00191,"T3":0.00226},"t36":{"lc":2140,"r":65,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2040,"r":56,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2455","year":2026,"model":"Sportage","trim":"X-Line 2.5L GDI AWD 8AT","t24":{"lc":2300,"r":71,"T12":0.00192,"T3":0.00227},"t36":{"lc":2490,"r":64,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2440,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AC2495","year":2026,"model":"Sportage","trim":"X-Pro Prestige 2.5L GDI AWD 8AT","t24":{"lc":2650,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2740,"r":63,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":2240,"r":55,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"4AH4225","year":2026,"model":"Sportage Hybrid","trim":"LX 1.6T GDI FWD 6AT","t24":{"lc":2460,"r":71,"T12":0.00191,"T3":0.00226},"t36":{"lc":2720,"r":64,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2790,"r":55,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AH4435","year":2026,"model":"Sportage Hybrid","trim":"S 1.6T GDI AWD 6AT","t24":{"lc":1060,"r":76,"T12":0.00192,"T3":0.00227},"t36":{"lc":1320,"r":69,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2040,"r":58,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AH4445","year":2026,"model":"Sportage Hybrid","trim":"EX 1.6T GDI AWD 6AT","t24":{"lc":1600,"r":74,"T12":0.00193,"T3":0.00228},"t36":{"lc":1840,"r":67,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":2190,"r":57,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AH4455","year":2026,"model":"Sportage Hybrid","trim":"X-Line 1.6T GDI AWD 6AT","t24":{"lc":1600,"r":74,"T12":0.00192,"T3":0.00227},"t36":{"lc":1840,"r":67,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":2240,"r":57,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"4AH4485","year":2026,"model":"Sportage Hybrid","trim":"SX-Prestige 1.6T GDI AWD 6AT","t24":{"lc":1800,"r":73,"T12":0.00192,"T3":0.00227},"t36":{"lc":1990,"r":66,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":1990,"r":57,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC4225","year":2027,"model":"Telluride","trim":"LX 2.5L Turbo FWD 8AT","t24":{"lc":0,"r":78,"T12":0.0021,"T3":0.00245},"t36":{"lc":0,"r":72,"T12":0.00262,"T3":0.00297,"T4":0.00327,"T5":0.00352,"T6":0.00372,"T7":0.00392},"t48":{"lc":0,"r":56,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4235","year":2027,"model":"Telluride","trim":"S 2.5L Turbo FWD 8AT","t24":{"lc":0,"r":76,"T12":0.0018,"T3":0.00215},"t36":{"lc":0,"r":70,"T12":0.00232,"T3":0.00267,"T4":0.00297,"T5":0.00322,"T6":0.00342,"T7":0.00362},"t48":{"lc":0,"r":55,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAC4245","year":2027,"model":"Telluride","trim":"EX 2.5L Turbo FWD 8AT","t24":{"lc":0,"r":76,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":70,"T12":0.00242,"T3":0.00277,"T4":0.00307,"T5":0.00332,"T6":0.00352,"T7":0.00372},"t48":{"lc":0,"r":56,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4265","year":2027,"model":"Telluride","trim":"SX 2.5L Turbo FWD 8AT","t24":{"lc":0,"r":75,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":69,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":55,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAC4435","year":2027,"model":"Telluride","trim":"S 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":77,"T12":0.00194,"T3":0.00229},"t36":{"lc":0,"r":71,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":56,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4445","year":2027,"model":"Telluride","trim":"EX 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":77,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":71,"T12":0.00248,"T3":0.00283,"T4":0.00313,"T5":0.00338,"T6":0.00358,"T7":0.00378},"t48":{"lc":0,"r":57,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4455","year":2027,"model":"Telluride","trim":"X-Line EX 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":76,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":70,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":56,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAC4475","year":2027,"model":"Telluride","trim":"X-Line SX 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":75,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":69,"T12":0.00242,"T3":0.00277,"T4":0.00307,"T5":0.00332,"T6":0.00352,"T7":0.00372},"t48":{"lc":0,"r":55,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4485","year":2027,"model":"Telluride","trim":"X-Pro SX 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":74,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":68,"T12":0.00242,"T3":0.00277,"T4":0.00307,"T5":0.00332,"T6":0.00352,"T7":0.00372},"t48":{"lc":0,"r":55,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4495","year":2027,"model":"Telluride","trim":"SX-Prestige 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":74,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":68,"T12":0.00248,"T3":0.00283,"T4":0.00313,"T5":0.00338,"T6":0.00358,"T7":0.00378},"t48":{"lc":0,"r":54,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC44A5","year":2027,"model":"Telluride","trim":"X-Line SX-Prestige 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":73,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":67,"T12":0.00242,"T3":0.00277,"T4":0.00307,"T5":0.00332,"T6":0.00352,"T7":0.00372},"t48":{"lc":0,"r":54,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAC44B5","year":2027,"model":"Telluride","trim":"X-Pro SX-Prestige 2.5L Turbo AWD 8AT","t24":{"lc":0,"r":73,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":67,"T12":0.00248,"T3":0.00283,"T4":0.00313,"T5":0.00338,"T6":0.00358,"T7":0.00378},"t48":{"lc":0,"r":54,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAH4245","year":2027,"model":"Telluride Hybrid","trim":"EX 2.5L Turbo FWD 6AT","t24":{"lc":0,"r":76,"T12":0.00168,"T3":0.00203},"t36":{"lc":0,"r":70,"T12":0.00225,"T3":0.0026,"T4":0.0029,"T5":0.00315,"T6":0.00335,"T7":0.00355},"t48":{"lc":0,"r":56,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAH4445","year":2027,"model":"Telluride Hybrid","trim":"EX 2.5L Turbo AWD 6AT","t24":{"lc":0,"r":77,"T12":0.00183,"T3":0.00218},"t36":{"lc":0,"r":71,"T12":0.00235,"T3":0.0027,"T4":0.003,"T5":0.00325,"T6":0.00345,"T7":0.00365},"t48":{"lc":0,"r":56,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAH4275","year":2027,"model":"Telluride Hybrid","trim":"SX 2.5L Turbo FWD 6AT","t24":{"lc":0,"r":75,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":69,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":54,"T12":0.00286,"T3":0.00321,"T4":0.00351,"T5":0.00376,"T6":0.00396,"T7":0.00416}},{"code":"JAH4485","year":2027,"model":"Telluride Hybrid","trim":"X-Line SX 2.5L Turbo AWD 6AT","t24":{"lc":0,"r":75,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":69,"T12":0.00242,"T3":0.00277,"T4":0.00307,"T5":0.00332,"T6":0.00352,"T7":0.00372},"t48":{"lc":0,"r":54,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAH4495","year":2027,"model":"Telluride Hybrid","trim":"SX-Prestige 2.5L Turbo AWD 6AT","t24":{"lc":0,"r":74,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":68,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":53,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAH44A5","year":2027,"model":"Telluride Hybrid","trim":"X-Line SX-Prestige 2.5L Turbo AWD 6AT","t24":{"lc":0,"r":73,"T12":0.00196,"T3":0.00231},"t36":{"lc":0,"r":67,"T12":0.00241,"T3":0.00276,"T4":0.00306,"T5":0.00331,"T6":0.00351,"T7":0.00371},"t48":{"lc":0,"r":53,"T12":0.00285,"T3":0.0032,"T4":0.0035,"T5":0.00375,"T6":0.00395,"T7":0.00415}},{"code":"JAC4225","year":2025,"model":"Telluride","trim":"LX 3.8L GDI FWD 8AT","t24":{"lc":2610,"r":71,"T12":0.00194,"T3":0.00229},"t36":{"lc":2480,"r":64,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":4060,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4235","year":2025,"model":"Telluride","trim":"S 3.8L GDI FWD 8AT","t24":{"lc":3360,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":3230,"r":63,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":4660,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4245","year":2025,"model":"Telluride","trim":"EX 3.8L GDI FWD 8AT","t24":{"lc":3460,"r":69,"T12":0.00192,"T3":0.00227},"t36":{"lc":3230,"r":62,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":4210,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4275","year":2025,"model":"Telluride","trim":"SX 3.8L GDI FWD 8AT","t24":{"lc":2660,"r":71,"T12":0.00193,"T3":0.00228},"t36":{"lc":2330,"r":64,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3760,"r":51,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4435","year":2025,"model":"Telluride","trim":"S 3.8L GDI AWD 8AT","t24":{"lc":2660,"r":72,"T12":0.00193,"T3":0.00228},"t36":{"lc":2460,"r":65,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3960,"r":52,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC4445","year":2025,"model":"Telluride","trim":"EX 3.8L GDI AWD 8AT","t24":{"lc":2660,"r":71,"T12":0.00194,"T3":0.00229},"t36":{"lc":2380,"r":64,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3760,"r":51,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4455","year":2025,"model":"Telluride","trim":"EX X-Line 3.8L GDI AWD 8AT","t24":{"lc":3060,"r":70,"T12":0.00192,"T3":0.00227},"t36":{"lc":2680,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":4110,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC4465","year":2025,"model":"Telluride","trim":"EX X-Pro 3.8L GDI AWD 8AT","t24":{"lc":3560,"r":68,"T12":0.00193,"T3":0.00228},"t36":{"lc":2930,"r":61,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3310,"r":50,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC4475","year":2025,"model":"Telluride","trim":"SX 3.8L GDI AWD 8AT","t24":{"lc":2160,"r":72,"T12":0.00194,"T3":0.00229},"t36":{"lc":1730,"r":65,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3210,"r":52,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC4485","year":2025,"model":"Telluride","trim":"SX X-Line 3.8L GDI AWD 8AT","t24":{"lc":2660,"r":71,"T12":0.00193,"T3":0.00228},"t36":{"lc":2230,"r":64,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":3310,"r":52,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC4495","year":2025,"model":"Telluride","trim":"SX-P 3.8L GDI AWD 8AT","t24":{"lc":2860,"r":70,"T12":0.00194,"T3":0.00229},"t36":{"lc":2180,"r":63,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3110,"r":51,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"JAC44A5","year":2025,"model":"Telluride","trim":"SX-P X-Line 3.8L GDI AWD 8AT","t24":{"lc":3160,"r":69,"T12":0.00194,"T3":0.00229},"t36":{"lc":2330,"r":62,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3160,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"JAC44B5","year":2025,"model":"Telluride","trim":"SX-P X-Pro 3.8L GDI AWD 8AT","t24":{"lc":3660,"r":68,"T12":0.00192,"T3":0.00227},"t36":{"lc":2830,"r":61,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":3210,"r":50,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"NAE2345","year":2026,"model":"EV6","trim":"Light 63.0 kWh RWD","t24":{"lc":7900,"r":60,"T12":0.00188,"T3":0.00223},"t36":{"lc":7200,"r":54,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":8400,"r":42,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"NAE4345","year":2026,"model":"EV6","trim":"Light L/R 84.0 kWh RWD","t24":{"lc":7400,"r":64,"T12":0.00188,"T3":0.00223},"t36":{"lc":6900,"r":58,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":8400,"r":46,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"NAE4355","year":2026,"model":"EV6","trim":"Wind 84.0 kWh RWD","t24":{"lc":7800,"r":63,"T12":0.0019,"T3":0.00225},"t36":{"lc":7100,"r":57,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":8200,"r":46,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"NAE4365","year":2026,"model":"EV6","trim":"GT-Line 84.0 kWh RWD","t24":{"lc":8200,"r":63,"T12":0.00193,"T3":0.00228},"t36":{"lc":6900,"r":57,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":7800,"r":46,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"NAE5445","year":2026,"model":"EV6","trim":"Light L/R 84.0 kWh AWD","t24":{"lc":7375,"r":65,"T12":0.00192,"T3":0.00227},"t36":{"lc":6825,"r":59,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":8500,"r":47,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"NAE5455","year":2026,"model":"EV6","trim":"Wind 84.0 kWh AWD","t24":{"lc":8000,"r":64,"T12":0.00193,"T3":0.00228},"t36":{"lc":7100,"r":58,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":8300,"r":47,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"NAE5465","year":2026,"model":"EV6","trim":"GT-Line 84.0 kWh AWD","t24":{"lc":8700,"r":63,"T12":0.00192,"T3":0.00227},"t36":{"lc":7100,"r":57,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":8000,"r":46,"T12":0.00254,"T3":0.00289,"T4":0.00319,"T5":0.00344,"T6":0.00364,"T7":0.00384}},{"code":"NAE2345","year":2025,"model":"EV6","trim":"Light 62.9 kWh RWD","t24":{"lc":15750,"r":49,"T12":0.0019,"T3":0.00225},"t36":{"lc":15700,"r":43,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":16600,"r":34,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"NAE4345","year":2025,"model":"EV6","trim":"Light L/R 84.0 kWh RWD","t24":{"lc":15420,"r":53,"T12":0.00192,"T3":0.00227},"t36":{"lc":15475,"r":47,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":16700,"r":38,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"NAE4355","year":2025,"model":"EV6","trim":"Wind 84.0 kWh RWD","t24":{"lc":16250,"r":53,"T12":0.00194,"T3":0.00229},"t36":{"lc":16300,"r":47,"T12":0.00214,"T3":0.00249,"T4":0.00279,"T5":0.00304,"T6":0.00324,"T7":0.00344},"t48":{"lc":17500,"r":38,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"NAE4365","year":2025,"model":"EV6","trim":"GT-Line 84.0 kWh RWD","t24":{"lc":17150,"r":53,"T12":0.00193,"T3":0.00228},"t36":{"lc":16700,"r":47,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":17700,"r":38,"T12":0.00255,"T3":0.0029,"T4":0.0032,"T5":0.00345,"T6":0.00365,"T7":0.00385}},{"code":"NAE5445","year":2025,"model":"EV6","trim":"Light L/R 84.0 kWh AWD","t24":{"lc":15750,"r":54,"T12":0.00192,"T3":0.00227},"t36":{"lc":15900,"r":48,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":17100,"r":39,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"NAE5455","year":2025,"model":"EV6","trim":"Wind 84.0 kWh AWD","t24":{"lc":16700,"r":54,"T12":0.00193,"T3":0.00228},"t36":{"lc":16600,"r":48,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":17700,"r":39,"T12":0.00253,"T3":0.00288,"T4":0.00318,"T5":0.00343,"T6":0.00363,"T7":0.00383}},{"code":"NAE5465","year":2025,"model":"EV6","trim":"GT-Line 84.0 kWh AWD","t24":{"lc":18200,"r":53,"T12":0.00189,"T3":0.00224},"t36":{"lc":17600,"r":47,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":18000,"r":39,"T12":0.00254,"T3":0.00289,"T4":0.00319,"T5":0.00344,"T6":0.00364,"T7":0.00384}},{"code":"PAE2345","year":2026,"model":"EV9","trim":"Light SR 76.1 kWh RWD","t24":{"lc":13000,"r":63,"T12":0.00189,"T3":0.00224},"t36":{"lc":13300,"r":57,"T12":0.00215,"T3":0.0025,"T4":0.0028,"T5":0.00305,"T6":0.00325,"T7":0.00345},"t48":{"lc":15400,"r":45,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"PAE4345","year":2026,"model":"EV9","trim":"Light LR 99.8 kWh RWD","t24":{"lc":12850,"r":65,"T12":0.00194,"T3":0.00229},"t36":{"lc":13215,"r":59,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":15600,"r":47,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"PAE5455","year":2026,"model":"EV9","trim":"Wind 99.8 kWh AWD","t24":{"lc":13000,"r":67,"T12":0.00194,"T3":0.00229},"t36":{"lc":13435,"r":61,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":16300,"r":49,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"PAE5465","year":2026,"model":"EV9","trim":"Land 99.8 kWh AWD","t24":{"lc":13600,"r":66,"T12":0.00193,"T3":0.00228},"t36":{"lc":13500,"r":60,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":16200,"r":48,"T12":0.00257,"T3":0.00292,"T4":0.00322,"T5":0.00347,"T6":0.00367,"T7":0.00387}},{"code":"PAE5475","year":2026,"model":"EV9","trim":"GT-Line 99.8 kWh AWD","t24":{"lc":13400,"r":67,"T12":0.00191,"T3":0.00226},"t36":{"lc":13400,"r":61,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":16200,"r":49,"T12":0.00256,"T3":0.00291,"T4":0.00321,"T5":0.00346,"T6":0.00366,"T7":0.00386}},{"code":"GAE1245","year":2026,"model":"Niro EV","trim":"Wind EV FWD","t24":{"lc":10450,"r":59,"T12":0.00193,"T3":0.00228},"t36":{"lc":10450,"r":53,"T12":0.00216,"T3":0.00251,"T4":0.00281,"T5":0.00306,"T6":0.00326,"T7":0.00346},"t48":{"lc":12300,"r":39,"T12":0.00253,"T3":0.00288,"T4":0.00318,"T5":0.00343,"T6":0.00363,"T7":0.00383}},{"code":"GAE1285","year":2026,"model":"Niro EV","trim":"Wave EV FWD","t24":{"lc":11050,"r":59,"T12":0.00194,"T3":0.00229},"t36":{"lc":10700,"r":53,"T12":0.00217,"T3":0.00252,"T4":0.00282,"T5":0.00307,"T6":0.00327,"T7":0.00347},"t48":{"lc":12200,"r":40,"T12":0.00253,"T3":0.00288,"T4":0.00318,"T5":0.00343,"T6":0.00363,"T7":0.00383}}];
+
+// ── Application state ─────────────────────────────────────────────
+var state = {
+  role: null,
+  username: null,
+  cilajetAmount: 995,
+  vanguardAmount: 995,
+  mfMarkup: 0,
+  discounts: {},
+  vehicle: null,
+  rateModel: null,
+  similar: { same:[], stepup:[], other:[] },
+  simTab: 'same',
+  currentPayTab: 'lease',
+  adminVehicle: null,
+  adminRateModel: null,
+  adminPayTab: 'lease'
+};
+
+// ── Utilities ─────────────────────────────────────────────────────
+function fmt(n)        { return '$' + Math.round(n).toLocaleString(); }
+function fmtPay(n)     { return n == null ? '--' : '$' + Math.round(n); }
+function showEl(id)    { var e=document.getElementById(id); if(e) e.classList.remove('hidden'); }
+function hideEl(id)    { var e=document.getElementById(id); if(e) e.classList.add('hidden'); }
+function setText(id,t) { var e=document.getElementById(id); if(e) e.textContent=t; }
+function setHTML(id,h) { var e=document.getElementById(id); if(e) e.innerHTML=h; }
+function val(id)       { var e=document.getElementById(id); return e ? e.value : ''; }
+
+// ── Rate lookup ───────────────────────────────────────────────────
+function findRate(modelCode, modelYear) {
+  if(!modelCode) return null;
+  // Exact match: code + year (handles Telluride MY25/MY27 collision)
+  for(var i=0; i<KFA_RATES.length; i++) {
+    if(KFA_RATES[i].code === modelCode && KFA_RATES[i].year === modelYear) return KFA_RATES[i];
+  }
+  // Fallback: code only (most recent entry wins)
+  for(var j=0; j<KFA_RATES.length; j++) {
+    if(KFA_RATES[j].code === modelCode) return KFA_RATES[j];
+  }
+  return null;
+}
+
+// KFA mileage residual adjustment vs 10k base
+function mileageAdj(mileage) {
+  if(mileage <= 10000) return 0;
+  if(mileage <= 12000) return -1;
+  return -3; // 15k/yr
+}
+
+// Get discount % for a model name
+function getDiscount(modelName) {
+  return state.discounts[modelName] || 0;
+}
+
+// ── KFA Lease calculator ──────────────────────────────────────────
+// Formula (verified against KFA Bulletin 2026-069 program examples):
+//   RV$ = MSRP * (residual_pct + mileage_adj) / 100
+//   NetCap = SellPrice + Cilajet + VanguardGPS - LeaseCash - DownPayment
+//   Monthly = round( (NetCap - RV$) / Term + (NetCap + RV$) * MF )
+//   Acq fee $650 collected at signing, NOT in NetCap
+//   MF markup applies to T3-T7 only (KFA advertised-special restriction on T1-2)
+//   24mo: only T12 and T3 published — T4-T7 return null
+var LEASE_TERMS   = [24, 36, 48];
+var TIERS         = ['T12','T3','T4','T5','T6','T7'];
+var MIL_LABELS    = {10000:'10k', 12000:'12k', 15000:'15k'};
+
+function calcLease(msrp, term, tier, mileage, dp, rateRec) {
+  if(!rateRec) return null;
+  var tk = 't' + term;
+  var t  = rateRec[tk];
+  if(!t) return null;
+  // 24mo only supports T12 and T3
+  if(term === 24 && tier !== 'T12' && tier !== 'T3') return null;
+  var baseMF = t[tier];
+  if(baseMF == null) return null;
+  var markup = (tier === 'T12') ? 0 : (state.mfMarkup || 0);
+  var mf     = baseMF + markup;
+  var resPct = t.r + mileageAdj(mileage || 10000);
+  if(resPct < 0) resPct = 0;
+  var rv     = msrp * resPct / 100;
+  var lc     = t.lc || 0;
+  var discPct = getDiscount(rateRec.model);
+  var sellPrice = msrp * (1 - discPct / 100);
+  var netCap = sellPrice + state.cilajetAmount + state.vanguardAmount - lc - (dp || 0);
+  var monthly = (netCap - rv) / term + (netCap + rv) * mf;
+  return { monthly: Math.round(monthly), term: term, tier: tier, rv: rv, netCap: netCap, mf: mf };
+}
+
+// ── KFA Finance calculator ────────────────────────────────────────
+// KFA_PROMO_APR: K500 Low APR T1-2 (FICO 720+) subvented rates per model.
+// Source: Bulletin 2026-065 (National APR) + 2026-070 (EV Programs, CA/CO/OR/WA).
+// Term map: 24/36/48mo → 24-48 range; 60mo → 49-60 range; 72mo → 67-72 range.
+// Models not listed here have no KFA subvented program — use KFA_STD_APR fallback.
+var KFA_PROMO_APR = {
+  'K5':              {24:1.90, 36:1.90, 48:1.90, 60:2.99, 72:3.99},
+  'Niro Hybrid':     {24:1.90, 36:1.90, 48:1.90, 60:2.99, 72:3.99},
+  'Sorento Hybrid':  {24:0.00, 36:0.00, 48:0.00, 60:0.90, 72:3.49},
+  'Telluride':       {24:3.99, 36:3.99, 48:3.99, 60:4.49, 72:5.99},
+  'Telluride Hybrid':{24:3.99, 36:3.99, 48:3.99, 60:4.49, 72:5.99},
+  'EV6':             {24:0.00, 36:0.00, 48:0.00, 60:0.00, 72:1.49},
+  'EV9':             {24:0.00, 36:0.00, 48:0.00, 60:0.00, 72:0.90},
+  'Niro EV':         {24:0.00, 36:0.00, 48:0.00, 60:0.00, 72:0.00}
+};
+// Standard (non-subvented) APR fallback — used for models with no K500 program,
+// and as the "Std Rate" column for all models.
+var KFA_STD_APR = {24:6.99, 36:6.99, 48:7.49, 60:7.99, 72:8.49};
+var FINANCE_TERMS = [24, 36, 48, 60, 72];
+
+function calcFinance(msrp, term, usePromo, dp, modelName) {
+  var discPct  = getDiscount(modelName || '');
+  var sellPrice = msrp * (1 - discPct / 100);
+  var principal = Math.max(0, sellPrice + state.cilajetAmount + state.vanguardAmount - (dp || 0));
+  var promoRates = KFA_PROMO_APR[modelName] || null;
+  var apr;
+  if(usePromo) {
+    apr = promoRates ? (promoRates[term] != null ? promoRates[term] : 0) : (KFA_STD_APR[term] || 6.99);
+  } else {
+    apr = KFA_STD_APR[term] || 6.99;
+  }
+  var r   = apr / 12 / 100;
+  var pmt = r === 0
+    ? principal / term
+    : principal * r * Math.pow(1+r, term) / (Math.pow(1+r, term) - 1);
+  return { monthly: Math.round(pmt), apr: apr, hasPromo: !!promoRates };
+}
+
+// ── API helpers ───────────────────────────────────────────────────
+function authHeaders() {
+  return { 'Content-Type':'application/json', 'Authorization':'Bearer '+AUTH_TOKEN };
+}
+
+function applySettings(s) {
+  if(s.cilajet_amount      != null) state.cilajetAmount  = Number(s.cilajet_amount);
+  if(s.vanguard_gps_amount != null) state.vanguardAmount = Number(s.vanguard_gps_amount);
+  if(s.mf_markup           != null) state.mfMarkup       = Number(s.mf_markup);
+  if(s.discounts           != null) state.discounts      = s.discounts;
+}
+
+// ── Login / Logout ────────────────────────────────────────────────
+function doLogin() {
+  var u = val('login-user').trim();
+  var p = val('login-pass');
+  if(!u || !p) return;
+  hideEl('login-error');
+  var btn = document.querySelector('#login-screen .login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+
+  fetch(API_BASE + '/api/auth/login', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({dealer:DEALER_SLUG, username:u, password:p})
+  })
+  .then(function(r){ return r.json().then(function(d){return{ok:r.ok,data:d};}); })
+  .then(function(res){
+    if(!res.ok){
+      setText('login-error', res.data.error || 'Invalid username or password');
+      showEl('login-error');
+      btn.disabled=false; btn.textContent='Sign In';
+      return;
+    }
+    AUTH_TOKEN = res.data.token;
+    localStorage.setItem('bd_kia_token', AUTH_TOKEN);
+    state.role     = res.data.role;
+    state.username = u;
+
+    return Promise.all([
+      fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/inventory').then(function(r){return r.json();}),
+      fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings',{headers:authHeaders()}).then(function(r){return r.json();})
+    ]).then(function(results){
+      INVENTORY = (results[0].vehicles || []);
+      applySettings(results[1] || {});
+
+      if(state.role === 'admin' || state.role === 'gm'){
+        setText('admin-sidebar-user', u.charAt(0).toUpperCase() + u.slice(1));
+        buildDiscRows();
+        renderCilajetAdmin();
+        renderVanguardAdmin();
+        renderMfMarkupAdmin();
+        renderInventoryAdmin();
+        showAdminScreen();
+      } else {
+        setText('sidebar-user', u.charAt(0).toUpperCase() + u.slice(1));
+        showSalesScreen();
+      }
+      btn.disabled=false; btn.textContent='Sign In';
+    });
+  })
+  .catch(function(){
+    setText('login-error', 'Connection error. Please try again.');
+    showEl('login-error');
+    btn.disabled=false; btn.textContent='Sign In';
+  });
+}
+
+function logout() {
+  AUTH_TOKEN = null;
+  localStorage.removeItem('bd_kia_token');
+  state.role = null; state.username = null;
+  state.vehicle = null; state.rateModel = null;
+  state.adminVehicle = null; state.adminRateModel = null;
+  state.similar = {same:[],stepup:[],other:[]};
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  var si = document.getElementById('search-input');
+  if(si) si.value = '';
+  hideEl('vehicle-section'); hideEl('search-error');
+  hideEl('admin-vehicle-section'); hideEl('admin-search-error');
+  document.getElementById('login-screen').style.display = '';
+  document.getElementById('app-screen').classList.add('hidden');
+  document.getElementById('admin-screen').classList.add('hidden');
+}
+
+// ── Screen control ────────────────────────────────────────────────
+function showSalesScreen() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').classList.add('hidden');
+  document.getElementById('app-screen').classList.remove('hidden');
+}
+
+function showAdminScreen() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').classList.add('hidden');
+  document.getElementById('admin-screen').classList.remove('hidden');
+}
+
+function switchPage(page) {
+  document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.remove('active'); });
+  var nav = document.getElementById('nav-'+page);
+  if(nav) nav.classList.add('active');
+  document.querySelectorAll('.page').forEach(function(el){ el.classList.remove('active'); });
+  var pg = document.getElementById('page-'+page);
+  if(pg) pg.classList.add('active');
+}
+
+function switchPayTab(tab) {
+  state.currentPayTab = tab;
+  document.getElementById('tab-lease').classList.toggle('active', tab==='lease');
+  document.getElementById('tab-finance').classList.toggle('active', tab==='finance');
+  var ls = document.getElementById('lease-section');
+  var fs = document.getElementById('finance-section');
+  if(tab==='lease'){ ls.classList.remove('hidden'); fs.classList.add('hidden'); }
+  else             { ls.classList.add('hidden');    fs.classList.remove('hidden'); }
+}
+
+function switchAdminPayTab(tab) {
+  state.adminPayTab = tab;
+  document.getElementById('admin-tab-lease').classList.toggle('active', tab==='lease');
+  document.getElementById('admin-tab-finance').classList.toggle('active', tab==='finance');
+  var ls = document.getElementById('admin-lease-section');
+  var fs = document.getElementById('admin-finance-section');
+  if(tab==='lease'){ ls.classList.remove('hidden'); fs.classList.add('hidden'); }
+  else             { ls.classList.add('hidden');    fs.classList.remove('hidden'); }
+}
+
+function switchAdminTab(tab) {
+  ['disc','inv','search'].forEach(function(t){
+    document.getElementById('atab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('admin-'+t+'-panel').classList.toggle('hidden', t!==tab);
+  });
+}
+
+function switchSimTab(tab) {
+  state.simTab = tab;
+  document.querySelectorAll('.sim-tab').forEach(function(el){ el.classList.remove('active'); });
+  if(event && event.target) event.target.classList.add('active');
+  renderSimilar();
+}
+
+// ── Tooltip ───────────────────────────────────────────────────────
+function tipToggle(iconEl) {
+  var box = iconEl.nextElementSibling;
+  if(!box) return;
+  var wasShown = box.classList.contains('show');
+  document.querySelectorAll('.tip-box.show').forEach(function(b){ b.classList.remove('show'); });
+  if(!wasShown) box.classList.add('show');
+}
+document.addEventListener('click', function(e){
+  if(!e.target.classList.contains('tip-icon')){
+    document.querySelectorAll('.tip-box.show').forEach(function(b){ b.classList.remove('show'); });
+  }
+});
+
+// ── Vehicle search (salesperson) ──────────────────────────────────
+function doSearch() {
+  var q = val('search-input').trim().toUpperCase();
+  if(!q) return;
+  hideEl('search-error'); hideEl('vehicle-section');
+  var found = INVENTORY.filter(function(v){
+    return v.stock_number === q || (v.vin && v.vin.toUpperCase().slice(-6) === q.slice(-6));
+  });
+  if(!found.length){
+    setText('search-error', 'No vehicle found for "' + q + '". Check stock number or last 6 VIN.');
+    showEl('search-error'); return;
+  }
+  state.vehicle   = found[0];
+  state.rateModel = findRate(found[0].model_code, found[0].model_year || 2026);
+  renderVehicle(found[0]);
+  buildSimilar(found[0]);
+  showEl('vehicle-section');
+}
+
+// ── Render vehicle card ───────────────────────────────────────────
+function renderVehicle(v) {
+  var msrp = v.msrp || v.total_msrp || 0;
+  setText('veh-name',  (v.model_year||'') + ' ' + (v.model||''));
+  setText('veh-trim',  v.trim || '');
+  setText('veh-msrp',  fmt(msrp) + ' MSRP');
+  var badges = [];
+  if(v.stock_number)  badges.push(v.stock_number);
+  if(v.exterior_color) badges.push(v.exterior_color);
+  if(v.model_code)    badges.push(v.model_code);
+  setHTML('veh-badges', badges.map(function(b){ return '<span class="badge">'+b+'</span>'; }).join(''));
+
+  var pw = document.getElementById('photo-wrap');
+  if(pw) pw.innerHTML = v.photo_url ? '<img class="vehicle-photo" src="'+v.photo_url+'" alt="" onerror="this.style.display=\'none\'">' : '';
+
+  setText('payments-title', 'Monthly Payments — '+(v.model_year||'')+' '+v.model+' '+(v.trim||''));
+
+  // Accessories banner
+  var totalAcc = state.cilajetAmount + state.vanguardAmount;
+  if(totalAcc > 0){
+    var parts = [];
+    if(state.cilajetAmount > 0)  parts.push('Cilajet ' + fmt(state.cilajetAmount));
+    if(state.vanguardAmount > 0) parts.push('Vanguard GPS ' + fmt(state.vanguardAmount));
+    setText('acc-note', 'Cap cost includes: ' + parts.join(' + ') + ' (total ' + fmt(totalAcc) + ')');
+    showEl('acc-note');
+  } else {
+    hideEl('acc-note');
+  }
+
+  renderLeaseGrid('lease-tbody', v, state.rateModel, 'sel-mileage', 'inp-dp', 'lease-note');
+  renderFinanceGrid('finance-tbody', v, 'inp-dp');
+}
+
+// ── Lease grid renderer ───────────────────────────────────────────
+function renderLeaseGrid(tbodyId, v, rateRec, milId, dpId, noteId) {
+  var tbody = document.getElementById(tbodyId);
+  if(!tbody) return;
+  var msrp    = v.msrp || v.total_msrp || 0;
+  var mileage = parseInt(val(milId || 'sel-mileage') || '10000');
+  var dp      = parseInt(val(dpId  || 'inp-dp')      || '0');
+
+  if(!rateRec){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:20px 12px">Rate data not available for this model. (Model code: '+(v.model_code||'—')+')</td></tr>';
+    if(noteId){ var n=document.getElementById(noteId); if(n) n.textContent=''; }
+    return;
+  }
+
+  var html = '';
+  LEASE_TERMS.forEach(function(term){
+    var tk = 't'+term;
+    if(!rateRec[tk]) return;
+    html += '<tr><td class="col-label">'+term+'mo / '+(MIL_LABELS[mileage]||mileage)+'k</td>';
+    TIERS.forEach(function(tier){
+      var r = calcLease(msrp, term, tier, mileage, dp, rateRec);
+      if(r == null){
+        html += '<td><span class="pay-cell disabled">—</span></td>';
+      } else {
+        var cls = 'pay-cell' + (tier==='T12' ? ' featured' : '');
+        html += '<td><span class="'+cls+'">'+fmtPay(r.monthly)+'</span></td>';
+      }
+    });
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+
+  if(noteId){
+    var noteEl = document.getElementById(noteId);
+    if(noteEl){
+      var discPct = getDiscount(rateRec.model);
+      var notes = ['Pre-tax. $650 acq fee due at signing. 24mo T4–T7 not offered by KFA.'];
+      if(dp > 0)      notes.push('$'+dp.toLocaleString()+' down applied.');
+      if(discPct > 0) notes.push(discPct+'% model price adjustment applied.');
+      noteEl.textContent = notes.join(' ');
+    }
+  }
+}
+
+// ── Finance grid renderer ─────────────────────────────────────────
+function renderFinanceGrid(tbodyId, v, dpId) {
+  var tbody = document.getElementById(tbodyId);
+  if(!tbody) return;
+  var msrp = v.msrp || v.total_msrp || 0;
+  var dp   = parseInt(val(dpId || 'inp-dp') || '0');
+
+  var html = '';
+  FINANCE_TERMS.forEach(function(term){
+    var r0   = calcFinance(msrp, term, true,  dp, v.model);
+    var rStd = calcFinance(msrp, term, false, dp, v.model);
+    html += '<tr>';
+    html += '<td class="col-label">'+term+' mo</td>';
+    html += '<td><span class="pay-cell featured">'+fmtPay(r0.monthly)+'</span><div style="font-size:10px;color:var(--text-muted)">'+(r0.hasPromo ? r0.apr+'% APR*' : r0.apr+'% APR (est.)')+'</div></td>';
+    html += '<td><span class="pay-cell">'+fmtPay(rStd.monthly)+'</span><div style="font-size:10px;color:var(--text-muted)">'+rStd.apr+'% APR (est.)</div></td>';
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+// ── Similar vehicles ──────────────────────────────────────────────
+// Rough Kia model tier ranking for "step up" suggestions
+var MODEL_RANK = {
+  'Seltos':1,'Niro':1,
+  'K4':2,'Sportage':3,'Sportage Hybrid':3,
+  'K5':4,'Sorento':5,'Sorento Hybrid':5,'Carnival':6,'Carnival Hybrid':6,
+  'Telluride':7,'Telluride Hybrid':7
+};
+
+function buildSimilar(v) {
+  var same=[], stepup=[], other=[];
+  var rank = MODEL_RANK[v.model] || 0;
+  INVENTORY.forEach(function(veh){
+    if(veh.stock_number === v.stock_number) return;
+    if(veh.model === v.model)                            same.push(veh);
+    else if(MODEL_RANK[veh.model] === rank + 1)          stepup.push(veh);
+    else                                                  other.push(veh);
+  });
+  state.similar = {same:same, stepup:stepup, other:other};
+  
+  var sec = document.getElementById('similar-section');
+  if(sec) sec.style.display = (same.length||stepup.length||other.length) ? '' : 'none';
+  setText('similar-title', 'Similar Vehicles');
+  renderSimilar();
+}
+
+function renderSimilar() {
+  var tab  = state.simTab || 'same';
+  var vehs = state.similar[tab] || [];
+  var mileage = parseInt(val('sel-mileage') || '10000');
+  var dp      = parseInt(val('inp-dp')      || '0');
+
+  var html = '';
+  vehs.slice(0,6).forEach(function(veh){
+    var msrp    = veh.msrp || veh.total_msrp || 0;
+    var rateRec = findRate(veh.model_code, veh.model_year || 2026);
+    var lease36 = rateRec ? calcLease(msrp, 36, 'T12', mileage, dp, rateRec) : null;
+    html += '<div class="sim-card" onclick="selectSimilar(\''+veh.stock_number+'\')">'+
+            '<div class="sim-model">'+(veh.model_year||'')+' '+veh.model+'</div>'+
+            '<div class="sim-trim">'+(veh.trim||'')+'</div>'+
+            '<div class="sim-msrp">'+fmt(msrp)+' MSRP</div>'+
+            (lease36 ? '<div class="sim-pay">'+fmtPay(lease36.monthly)+'/mo</div><div style="font-size:10px;color:var(--text-muted)">36mo T1-2 est.</div>' : '')+
+            '<div class="sim-stock">#'+veh.stock_number+'</div>'+
+            '</div>';
+  });
+  if(!html) html = '<div style="color:var(--text-muted);font-size:13px;padding:8px">No vehicles in this category.</div>';
+  setHTML('similar-list', html);
+}
+
+function selectSimilar(stockNum) {
+  var found = INVENTORY.filter(function(v){ return v.stock_number === stockNum; });
+  if(!found.length) return;
+  state.vehicle   = found[0];
+  state.rateModel = findRate(found[0].model_code, found[0].model_year || 2026);
+  document.getElementById('search-input').value = found[0].stock_number;
+  renderVehicle(found[0]);
+  buildSimilar(found[0]);
+  window.scrollTo(0,0);
+}
+
+// ── Parameter change (salesperson) ────────────────────────────────
+function onParamChange() {
+  if(!state.vehicle) return;
+  renderLeaseGrid('lease-tbody', state.vehicle, state.rateModel, 'sel-mileage', 'inp-dp', 'lease-note');
+  renderFinanceGrid('finance-tbody', state.vehicle, 'inp-dp');
+  renderSimilar();
+}
+
+// ── Admin: parameter change (spot-check) ─────────────────────────
+function onAdminParamChange() {
+  if(!state.adminVehicle) return;
+  renderLeaseGrid('admin-lease-tbody', state.adminVehicle, state.adminRateModel, 'admin-sel-mileage', 'admin-inp-dp', null);
+  renderFinanceGrid('admin-finance-tbody', state.adminVehicle, 'admin-inp-dp');
+}
+
+// ── Admin: save settings ──────────────────────────────────────────
+function saveToAPI(updates, msgId, successText) {
+  var msgEl = document.getElementById(msgId);
+  if(msgEl){ msgEl.textContent='Saving…'; msgEl.style.color='var(--text-secondary)'; msgEl.classList.remove('hidden'); }
+
+  fetch(API_BASE+'/api/dealer/'+DEALER_SLUG+'/settings', {
+    method:'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(updates)
+  })
+  .then(function(r){ return r.json().then(function(d){return{ok:r.ok,data:d};}); })
+  .then(function(res){
+    if(msgEl){
+      if(res.ok){
+        msgEl.textContent = successText || 'Saved.';
+        msgEl.style.color = 'var(--green)';
+        setTimeout(function(){ msgEl.classList.add('hidden'); }, 2500);
+      } else {
+        msgEl.textContent = 'Error: ' + (res.data.error || 'Save failed.');
+        msgEl.style.color = 'var(--red)';
+      }
+    }
+  })
+  .catch(function(){
+    if(msgEl){ msgEl.textContent='Network error.'; msgEl.style.color='var(--red)'; }
+  });
+}
+
+function saveCilajet() {
+  var amt = Math.max(0, parseInt(val('cilajet-amt')) || 0);
+  state.cilajetAmount = amt;
+  saveToAPI({cilajet_amount: amt}, 'cilajet-msg', 'Cilajet saved.');
+}
+
+function saveVanguard() {
+  var amt = Math.max(0, parseInt(val('vanguard-amt')) || 0);
+  state.vanguardAmount = amt;
+  saveToAPI({vanguard_gps_amount: amt}, 'vanguard-msg', 'Vanguard GPS saved.');
+}
+
+function saveMfMarkup() {
+  var markup = parseFloat(val('mf-markup-input')) || 0;
+  markup = Math.min(0.00040, Math.max(0, markup));
+  document.getElementById('mf-markup-input').value = markup;
+  state.mfMarkup = markup;
+  saveToAPI({mf_markup: markup}, 'mfmarkup-msg', 'MF Markup saved.');
+}
+
+function saveDiscounts() {
+  var rows    = document.querySelectorAll('#disc-rows .disc-row');
+  var discounts = {};
+  rows.forEach(function(row){
+    var inp   = row.querySelector('input[type="number"]');
+    var label = row.querySelector('.disc-label');
+    if(inp && label){
+      var model = label.getAttribute('data-model');
+      if(model) discounts[model] = parseFloat(inp.value) || 0;
+    }
+  });
+  state.discounts = discounts;
+  saveToAPI({discounts: discounts}, 'disc-msg', 'Price adjustments saved.');
+}
+
+// ── Admin: render panels ──────────────────────────────────────────
+function buildDiscRows() {
+  // Build from inventory models + KFA rate models
+  var models = {};
+  INVENTORY.forEach(function(v){ if(v.model) models[v.model]=true; });
+  if(!Object.keys(models).length){
+    // Seed with all KFA models
+    KFA_RATES.forEach(function(r){ if(r.model) models[r.model]=true; });
+  }
+  var html = '';
+  Object.keys(models).sort().forEach(function(model){
+    var discVal = state.discounts[model] || 0;
+    html += '<div class="disc-row">'+
+      '<div class="disc-label" data-model="'+model+'">'+model+'</div>'+
+      '<input type="number" min="0" max="15" step="0.5" value="'+discVal+'" class="kia-input" style="width:72px" '+
+      'onfocus="this.style.borderColor=\'var(--kia-red)\'" onblur="this.style.borderColor=\'var(--border)\'">'+
+      '<div class="disc-unit">%</div>'+
+      '</div>';
+  });
+  setHTML('disc-rows', html);
+}
+
+function renderCilajetAdmin() {
+  var inp = document.getElementById('cilajet-amt');
+  if(inp) inp.value = state.cilajetAmount;
+}
+
+function renderVanguardAdmin() {
+  var inp = document.getElementById('vanguard-amt');
+  if(inp) inp.value = state.vanguardAmount;
+}
+
+function renderMfMarkupAdmin() {
+  var inp = document.getElementById('mf-markup-input');
+  if(inp) inp.value = state.mfMarkup;
+}
+
+function renderInventoryAdmin() {
+  var counts = {};
+  INVENTORY.forEach(function(v){ counts[v.model]=(counts[v.model]||0)+1; });
+  var html = '';
+  Object.keys(counts).sort().forEach(function(model){
+    html += '<tr><td>'+model+'</td><td>'+counts[model]+'</td></tr>';
+  });
+  setHTML('inv-tbody', html);
+  setText('inv-count', INVENTORY.length);
+}
+
+// ── Admin: spot-check search ──────────────────────────────────────
+function doAdminSearch() {
+  var q = val('admin-search-input').trim().toUpperCase();
+  if(!q) return;
+  hideEl('admin-search-error'); hideEl('admin-vehicle-section');
+
+  var found = INVENTORY.filter(function(v){
+    return v.stock_number === q || (v.vin && v.vin.toUpperCase().slice(-6) === q.slice(-6));
+  });
+  if(!found.length){
+    setText('admin-search-error', 'No vehicle found for "'+q+'".');
+    showEl('admin-search-error'); return;
+  }
+  var v = found[0];
+  state.adminVehicle   = v;
+  state.adminRateModel = findRate(v.model_code, v.model_year || 2026);
+
+  var msrp = v.msrp || v.total_msrp || 0;
+  setText('admin-veh-name',  (v.model_year||'')+' '+v.model);
+  setText('admin-veh-trim',  v.trim || '');
+  setText('admin-veh-msrp',  fmt(msrp)+' MSRP');
+  setText('admin-payments-title', 'Payments — '+(v.model_year||'')+' '+v.model+' '+(v.trim||''));
+
+  var pw = document.getElementById('admin-photo-wrap');
+  if(pw) pw.innerHTML = v.photo_url ? '<img class="vehicle-photo" src="'+v.photo_url+'" alt="" onerror="this.style.display=\'none\'">' : '';
+
+  var totalAcc = state.cilajetAmount + state.vanguardAmount;
+  if(totalAcc > 0){
+    var parts = [];
+    if(state.cilajetAmount > 0)  parts.push('Cilajet '+fmt(state.cilajetAmount));
+    if(state.vanguardAmount > 0) parts.push('Vanguard GPS '+fmt(state.vanguardAmount));
+    setText('admin-acc-note', 'Cap cost includes: '+parts.join(' + '));
+    showEl('admin-acc-note');
+  } else { hideEl('admin-acc-note'); }
+
+  renderLeaseGrid('admin-lease-tbody', v, state.adminRateModel, 'admin-sel-mileage', 'admin-inp-dp', null);
+  renderFinanceGrid('admin-finance-tbody', v, 'admin-inp-dp');
+  showEl('admin-vehicle-section');
+}
+
+// ── Keyboard navigation ───────────────────────────────────────────
+document.addEventListener('keydown', function(e){
+  if(e.key !== 'Enter') return;
+  var id = document.activeElement && document.activeElement.id;
+  if(id === 'login-user' || id === 'login-pass')     doLogin();
+  if(id === 'search-input')                           doSearch();
+  if(id === 'admin-search-input')                     doAdminSearch();
+});
+
+</script>
+</body>
+</html>
